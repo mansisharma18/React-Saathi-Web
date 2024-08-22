@@ -10,7 +10,7 @@
 }
 body {
   font-weight: 400;
-  font-size: 16px;
+  font-size: 12px;
   position: relative;
   color: #444;
   
@@ -59,7 +59,7 @@ body {
 }
 .content{
   background-color:whitesmoke;
-  height:100vh;
+  min-height:100vh;
 }
 
  
@@ -72,17 +72,22 @@ body {
 }
 
 .brandMobile {
-  font-size: 44px !important; /* Larger font size */
-  font-weight: bold; /* Make it bold */
-  color: #ffffff; /* Text color */
-  padding: 10px !important; 
-  margin-top: 20px !important;
+  font-size: 24px !important;
+    font-weight: bold;
+    color: #ffffff !important;
+    padding: 10px !important;
+    margin-top: 2px !important;
+    border-bottom: solid 1px;
+    border-bottom-color: whitesmoke;
+    width: 100%;
+    text-align: center;
+  
 }
 
 
 .navbar-nav .nav-link {
   padding: 10px 20px;  /* Adjust padding */
-  font-size: 22px;     /* Adjust font size */
+  font-size: 12px;     /* Adjust font size */
   font-weight: 500;    /* Adjust font weight */
   color: #ffffff;      /* Text color */
   margin: 5px 0;       /* Margin between links */
@@ -113,13 +118,13 @@ body {
 
 
 /* header css */
-
+/* 
 .header{
-  /* width:1170px; */
+  
   border-bottom: 1px solid gainsboro;
   background-color: darkslateblue;
  
-}
+} */
 
 .footer{
   background-color:darkslateblue;
@@ -128,4 +133,145 @@ body {
 
 .footerTitle{
   margin-top:1rem;
+}
+
+
+.slider-heading p {
+  padding: 15px 19px;
+  color: #fff;
+  font-size: 20px;
+  text-transform: capitalize;
+}
+.bg-pink {
+  background: #f5b6ff;
+}
+.bg-org {
+  background: #ffc672;
+}
+.bg-l-org {
+  background: #ffa68a;
+}
+.bg-voilet {
+  background: #cca4ff;
+}
+.bg-blue {
+  background: #71ddff;
+}
+.bg-green {
+  background: #8bffba;
+}
+
+
+
+.banner {
+  height: 49vh;
+  position: relative;
+  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/Banner1-Full.jpg") center;
+  animation: carousel 30s ease-in-out infinite;
+  opacity: 0.8;
+}
+
+
+.primary-btn-color {
+  background-color: #00415e;
+}
+
+@keyframes carousel {
+  0% {
+    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner1-Full.jpg")
+      center center no-repeat;
+    background-size: cover;
+  }
+  25% {
+    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner2.jpg") center
+      center no-repeat;
+    background-size: cover;
+  }
+  50% {
+    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner3.jpg") center
+      center no-repeat;
+    background-size: cover;
+  }
+  100% {
+    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner41.jpg") center
+      center no-repeat;
+    background-size: cover;
+  }
+}
+.banner .banner-title {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  flex-direction: column;
+  font-weight: bold;
+  opacity: 1;
+  text-shadow: 2px 5px 5px black;
+}
+
+.banner .banner-title h1 {
+  font-weight: bold;
+}
+
+
+
+.header {
+  display: flex;
+  /*justify-content: space-between;*/
+  padding: 15px 0;
+}
+.pageHeader {
+  height: 200px;
+}
+.comman-pg-header {
+  background: #b9daf1;
+}
+.modal-header {
+  padding: 0;
+  border: 0;
+}
+.logo img {
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+  @media only screen and (min-width: 320px) and (max-width: 480px){
+    
+  }
+
+}
+.logo{
+/*     flex-grow:1; */
+}
+
+@media only screen and (min-width: 767px)  {
+    .webAlign{
+       margin-left:40px;
+       margin-right:70px;
+    }
+  
+}
+.fgrow{
+  flex-grow:2;
+    justify-content:center !important;
+  display:flex !important;
+
+}
+.logo span {
+  color: #00415e;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.navbar-nav .nav-link{
+  padding-left:1rem;
+  padding-right:.5rem;
+}
+
+.bg-light {
+  background-color: transparent !important;
+}
+
+.nav-link-black {
+  color: black !important;
+  font-size: 20px !important;
 }

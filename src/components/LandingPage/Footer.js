@@ -25,16 +25,9 @@ const Footer = () => {
           <div>
             <Form>
             <Row className="mb-3">
-        <Form.Group as={Col} md="12" controlId="validationCustom02">
         
-         <Form.Control
-            required
-            type="text"
-            placeholder="Enter your email"
-            
-          />
-      
-        </Form.Group>
+        
+       
 
         </Row>
             </Form>

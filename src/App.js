@@ -7,8 +7,8 @@ import HomePage from './components/LandingPage/HomePage';
 function App() {
   return (
     <div className="">
-     <Dashboard/>
-     {/* <HomePage/> */}
+     {/* <Dashboard/> */}
+     <HomePage/>
      
     </div>
   )

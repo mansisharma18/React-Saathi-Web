@@ -28,21 +28,21 @@ const ManageUsers = () => {
       <Card.Body>
      <div className="d-flex justify-content-center">
         <div className="mt-4">
-            <h2>Create a User</h2>
+            <h4>Create a User</h4>
         </div>
      </div>
       <Form>
       <Row>
         <Col className="p-3">
           <Form.Control placeholder="First name"
-          style={{ padding: '12px' }}
+          style={{ padding: '8px',fontSize:"12px" }}
           value={first} 
             onChange={(event) => setFirst(event.target.value)}
           />
         </Col>
         <Col className="p-3">
           <Form.Control placeholder="Middle name"
-          style={{ padding: '12px' }}
+            style={{ padding: '8px',fontSize:"12px" }}
           value={middle} 
             onChange={(event) => setMiddle(event.target.value)} />
         </Col>
@@ -50,13 +50,13 @@ const ManageUsers = () => {
       <Row>
       <Col className="p-3">
           <Form.Control placeholder="Last name"
-          style={{ padding: '12px' }} 
+            style={{ padding: '8px',fontSize:"12px" }}
           value={last} 
             onChange={(event) => setLast(event.target.value)}/>
         </Col>
         <Col className="p-3">
           <Form.Control placeholder="Email Address"
-          style={{ padding: '12px' }}
+           style={{ padding: '8px',fontSize:"12px" }}
           value={email} 
             onChange={(event) => setEmail(event.target.value)} />
         </Col>
@@ -66,14 +66,14 @@ const ManageUsers = () => {
           <Form.Control
             type="date"
             placeholder="D.O.B"
-            style={{ padding: '12px' }}
+            style={{ padding: '8px',fontSize:"12px" }}
             value={dob} 
             onChange={(event) => setDob(event.target.value)}
           />
         </Col>
         <Col className="p-3">
           <Form.Control placeholder="Phone Number"
-          style={{ padding: '12px' }} 
+           style={{ padding: '8px',fontSize:"12px" }}
           value={mob} 
             onChange={(event) => setMob(event.target.value)}/>
         </Col>
@@ -84,14 +84,14 @@ const ManageUsers = () => {
             type="file"
             accept="image/*"
             placeholder="Select Image"
-            style={{ padding: '12px' }}
+            style={{ padding: '8px',fontSize:"12px" }}
             value={image} 
             onChange={(event) => setImage(event.target.value)}
           />
         </Col>
         <Col className="p-3">
           <Form.Select
-            style={{ padding: '12px' }} 
+             style={{ padding: '8px',fontSize:"12px" }}
             aria-label="Select Option"
             value={selectedOption} 
             onChange={(event) => setSelectedOption(event.target.value)} 
@@ -108,7 +108,7 @@ const ManageUsers = () => {
           <Form.Control
             as="textarea"
             placeholder="Brief Bio"
-            style={{ padding: '12px' }} 
+            style={{ padding: '8px',fontSize:"12px" }}
             rows={3} 
             value={bio} 
             onChange={(event) => setBio(event.target.value)}

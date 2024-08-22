@@ -33,7 +33,7 @@ const LeftNavigation = () => {
         <Navbar.Brand href="/" className="brandMobile">Saathi</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto flex-column">
+          <Nav className="me-auto flex-column mt-5">
             <Nav.Link href="/"  className="nav-link"><HomeIcon  className="me-2"/><span>Home</span></Nav.Link>
             <Nav.Link href="/list"  className="nav-link"><PeopleIcon className="me-2"/>My Subscribers</Nav.Link>
             <Nav.Link href="/myAccount"  className="nav-link"><AccountCircleIcon className="me-2"/>My Account</Nav.Link>
