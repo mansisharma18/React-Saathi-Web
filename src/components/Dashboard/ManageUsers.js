@@ -18,19 +18,47 @@ const ManageUsers = () => {
     const[image,setImage]=useState('')
     const[bio,setBio]=useState('')
     const [selectedOption, setSelectedOption] = useState('Admin');
+    const[password,setPassword]=useState('')
+    const[countryCode,setCountryCode]=useState('')
+
+
 
 
   return (
     <div className="d-flex">
-         <Container className="justify-content-center aligh-items-center mt-5">
+         <Container className="justify-content-center aligh-items-center mt-5 ml-5" style={{margin:"25px"}}>
 
-<Card className="shadow-sm pb-5">
+<Card className="shadow-sm pb-3" >
       <Card.Body>
-     <div className="d-flex justify-content-center">
-        <div className="mt-4">
+
+      <div className="d-flex justify-content-center">
+        <div className="mt-2">
             <h4>Create a User</h4>
+
         </div>
+       
      </div>
+      <div>
+          <Form>
+          <Row>
+     
+        <Col lg={3} className="p-3">
+          <Form.Select
+             style={{ padding: '8px',fontSize:"12px" }}
+            aria-label="Select Option"
+            value={selectedOption} 
+            onChange={(event) => setSelectedOption(event.target.value)} 
+          >
+            <option>User Type</option>
+            <option value="1">Admin</option>
+            <option value="2">Saathi</option>
+            
+          </Form.Select>
+        </Col>
+      </Row>
+          </Form>
+        </div>
+   
       <Form>
       <Row>
         <Col className="p-3">
@@ -41,29 +69,21 @@ const ManageUsers = () => {
           />
         </Col>
         <Col className="p-3">
-          <Form.Control placeholder="Middle name"
-            style={{ padding: '8px',fontSize:"12px" }}
-          value={middle} 
-            onChange={(event) => setMiddle(event.target.value)} />
-        </Col>
-      </Row>
-      <Row>
-      <Col className="p-3">
-          <Form.Control placeholder="Last name"
+        <Form.Control placeholder="Last name"
             style={{ padding: '8px',fontSize:"12px" }}
           value={last} 
             onChange={(event) => setLast(event.target.value)}/>
         </Col>
-        <Col className="p-3">
-          <Form.Control placeholder="Email Address"
+      </Row>
+      <Row>
+      <Col className="p-3">
+      <Form.Control placeholder="Email Address"
            style={{ padding: '8px',fontSize:"12px" }}
           value={email} 
             onChange={(event) => setEmail(event.target.value)} />
         </Col>
-      </Row>
-      <Row>
-      <Col className="p-3">
-          <Form.Control
+        <Col className="p-3">
+        <Form.Control
             type="date"
             placeholder="D.O.B"
             style={{ padding: '8px',fontSize:"12px" }}
@@ -71,16 +91,39 @@ const ManageUsers = () => {
             onChange={(event) => setDob(event.target.value)}
           />
         </Col>
-        <Col className="p-3">
-          <Form.Control placeholder="Phone Number"
-           style={{ padding: '8px',fontSize:"12px" }}
-          value={mob} 
-            onChange={(event) => setMob(event.target.value)}/>
-        </Col>
       </Row>
       <Row>
       <Col className="p-3">
-          <Form.Control
+      <Row className="align-items-center">
+    {/* Country Code Select */}
+    <Col xs="auto" lg={2}>
+      <Form.Select
+        style={{ padding: '8px', fontSize: '12px' }}
+        aria-label="Select Country Code"
+        value={countryCode} // Add a state for countryCode
+        onChange={(event) => setCountryCode(event.target.value)} // Set the state for countryCode
+      >
+        {/* Replace the options below with a full list of country codes as needed */}
+        <option >+91</option>
+        <option value="+91">+91 (India)</option>
+        <option value="+44">+44 (UK)</option>
+        {/* Add more options as needed */}
+      </Form.Select>
+    </Col>
+    
+    {/* Phone Number Input */}
+    <Col>
+      <Form.Control
+        placeholder="Phone Number"
+        style={{ padding: '8px', fontSize: '12px' }}
+        value={mob} // Use state to manage the phone number input
+        onChange={(event) => setMob(event.target.value)} // Update state on change
+      />
+    </Col>
+  </Row>
+        </Col>
+        <Col className="p-3">
+        <Form.Control
             type="file"
             accept="image/*"
             placeholder="Select Image"
@@ -89,20 +132,33 @@ const ManageUsers = () => {
             onChange={(event) => setImage(event.target.value)}
           />
         </Col>
+      </Row>
+
+      <Row>
+      <Col className="p-3">
+      <Form.Control placeholder="Password"
+           style={{ padding: '8px',fontSize:"12px" }}
+          value={password} 
+            onChange={(event) => setPassword(event.target.value)}/>
+        </Col>
         <Col className="p-3">
-          <Form.Select
+      
+        <Form.Select
              style={{ padding: '8px',fontSize:"12px" }}
             aria-label="Select Option"
             value={selectedOption} 
             onChange={(event) => setSelectedOption(event.target.value)} 
           >
-            <option>Select Option</option>
-            <option value="1">Admin</option>
-            <option value="2">Saathi</option>
+            <option>Status</option>
+            <option value="1">Active</option>
+            <option value="2">Inactive</option>
             
           </Form.Select>
         </Col>
       </Row>
+
+
+    
       <Row>
         <Col className="p-3">
           <Form.Control
@@ -115,14 +171,19 @@ const ManageUsers = () => {
           />
         </Col>
       </Row>
+
+
+      
       <Button variant="primary"
        type="submit"
        style={{
-        backgroundColor: 'darkslateblue',  
-        borderColor: 'darkslateblue',    
+        width: '200px',            
+        backgroundColor: '#009efb',  
+        borderColor: '#009efb',    
         width: '200px',            
         color: 'white',
-        margin:"4px"      
+        margin:"4px",
+        fontSize:"12px"     
       }}
        >
         Submit

@@ -28,16 +28,16 @@ const LeftNavigation = () => {
         </Container>
       </Navbar> */}
 
-<Navbar collapseOnSelect expand="lg"  >
-      <Container className="d-flex flex-column" >
+<Navbar className="leftside" collapseOnSelect expand="lg" style={{ position: "relative" }}>
+      <Container className="d-flex flex-column " >
         <Navbar.Brand href="/" className="brandMobile">Saathi</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto flex-column mt-5">
+        <Navbar.Collapse id="responsive-navbar-nav" style={{ width: "100%" }}>
+          <Nav className="me-auto flex-column mt-3 leftNavbar">
             <Nav.Link href="/"  className="nav-link"><HomeIcon  className="me-2"/><span>Home</span></Nav.Link>
             <Nav.Link href="/list"  className="nav-link"><PeopleIcon className="me-2"/>My Subscribers</Nav.Link>
             <Nav.Link href="/myAccount"  className="nav-link"><AccountCircleIcon className="me-2"/>My Account</Nav.Link>
-            <Nav.Link href="/createSaathi"  className="nav-link"><AdminPanelSettingsIcon className="me-2"/>Assign a Saathi</Nav.Link>
+            <Nav.Link href="/assignSaathi"  className="nav-link"><AdminPanelSettingsIcon className="me-2"/>Assign a Saathi</Nav.Link>
             <Nav.Link href="/manageUsers"  className="nav-link"><ManageAccountsIcon className="me-2"/>Manage Users</Nav.Link>
             <Nav.Link href="/patronDetails"  className="nav-link"><ManageAccountsIcon className="me-2"/>Patron Details</Nav.Link>
 

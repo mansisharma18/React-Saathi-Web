@@ -8,6 +8,7 @@ import List from './List';
 import MyAccount from './MyAccount';
 import ManageUsers from './ManageUsers';
 import PatronDetails from './PatronDetails';
+import AssignSaathi from './AssignSaathi';
 
 
 const Dashboard = () => {
@@ -27,7 +28,7 @@ const Dashboard = () => {
       <Route path="/createSaathi" element={<CreateSaathi/>}/>
       <Route path="/myAccount" element={<MyAccount/>}/>
       <Route path="/manageUsers" element={<ManageUsers/>}/>
-      <Route path="/manageUsers" element={<ManageUsers/>}/>
+      <Route path="/assignSaathi" element={<AssignSaathi/>}/>
       <Route path="/patronDetails" element={<PatronDetails/>}/>
 
       </Routes>

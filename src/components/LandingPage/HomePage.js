@@ -109,10 +109,121 @@ class HomePage extends Component {
         </div>
                <section className="banner">
                   <div className='banner-title h1 d-flex justify-content-center align-items-center'>
-                     <h1 className='color-white font-weight-bold 'id="head1">Satthi</h1>
-                     {/* <div className='h2 color-white text-center' id="head1">Getting You Closer To Cures From Around The World</div> */}
+                     <h1 className='color-white font-weight-bold 'id="head1">Saathi – Your Loved Ones Deserve the Best Care</h1>
+                     <div className='h2 color-white text-center' id="head1">Let Saathi be the helping hand and caring voice that keeps your family connected, no matter how far away you are.</div>
                   </div>
                </section>
+
+
+
+
+
+               <section className="tabslider clerfix">
+          <div className="container">
+            <div className="row">
+                <div className="tab-nav">
+                  <div className="comman-heading"  itemscope itemtype="http://all-cures.com/Product">
+                    
+                     <div className="h4 mt-4" itemprop="Category">About Us</div>
+                     <p className="fw-bold">Why Saathi?</p>
+                     <p>Saathi was created with one goal in mind: to bring peace of mind to families who live far from their loved ones. We understand the challenges of being away, so we’ve developed a solution that allows you to stay involved in their care, 
+                      even from a distance. Saathi’s companions are trained,
+                       compassionate individuals who provide regular check-ins, social visits, and practical assistance.</p>
+                       <p className="fw-bold">Key Values:</p>
+                       <ul>
+                        <li><p><span className="fw-bold">Companionship:</span>
+                        Every Saathi is dedicated to being more than just an assistant – they are a friend who helps reduce feelings of loneliness and isolation.</p>
+                        </li>
+                        <li><p><span className="fw-bold">Professional Care:</span>
+                        Our companions are trained to handle a variety of needs, from simple conversations to helping with everyday tasks like errands or medical appointments.</p>
+                        </li>
+                        <li><p><span className="fw-bold">Trust and Reliability:</span>
+                        You can rely on us to keep you informed, providing regular updates so you always know your family is in good hands..</p>
+                        </li>
+                       </ul>
+                  </div>
+               
+               </div>
+                  
+          </div>
+        </div>
+      </section> 
+
+
+      
+      <section className="tabslider clerfix">
+          <div className="container">
+            <div className="row">
+                <div className="tab-nav">
+                  <div className="comman-heading"  itemscope itemtype="http://all-cures.com/Product">
+                    
+                     <div className="h4 mt-4" itemprop="Category">Services</div>
+                     <p className="fw-bold">How Can Saathi Help?</p>
+                     <p>Saathi provides a wide range of services to make life easier for your loved ones and give you peace of mind. Whether it's 
+                      providing emotional support, managing daily tasks, or making sure health needs are met, we are here to help.</p>
+                       <p className="fw-bold">Service Highlights:</p>
+                       <ul>
+                        <li><p><span className="fw-bold">Social Calls and Emotional Support:</span>
+                        Regular conversations to keep them feeling connected and reduce isolation.</p>
+                        </li>
+                        <li><p><span className="fw-bold">Home Check-Ins</span>
+                        Visits to ensure they are safe, comfortable, and healthy.</p>
+                        </li>
+                        <li><p><span className="fw-bold">Transportation Assistance:</span>
+                        Help with getting to doctor’s appointments, running errands, or visiting friends.</p>
+                        </li>
+                        <li><p><span className="fw-bold">Errand Running:</span>
+                        Picking up groceries, medications, or helping with other daily tasks.</p>
+                        </li>
+                       </ul>
+                  </div>
+               
+               </div>
+                  
+          </div>
+        </div>
+      </section> 
+
+
+
+      <section className="tabslider clerfix">
+          <div className="container">
+            <div className="row">
+                <div className="tab-nav">
+                  <div className="comman-heading"  itemscope itemtype="http://all-cures.com/Product">
+                    
+                     <div className="h4 mt-4" itemprop="Category">How it Works</div>
+                     <p className="fw-bold">Getting Started is Easy!</p>
+                    
+                       <span className="fw-bold">Step 1:</span>
+                       <p><span className="fw-bold">Download the App:</span>
+                       Available on both the App Store and Google Play, Saathi is easy to set up and start using right away.</p>
+
+                       <span className="fw-bold">Step 2:</span>
+                       <p><span className="fw-bold">Choose a Package: </span>
+                       Select a care package that best suits your family’s needs, whether it’s regular social calls, errands, or in-person check-ins.</p>
+
+                       
+                       <span className="fw-bold">Step 3:</span>
+                       <p><span className="fw-bold">Connect with a Saathi: </span>
+                       Your assigned Saathi companion will reach out to your family member and start providing the care and support they 
+                       need. You’ll receive updates and reports directly to your phone.</p>
+
+                       
+                       <span className="fw-bold">Step 4:</span>
+                       <p><span className="fw-bold">Stay Informed:  </span>
+                       Track your Saathi’s visits, check-ins, and progress reports through the app, so you always know how your loved one is doing.</p>
+                       
+                       
+                       
+                  </div>
+               
+               </div>
+                  
+          </div>
+        </div>
+      </section> 
+               
                
             
       <section className="tabslider clerfix">
@@ -121,10 +232,10 @@ class HomePage extends Component {
                 <div className="tab-nav">
                   <div className="comman-heading"  itemscope itemtype="http://all-cures.com/Product">
                     
-                     <div className="h4 mt-4" itemprop="Category">Our Packages</div>
-                     <p>We are working to create a Mobile App that aims at providing services to the Aged Seniors who are living alone away from their children/family 
-                        and need assistance and support. 
-                        We would appreciate if you could please spare some time and help to complete the survey and also provide feedback / suggestions.</p>
+                     <div className="h4 mt-4" itemprop="Category">Pricing</div>
+                     <p className="fw-bold">Affordable Care, Tailored to Your Needs</p>
+                     <p>Saathi offers flexible packages that cater to different levels of care. Whether your loved one needs a few weekly calls 
+                      or regular in-person check-ins, we’ve got a plan that works for you.</p>
                   </div>
                
                </div>

@@ -33,6 +33,10 @@ body {
 
 }
 
+.topbar{
+  background: linear-gradient(to right, #0178bc 0%, #00bdda 100%)
+}
+
 .navbar .leftbar{
   border-right-style:solid;
   border-color:rgb(227, 229, 236);
@@ -44,8 +48,8 @@ body {
 @media (min-width: 992px) {
   .leftbar{
     height:100vh;
-    background-color: darkslateblue;
-    width:14%;
+    /* background-color: darkslateblue; */
+    width:15%;
     
   }
   
@@ -74,7 +78,7 @@ body {
 .brandMobile {
   font-size: 24px !important;
     font-weight: bold;
-    color: #ffffff !important;
+    color: #54667a !important;
     padding: 10px !important;
     margin-top: 2px !important;
     border-bottom: solid 1px;
@@ -89,25 +93,41 @@ body {
   padding: 10px 20px;  /* Adjust padding */
   font-size: 12px;     /* Adjust font size */
   font-weight: 500;    /* Adjust font weight */
-  color: #ffffff;      /* Text color */
+  text-align: left;
+  /* color: #ffffff;    */
   margin: 5px 0;       /* Margin between links */
-  border-radius: 4px;  /* Rounded corners */
-  transition: background-color 0.3s ease;  /* Smooth hover effect */
+  /* border-radius: 4px;  */
+   /* Rounded corners */
+  /* transition: background-color 0.3s ease;  */
+   /* Smooth hover effect */
 }
 
 /* Hover effect for Navbar Links */
 .navbar-nav .nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Lighten on hover */
-  color: #ffffff; /* Maintain text color */
+  /* background-color: rgba(255, 255, 255, 0.1); */
+   /* Lighten on hover */
+  color:#009efb; /* Maintain text color */
   text-decoration: none; /* Remove underline */
+  border-left: 4px solid #009efb;
 }
 
 /* Active link styling */
 .navbar-nav .nav-link.active {
-  background-color: #3347B0; /* Active link background */
+  background-color: #009efb; /* Active link background */
   color: #ffffff; /* Active link text color */
+  border-left: 4px solid #009efb;
 }
 
+.leftNavbar.navbar-nav {
+  padding-left: 0; /* Remove padding */
+}
+
+.leftNavbar .nav-link {
+  text-align: left !important; /* Left-align text */
+  padding-left: 0; /* Remove padding for alignment */
+  margin-left: 0; /* Remove any left margin */
+  
+}
 /* Mobile-specific adjustments */
 @media (max-width: 767px) {
   .navbar-nav .nav-link {
@@ -274,4 +294,14 @@ body {
 .nav-link-black {
   color: black !important;
   font-size: 20px !important;
+}
+
+/* .card{
+  border-radius: 0!important;
+} */
+@media (min-width: 768px) { /* Adjust the breakpoint as needed */
+  .navbar .leftside {
+    position: fixed !important;
+    top: 0;
+  }
 }

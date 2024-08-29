@@ -1,8 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import { Avatar } from '@mui/material';
+import Button from 'react-bootstrap/Button'
+import Avatar from '@mui/material/Avatar';
+import avimg from '../../assets/images/download.png'
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 
 
@@ -11,8 +16,8 @@ const TopBar = () => {
 
 
   return (
-    <div>
-      <nav className="navbar  navbar-expand-lg bg-body-light sticky-top" id="navbar" style={{ position: "sticky", top: "0" }}>
+    <div className="">
+      <nav className="navbar topbar navbar-expand bg-body-light sticky-top" id="navbar" style={{ width:"100%",position: "sticky", top: "0",height:"69px" }}>
         <div className="container-fluid">
           <div className="d-flex justify-content-end justify-content-right">
 
@@ -102,14 +107,32 @@ const TopBar = () => {
                 <li className="nav-item search" >
                   <form>
                     <div className="row">
-                      <div className="col-md-12 mt-2 ml-3">
-                        <div className="input-group">
+                      <div className="col-md-12 mt-1 ml-3" style={{width:"250px"}}>
 
-                          <input type="text" className="form-control" placeholder="Search " aria-label="" aria-describedby="basic-addon1" />
-                          <span className="input-group-text" id="basic-addon1">
-                            <i className="bi bi-search"></i>
-                          </span>
-                        </div>
+                      <div className="search-bar-container" style={{ position: 'relative', display: 'inline-block', width: '100%' }}>
+  <input
+    type="text"
+    className="form-control"
+    placeholder="Search For..."
+    aria-label="Search For..."
+    style={{ borderRadius: '23px', padding: '5px',fontSize:"12px",marginTop:"2px" }} // Extra padding for the icon space
+  />
+  <span
+    className="search-icon"
+    style={{
+      position: 'absolute',
+      right: '10px',  // Position from the right side
+      top: '50%',
+      transform: 'translateY(-50%)',
+      color: '#999',
+      cursor: 'pointer',
+    }}
+  >
+    <i className="bi bi-search"></i>
+  </span>
+</div>
+
+
 
 
                       </div>
@@ -122,85 +145,47 @@ const TopBar = () => {
                 <ul className="navbar-nav me-auto ">
 
                   <li className="nav-item" style={{ marginRight: "20px" }}>
-                    <div className="dropstart" style={{ width: "fit-content" }}>
-                      <Link className="nav-link" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" to="#">
-                        {/* <span className="ms-2" style={{ fontSize: "20px" }}>
+                    <div>
+                     
+                        <span className="ms-2" style={{ fontSize: "20px",color:"white" }}>
                         <i className="bi bi-bell-fill"  ></i>
                         
-                        </span> */}
-
-<Avatar sx={{backgroundColor:'#F8F8F8',width:"30px",height:"30px"}}>
-                                   <span style={{color:"black", fontSize: "20px"}}> N </span>
-                                    </Avatar>
-                          </Link>
-                      <ul className="dropdown-menu">
+                        </span>
 
 
-                   
-                      </ul>
+                  
 
                     </div>
 
                   </li>
                   <li className="nav-item " style={{ marginRight: "20px" }}>
-                    <Link className="nav-link" to="#">
-                        
-                    <Avatar sx={{backgroundColor:'#F8F8F8',width:"30px",height:"30px"}}>
-                                   <span style={{color:"black", fontSize: "20px"}}> M </span>
-                                    </Avatar>
-                      </Link>
-                  </li>
-                  <li className="nav-item d-lg-block d-sm-none d-md-none">
-                    {/* <Link className="nav-link" to="/profile"> */}
-
-
-                    <div className="dropstart">
+                 
+                  <div>
                      
-                      <ul className="dropdown-menu px-1">
+                        <span className="ms-2" style={{ fontSize: "20px",color:"white" }}>
+                        <i class="bi bi-envelope-fill"></i>
+                        
+                        </span>
 
-                        <li>
-                          <div className="d-flex bg-light px-1">
-                            <div><img src="../images/ellipse1.png" alt="avatar" style={{ width: "30px", height: "30px" }} /></div>
-                            <div className="ms-2">
-                              <div className="row"><span className="fw-bold">John Doe</span></div>
-                              <div className="row"><span style={{ fontSize: "12px" }} >johndoe@gmail.com</span></div>
-                              <div className="row" style={{ color: "#3347B0" }}><span style={{ fontSize: "12px" }}>+91 9876543256</span></div>
-                            </div>
-                          </div>
 
-                        </li>
+                  
 
-                        <li>
-                          <div className="d-flex align-items-center mt-2 ms-1 ">
-                            <i className="bi bi-person"></i>
-                            <Link className="dropdown-item" to="/profile">View Profile</Link>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="d-flex align-items-center ms-1">
-                            <i className="bi bi-file-bar-graph"></i>
-                            <Link className="dropdown-item" to="#">Dashboard</Link>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="d-flex align-items-center ms-1">
-                            <i className="bi bi-file-lock"></i>
-                            <Link className="dropdown-item" href="#">Change Password</Link>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="d-flex align-items-center ms-1">
-                            <i className="bi bi-box-arrow-in-right"></i>
-                            <Link className="dropdown-item" href="#">Logout</Link>
-                          </div>
-                        </li>
-
-                      </ul>
                     </div>
-
-
                   </li>
+              
 
+                  <li className="nav-item " style={{ marginRight: "20px" }}>
+                 
+                 <div>
+                    
+                 <Avatar alt="Remy Sharp" src={avimg}
+                  sx={{ width: 34, height: 34 }} />
+
+
+                 
+
+                   </div>
+                 </li>
 
 
 
