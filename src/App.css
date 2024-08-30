@@ -305,3 +305,32 @@ body {
     top: 0;
   }
 }
+
+.signup{
+  margin-top:2.5rem;
+}
+
+img{
+ width:80%
+}
+
+.signup .row {
+  --bs-gutter-x: 0rem !important;
+}
+
+.date-input-with-label {
+  position: relative;
+  padding-left: 65px; /* Adjust this padding to accommodate the label and the space */
+}
+
+.date-input-with-label::before {
+  content: "D.O.B";  /* The text you want inside the input field */
+  position: absolute;
+  left: 10px;  /* Adjust this value to position the label correctly */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;  /* Customize color to fit with the input */
+  font-size: 12px;  /* Adjust the font size as needed */
+  pointer-events: none;  /* Ensure that the label doesn't interfere with clicking in the input */
+  margin-right: 5px; /* Add some space after the label */
+}

@@ -9,6 +9,8 @@ import MyAccount from './MyAccount';
 import ManageUsers from './ManageUsers';
 import PatronDetails from './PatronDetails';
 import AssignSaathi from './AssignSaathi';
+import SubscribersList from './SubscribersList';
+import SaathiList from './SaathiList';
 
 
 const Dashboard = () => {
@@ -27,8 +29,10 @@ const Dashboard = () => {
       
       <Route path="/createSaathi" element={<CreateSaathi/>}/>
       <Route path="/myAccount" element={<MyAccount/>}/>
-      <Route path="/manageUsers" element={<ManageUsers/>}/>
+      <Route path="/userRegisteration" element={<ManageUsers/>}/>
       <Route path="/assignSaathi" element={<AssignSaathi/>}/>
+      <Route path="/subscribers" element={<SubscribersList/>}/>
+      <Route path="/saathis" element={<SaathiList/>}/>
       <Route path="/patronDetails" element={<PatronDetails/>}/>
 
       </Routes>
