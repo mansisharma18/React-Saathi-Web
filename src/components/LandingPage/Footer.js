@@ -4,7 +4,8 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/esm/Container';
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form';
-
+import GooglePlay from '../../assets/images/googleplay.png';
+import AppStore from '../../assets/images/appstore.png';
 
 const Footer = () => {
   return (
@@ -12,104 +13,55 @@ const Footer = () => {
       <Container>
         <Row className="">
           <Col>
-          <div className="footerTitle">
-            <h5>Saathi</h5>
-          </div>
+            <div className="footerTitle">
+              <h5>About Saathi</h5>
+            </div>
 
-          <div className="footerSubtitle">
-            <p>Subscribe</p>
-          </div>
-          <div>
-            <p>Get 10% off your first order</p>
-          </div>
-          <div>
-            <Form>
-            <Row className="mb-3">
-        
-        
-       
-
-        </Row>
-            </Form>
-          </div>
-          
-          </Col>
-          <Col>
-          <div className="footerTitle">
-            <h5>Support</h5>
-          </div>
+           
+            <div>
+              <Form>
+                <Row className="mb-3">
 
 
-          <div className="footerPara">
-            <p> 92/B Whitefield, Bangalore,Bengaluru, Karnataka,345669</p>
-          </div>
 
-          <div className="footerPara">
-            <p> saathi@gmail.com</p>
-          </div>
 
-          <div className="footerPara">
-            <p> +91-9087654321</p>
-          </div>
+                </Row>
+              </Form>
+            </div>
 
           </Col>
           <Col>
-          <div className="footerTitle">
-            <h5>Account</h5>
-          </div>
 
-          <div className="footerPara">
-            <p> My Account</p>
-          </div>
 
-          <div className="footerPara">
-            <p> Login/Register</p>
-          </div>
-          
-          <div className="footerPara">
-            <p> Cart</p>
-          </div>
 
-          <div className="footerPara">
-            <p> Whishlist</p>
-          </div>
 
-          <div className="footerPara">
-            <p>Shop</p>
-          </div>
+
+            <div className="footerPara">
+              <p> saathi@gmail.com</p>
+            </div>
+
+            <div className="footerPara">
+              <p> +91-9087654321</p>
+            </div>
+
           </Col>
+
+
           <Col>
+            <div className="footerTitle">
+              <h5>Download App</h5>
+            </div>
 
-          <div className="footerTitle">
-            <h5>Quick Link</h5>
-          </div>
+            <div className="footerPara">
+              <p>Save $5 with App New users only</p>
+              <img src={GooglePlay} alt="Google Play Link" height="" width="150"
+                style={{ width: "148px", maxHeight: "45px", marginBottom: "7px", marginRight: "5px" }}></img>
+              <img src={AppStore} alt="Apple Link" height="" width="150"
+                style={{ width: "150px", maxHeight: "45px", marginBottom: "7px" }}></img>
+            </div>
 
-          <div className="footerPara">
-            <p>Privacy Policy</p>
-          </div>
 
-          <div className="footerPara">
-            <p>Terms of use</p>
-          </div>
-          <div className="footerPara">
-            <p>FAQ</p>
-          </div>
 
-          <div className="footerPara">
-            <p>Contact</p>
-          </div>
-          
-          </Col>
-          <Col>
-          <div className="footerTitle">
-            <h5>Download App</h5>
-          </div>
-
-          <div className="footerPara">
-            <p>Save $5 with App New users only</p>
-          </div>
-          
-          
           </Col>
         </Row>
       </Container>
