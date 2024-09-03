@@ -14,17 +14,20 @@ import Login from "./components/login/Login";
 import TopBar from "./components/Dashboard/TopBar";
 import LeftNavigation from "./components/Dashboard/LeftNavigation";
 import UpdateAdminUsers from "./components/Dashboard/UpdateAdminUsers";
+import SaathiLandingPage from "./components/Dashboard/SaathiLandingPage";
+import HomePage from "./components/LandingPage/HomePage";
 
 function App() {
   const location = useLocation(); // Get the current location
 
   // Determine if the current route is the login page
   const isLoginPage = location.pathname === "/";
+  const isHomePage=location.pathname ==="/home"
 
   return (
     <div className="">
       {/* Conditional rendering: only show LeftNavigation and TopBar if not on login page */}
-      {!isLoginPage && (
+      {(!isLoginPage && !isHomePage) && (
         <div className="d-flex">
           <LeftNavigation />
           <div className="flex-grow-1">
@@ -33,6 +36,8 @@ function App() {
             <div className="content">
               <Routes>
                 <Route path="/dashboard" element={<DashboardLandingPage />} />
+                <Route path="/saathiDashboard" element={<SaathiLandingPage />} />
+                
                 <Route path="/list" element={<List />} />
                 <Route path="/createSaathi" element={<CreateSaathi />} />
                 <Route path="/myAccount" element={<MyAccount />} />
@@ -52,6 +57,12 @@ function App() {
       {isLoginPage && (
         <Routes>
           <Route path="/" element={<Login />} />
+        </Routes>
+      )}
+
+{isHomePage && (
+        <Routes>
+          <Route path="/home" element={<HomePage />} />
         </Routes>
       )}
     </div>

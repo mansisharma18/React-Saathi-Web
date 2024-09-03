@@ -54,10 +54,11 @@ const LeftNavigation = () => {
                 </>
             )}
 
-            {user=='Saathi' &&(<>
+            {user=='Saathi' &&(
+              <>
             
 
-              <Nav.Link href="/dashboard"  className="nav-link"><HomeIcon  className="me-2"/><span>Home</span></Nav.Link>
+              <Nav.Link href="/saathiDashboard"  className="nav-link"><HomeIcon  className="me-2"/><span>Home</span></Nav.Link>
             {/* <Nav.Link href="/list"  className="nav-link"><PeopleIcon className="me-2"/>My Subscribers</Nav.Link> */}
            
             {/* <Nav.Link href="/userRegisteration"  className="nav-link"><ManageAccountsIcon className="me-2"/>User Registration</Nav.Link>
