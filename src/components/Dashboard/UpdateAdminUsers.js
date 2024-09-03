@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import { useNavigate } from 'react-router-dom';
 
 const UpdateAdminUsers = () => {
     const [first, setFirst] = useState('');
@@ -51,6 +52,13 @@ const UpdateAdminUsers = () => {
     };
     fetchData();
   }, []);
+
+  
+  const navigate = useNavigate(); 
+
+  const handleCancel = () => {
+      navigate('/dashboard'); 
+  };
 
   const handleSubmit=(e)=>{
     e.preventDefault()
@@ -265,21 +273,37 @@ const UpdateAdminUsers = () => {
 )}
                              
 
-                                {/* Submit Button */}
-                                <Button
-                                    variant="primary"
-                                    type="submit"
-                                    style={{
-                                        width: '200px',
-                                        backgroundColor: '#009efb',
-                                        borderColor: '#009efb',
-                                        color: 'white',
-                                        margin: "4px",
-                                        fontSize: "12px"
-                                    }}
-                                >
-                                    Update
-                                </Button>
+                             <div className="d-flex justify-content-between mt-3">
+  <Button
+    variant="primary"
+    type="submit"
+    style={{
+      backgroundColor: '#009efb',
+      borderColor: '#009efb',
+      color: 'white',
+      margin: "4px",
+      fontSize: "12px"
+    }}
+  >
+    Update
+  </Button>
+
+  <Button
+    variant="secondary"
+    type="button"
+    onClick={handleCancel}
+    style={{
+      backgroundColor: '#009efb',
+      borderColor: '#009efb',
+      color: 'white',
+      margin: "4px",
+      fontSize: "12px"
+    }}
+  >
+    Cancel
+  </Button>
+</div>
+
 
                                 {alert && (
                 <Alert variant="success" className="h6 mx-3">
