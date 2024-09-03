@@ -34,7 +34,7 @@ const PatronDetails = () => {
       <Card.Body>
      <div className="d-flex justify-content-center">
         <div className="mt-2">
-            <h4>Enter Patron Details</h4>
+            <h4> Patron Details</h4>
         </div>
      </div>
       <Form>
@@ -188,8 +188,9 @@ const PatronDetails = () => {
         fontSize:"12px"      
       }}
        >
-        Submit
+        Save
       </Button>
+
 
     </Form>
       </Card.Body>

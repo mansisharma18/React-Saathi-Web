@@ -9,12 +9,16 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
+import { useNavigate,Link } from 'react-router-dom';
 
 const Login = () => {
   const [validated, setValidated] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,15 +42,23 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
+
+
+
+    const AdMap = {
+      email:email,
+      password:password
+    };
   
-    // Create a new FormData object
+    console.log('AdMap:', AdMap);
+  
+  
     const formData = new FormData();
   
-    // Append email and password to the FormData object
-    formData.append('email', JSON.stringify(email));
-    formData.append('password', JSON.stringify(password));
+    Object.keys(AdMap).forEach((key) => {
+      formData.append(key, AdMap[key]);
+    });
   
-    // Send a POST request using Axios with the form data
     axios
       .post(`https://saathi.etheriumtech.com:444/Saathi/admin/login`, formData, {
         headers: {
@@ -54,10 +66,12 @@ const Login = () => {
         },
       })
       .then((res) => {
-        console.log(res.data); // Handle the response from the server
-        // localStorage.setItem('userid', res.data.userId);
-        // const getid = localStorage.getItem('userid');
-        // console.log('getid', getid, '660e81b21eb13a8336fdd26f');
+        console.log(res.data); 
+        localStorage.setItem('userType', res.data.userType);
+        const user = localStorage.getItem('userType');
+        console.log('user', user);
+         // Redirect to /dashboard after successful login
+         navigate('/dashboard'); // Use navigate to redirect
       })
       .catch((err) => console.log(err)); // Handle errors
   };
@@ -65,35 +79,47 @@ const Login = () => {
   return (
     <>
       <Container
-        className=" d-flex justify-content-center aligh-items-center mt-5"
-        style={{ margin: "25px" }}
+        className=" d-flex justify-content-center align-items-center"
+        style={{marginTop:"150px"}}
       >
-        <Card className="shadow-sm pb-3">
+        <Card className="shadow-sm pb-2">
           <Card.Body>
-            <div className="signup">
+            <div className="">
               <Row>
-                {/* <Col sm={7}>
-         <img src={loginImage} alt="loginimg"/>
-        </Col> */}
-
+              
                 <Col>
-                  <div className="p-2">
-                    <h2>Log in</h2>
-                    <p>Enter your details below</p>
+                  <div className="">
+                  <div className="text-center">
+  <p className="" style={{
+    fontSize: "20px", 
+    fontFamily: "'Helvetica Neue', sans-serif", 
+    fontWeight: "300", 
+    letterSpacing: "0.5px"
+  }}>
+    Sign In
+  </p>
+</div>
+
+
+
+
+                  
+                   
 
                     <Form onSubmit={handleSubmit}>
                       <Row className="mb-3">
                         <Form.Group
                           as={Col}
-                          md="9"
+                          md="12"
                           controlId="validationCustom02"
                         >
                           <Form.Control
                             required
                             type="text"
-                            placeholder="Email or phone number"
+                            placeholder="Username"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            style={{fontSize:"14px"}}
                           />
                         </Form.Group>
                       </Row>
@@ -101,26 +127,27 @@ const Login = () => {
                       <Row className="mb-3">
                         <Form.Group
                           as={Col}
-                          md="9"
+                          md="12"
                           controlId="validationCustom03"
                         >
                           <Form.Control
                             required
-                            type="text"
+                            type="password"
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            style={{fontSize:"14px"}}
                           />
                         </Form.Group>
 
                         <div className="pt-4 d-flex">
                           <div>
-                            <Button variant="danger" type="submit">
+                            <Button variant="primary" type="submit" style={{fontSize:"12px"}}>
                               Login
                             </Button>
                           </div>
                           <div className="ms-auto">
-                            {/* <p><Link to="#">Forgot Password</Link></p> */}
+                            <span style={{fontSize:"14px"}}><Link to="#">Forgot Password</Link></span>
                           </div>
                         </div>
                       </Row>

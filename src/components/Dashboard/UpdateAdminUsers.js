@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
@@ -8,10 +8,8 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import { useNavigate } from 'react-router-dom';
 
-
-const ManageUsers = () => {
+const UpdateAdminUsers = () => {
     const [first, setFirst] = useState('');
     const [last, setLast] = useState('');
     const [middle, setMiddle] = useState('');
@@ -27,18 +25,37 @@ const ManageUsers = () => {
     const[alert,setAlert]=useState();
 
 
-
-    const navigate = useNavigate(); 
-
-    const handleCancel = () => {
-        navigate('/dashboard'); 
-    };
-
-    const handleSubmit = async (event) => {
-      event.preventDefault();
     
-      
-      const AdMap = {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+       
+      axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/1`)
+      .then(res => {
+          console.log(res.data.firstName)
+          setFirst(res.data.firstName)
+          setLast(res.data.lastName)
+          setMob(res.data.contactNo)
+          setEmail(res.data.email)
+          setDob(res.data.dob)
+          setBio(res.data.briefBio)
+          setSelectedOption(res.data.userType)
+          setPassword(res.data.password)
+          setCountryCode(res.data.countryCode)
+          setStatus(res.data.status)
+          
+      })
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleSubmit=(e)=>{
+    e.preventDefault()
+
+    const AdMap = {
         firstName: first,
         lastName: last,
         email: email,
@@ -49,8 +66,8 @@ const ManageUsers = () => {
         userType: selectedOption,
         password: password,
         status: 1, // You can adjust this based on your form inputs
-        createdBy: 87,
-        updatedBy: null,
+        // createdBy: 87,
+        updatedBy: 1,
         picture:image
       };
     
@@ -64,45 +81,45 @@ const ManageUsers = () => {
       for (let [key, value] of formData.entries()) {
         console.log(`${key}: ${value}`);
       }
-    
-      // Send a POST request using Axios with the form data
-      axios
-        .post(`https://saathi.etheriumtech.com:444/Saathi/admin-users`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-        .then((response) => {
-          console.log("Response:", response.data); 
-          if (response.data) {
-            setAlert('User created successfully!!');
-          } 
-        //   else if (response.data === 0) {
-        //     setAlert('Company not created. Please check all fields and try again.');
-        //   }
-           else {
-            setAlert('An error occurred. Please contact the development team.');
-          }
-  
-          setTimeout(() => {
-            setAlert('');
-          }, 5000); // Hide alert after 3 seconds
-        })
-        .catch((error) => {
-          console.error('Error creating ad:', error); // Handle errors
-        });
-    };
-    
-    
+    axios
+    .post(`https://saathi.etheriumtech.com:444/Saathi/admin-users/1`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+    .then((response) => {
+      console.log("Response:", response.data); 
+      if (response.data) {
+        setAlert('User updated successfully!!');
+      } 
+    //   else if (response.data === 0) {
+    //     setAlert('Company not created. Please check all fields and try again.');
+    //   }
+       else {
+        setAlert('An error occurred. Please contact the development team.');
+      }
 
-    return (
-        <div className="d-flex">
+      setTimeout(() => {
+        setAlert('');
+      }, 5000); // Hide alert after 3 seconds
+    })
+    .catch((error) => {
+      console.error('Error creating ad:', error); // Handle errors
+    });
+
+    
+  }
+
+
+  return (
+    <div>
+            <div className="d-flex">
             <Container className="justify-content-center aligh-items-center mt-5 ml-5" style={{ margin: "25px" }}>
                 <Card className="shadow-sm pb-3">
                     <Card.Body>
                         <div className="d-flex justify-content-center">
                             <div className="mt-2">
-                                <h4>Add New User</h4>
+                                {/* <h4>Update User</h4> */}
                             </div>
                         </div>
                         <div>
@@ -205,7 +222,7 @@ const ManageUsers = () => {
                                 </Row>
 
                                 <Row>
-                                    <Col className="p-3">
+                                    {/* <Col className="p-3">
                                         <Form.Control
                                         type="password"
                                             placeholder="Password"
@@ -213,8 +230,8 @@ const ManageUsers = () => {
                                             value={password}
                                             onChange={(event) => setPassword(event.target.value)}
                                         />
-                                    </Col>
-                                    <Col className="p-3">
+                                    </Col> */}
+                                    <Col className="p-3" md={6}>
                                         <Form.Select
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             aria-label="Select Option"
@@ -247,37 +264,22 @@ const ManageUsers = () => {
 
 )}
                              
-                             <div className="d-flex justify-content-between mt-3">
-  <Button
-    variant="primary"
-    type="submit"
-    style={{
-      backgroundColor: '#009efb',
-      borderColor: '#009efb',
-      color: 'white',
-      margin: "4px",
-      fontSize: "12px"
-    }}
-  >
-    Save
-  </Button>
 
-  <Button
-    variant="secondary"
-    type="button"
-    onClick={handleCancel}
-    style={{
-      backgroundColor: '#009efb',
-      borderColor: '#009efb',
-      color: 'white',
-      margin: "4px",
-      fontSize: "12px"
-    }}
-  >
-    Cancel
-  </Button>
-</div>
-
+                                {/* Submit Button */}
+                                <Button
+                                    variant="primary"
+                                    type="submit"
+                                    style={{
+                                        width: '200px',
+                                        backgroundColor: '#009efb',
+                                        borderColor: '#009efb',
+                                        color: 'white',
+                                        margin: "4px",
+                                        fontSize: "12px"
+                                    }}
+                                >
+                                    Update
+                                </Button>
 
                                 {alert && (
                 <Alert variant="success" className="h6 mx-3">
@@ -290,7 +292,8 @@ const ManageUsers = () => {
                 </Card>
             </Container>
         </div>
-    );
+    </div>
+  )
 }
 
-export default ManageUsers;
+export default UpdateAdminUsers

@@ -2,7 +2,7 @@ import React from 'react'
 import LeftNavigation from './LeftNavigation'
 import TopBar from './TopBar'
 import DashboardLandingPage from './DashboardLandingPage'
-import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, BrowserRouter, useLocation } from 'react-router-dom';
 import CreateSaathi from './CreateSaathi';
 import List from './List';
 import MyAccount from './MyAccount';
@@ -14,9 +14,19 @@ import SaathiList from './SaathiList';
 
 
 const Dashboard = () => {
+
+  const location = useLocation(); // Get the current location
+  
+  const user = localStorage.getItem('userType');
+
+  // Check if the current path is "/login"
+  const isLoginPage = location.pathname === '/login';
+  
   return (
     <div>
-  <BrowserRouter>
+
+{!isLoginPage && (
+  
       <div className="d-flex">
       <LeftNavigation />
       <div className="flex-grow-1">
@@ -24,7 +34,7 @@ const Dashboard = () => {
         {/* Add your page content here */}
         <div className=" content">
         <Routes>
-      <Route path="/" element={<DashboardLandingPage/>}/>
+      <Route path="/dashboard" element={<DashboardLandingPage/>}/>
       <Route path="/list" element={<List/>}/>
       
       <Route path="/createSaathi" element={<CreateSaathi/>}/>
@@ -48,8 +58,8 @@ const Dashboard = () => {
     </div>
       
       
-      </BrowserRouter>
-
+      
+)}
     </div>
   )
 }

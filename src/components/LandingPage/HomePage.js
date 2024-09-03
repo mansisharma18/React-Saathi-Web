@@ -3,10 +3,10 @@ import Footer from "./Footer";
 import { Navbar } from "react-bootstrap";
 import { Nav, NavDropdown, Container } from "react-bootstrap";
 import Carousel1 from "./Carousel1";
-import img1 from "../../assets/images/1.jpeg";
-import img2 from "../../assets/images/2.jpeg";
-import img3 from "../../assets/images/3.jpeg";
-import img4 from "../../assets/images/4.jpeg";
+import img1 from "../../assets/images/1.jpg";
+import img2 from "../../assets/images/2.jpg";
+import img3 from "../../assets/images/3.jpg";
+import img4 from "../../assets/images/4.jpg";
 // import { env } from 'process'
 
 // env.REACT_APP = 'http://115.246.93.94:8080/cures';

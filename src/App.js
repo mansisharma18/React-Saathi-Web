@@ -1,23 +1,70 @@
-import logo from "./logo.svg";
+import React from "react";
 import "./App.css";
-import Dashboard from "./components/Dashboard/Dashboard";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  BrowserRouter,
-} from "react-router-dom";
-import HomePage from "./components/LandingPage/HomePage";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import DashboardLandingPage from "./components/Dashboard/DashboardLandingPage";
+import List from "./components/Dashboard/List";
+import CreateSaathi from "./components/Dashboard/CreateSaathi";
+import MyAccount from "./components/Dashboard/MyAccount";
+import ManageUsers from "./components/Dashboard/ManageUsers";
+import AssignSaathi from "./components/Dashboard/AssignSaathi";
+import SubscribersList from "./components/Dashboard/SubscribersList";
+import SaathiList from "./components/Dashboard/SaathiList";
+import PatronDetails from "./components/Dashboard/PatronDetails";
 import Login from "./components/login/Login";
+import TopBar from "./components/Dashboard/TopBar";
+import LeftNavigation from "./components/Dashboard/LeftNavigation";
+import UpdateAdminUsers from "./components/Dashboard/UpdateAdminUsers";
 
 function App() {
+  const location = useLocation(); // Get the current location
+
+  // Determine if the current route is the login page
+  const isLoginPage = location.pathname === "/";
+
   return (
     <div className="">
-      <Dashboard/>
-      {/* <HomePage/> */}
-      {/* <Login /> */}
+      {/* Conditional rendering: only show LeftNavigation and TopBar if not on login page */}
+      {!isLoginPage && (
+        <div className="d-flex">
+          <LeftNavigation />
+          <div className="flex-grow-1">
+            <TopBar />
+            {/* Content area for routes */}
+            <div className="content">
+              <Routes>
+                <Route path="/dashboard" element={<DashboardLandingPage />} />
+                <Route path="/list" element={<List />} />
+                <Route path="/createSaathi" element={<CreateSaathi />} />
+                <Route path="/myAccount" element={<MyAccount />} />
+                <Route path="/userRegisteration" element={<ManageUsers />} />
+                <Route path="/assignSaathi" element={<AssignSaathi />} />
+                <Route path="/subscribers" element={<SubscribersList />} />
+                <Route path="/saathis" element={<SaathiList />} />
+                <Route path="/patronDetails" element={<PatronDetails />} />
+                <Route path="/updateAdminUsers/:id" element={<UpdateAdminUsers />} />
+              </Routes>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Render the Login page when on the login route */}
+      {isLoginPage && (
+        <Routes>
+          <Route path="/" element={<Login />} />
+        </Routes>
+      )}
     </div>
   );
 }
 
-export default App;
+// Wrap App with Router so we can use useLocation hook in App component
+function AppWrapper() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+}
+
+export default AppWrapper;

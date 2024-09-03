@@ -6,16 +6,25 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import Alert from 'react-bootstrap/Alert';
+import { useNavigate } from 'react-router-dom';
+
 
 const AssignSaathi = () => {
-    // States for fetched data
+  
     const [sub, setSub] = useState([]);
     const [saathi, setSaathi] = useState([]);
-
-    // States for selected values
     const [selectedSub, setSelectedSub] = useState('');
     const [selectedSaathi, setSelectedSaathi] = useState('');
     const [alert, setAlert] = useState('');
+
+    
+    const navigate = useNavigate(); // for React Router v6+
+
+    const handleCancel = () => {
+        navigate('/dashboard'); // for React Router v6+
+    };
+
 
     useEffect(() => {
         const fetchList = async () => {
@@ -43,12 +52,24 @@ const AssignSaathi = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
-        axios.post(`https://saathi.etheriumtech.com:444/Saathi/subscribers/`, {
-            saathiID: selectedSaathi, // Use the selectedSaathi state
+        axios.put(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${selectedSub}`, {
+            saathiID: parseInt(selectedSaathi), // Use the selectedSaathi state
         })
-        .then((res) => {
-            console.log(res.data);
-            setAlert('Assignment successful');
+        .then((response) => {
+          console.log("Response:", response.data); 
+          if (response.data) {
+            setAlert('Saathi assigned successfully!!');
+          } 
+        //   else if (response.data === 0) {
+        //     setAlert('Company not created. Please check all fields and try again.');
+        //   }
+           else {
+            setAlert('An error occurred. Please contact the development team.');
+          }
+  
+          setTimeout(() => {
+            setAlert('');
+          }, 5000); // Hide alert after 3 seconds
         })
         .catch((err) => {
             console.log(err);
@@ -100,19 +121,44 @@ const AssignSaathi = () => {
                                     </Col>
                                 </Row>
 
-                                <Button variant="primary"
-                                    type="submit"
-                                    style={{
-                                        width: '200px',            
-                                        backgroundColor: '#009efb',  
-                                        borderColor: '#009efb',    
-                                        color: 'white',
-                                        margin: "4px",
-                                        fontSize: "12px"
-                                    }}
-                                >
-                                    Submit
-                                </Button>
+                                     
+                                <div className="d-flex justify-content-between mt-3">
+  <Button
+    variant="primary"
+    type="submit"
+    style={{
+      backgroundColor: '#009efb',
+      borderColor: '#009efb',
+      color: 'white',
+      margin: "4px",
+      fontSize: "12px"
+    }}
+  >
+    Assign
+  </Button>
+
+  <Button
+    variant="secondary"
+    type="button"
+    onClick={handleCancel}
+    style={{
+      backgroundColor: '#009efb',
+      borderColor: '#009efb',
+      color: 'white',
+      margin: "4px",
+      fontSize: "12px"
+    }}
+  >
+    Cancel
+  </Button>
+</div>
+
+
+                                {alert && (
+                <Alert variant="success" className="h6 mx-3">
+                  {alert}
+                </Alert>
+              )}
                             </Form>
                         </Card.Body>
                     </Card>

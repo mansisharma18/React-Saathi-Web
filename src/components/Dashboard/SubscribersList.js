@@ -20,7 +20,7 @@ const SubscribersList = () => {
         const fetchData = async () => {
        
 
-        axios.get(`https://saathi.etheriumtech.com:444/Saathi/subscribers/active`)
+        axios.get(`https://saathi.etheriumtech.com:444/Saathi/subscribers`)
         .then(res => {
             console.log(res.data[0].firstName)
             setList(res.data)
