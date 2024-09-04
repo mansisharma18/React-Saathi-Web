@@ -7,11 +7,12 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import Alert from 'react-bootstrap/Alert';
 
 const Login = () => {
-  const [validated, setValidated] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [alert, setAlert] = useState("");
 
   const navigate = useNavigate();
 
@@ -58,14 +59,33 @@ const Login = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
-        localStorage.setItem("userType", res.data.userType);
-        const user = localStorage.getItem("userType");
-        console.log("user", user);
-        // Redirect to /dashboard after successful login
-        navigate("/dashboard"); // Use navigate to redirect
+        if (res.data && res.data !="Invalid credentials for Admin") {
+          // Assuming the API response has a success field
+          localStorage.setItem("userType", res.data.userType);
+          localStorage.setItem("userId", res.data.adminUserID);
+          const user = localStorage.getItem("userType");
+          const userId = localStorage.getItem("userId");
+          console.log("userId", userId);
+          console.log("user", user);
+          // Redirect to /dashboard after successful login
+          navigate("/dashboard");
+        } else if (res.data =="Invalid credentials for Admin") {
+          // Show alert for invalid credentials
+          setAlert('Invalid credentials. Please try again.');
+          setTimeout(() => {
+            setAlert('');
+          }, 4000);
+        }
+       
       })
-      .catch((err) => console.log(err)); // Handle errors
+      .catch((err) => {
+        console.log(err);
+        // Handle other errors
+        setAlert('An error occurred. Please try again later.');
+        setTimeout(() => {
+          setAlert('');
+        }, 4000);
+      });
   };
 
   return (
@@ -79,17 +99,17 @@ const Login = () => {
             <div className="text-center mb-4">
               <h3 style={{ fontWeight: "bold", fontFamily: "'Helvetica Neue', sans-serif" ,color: "#6c757d" }}>Sign In</h3>
             </div>
-            <Form onSubmit={handleSubmit} noValidate validated={validated}>
+            <Form onSubmit={handleSubmit}>
+             
               <Form.Group className="mb-3" controlId="validationCustom02">
                 <Form.Control
                   required
                   type="text"
-                  placeholder="Email"
+                  placeholder="Username"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   style={{ fontSize: "14px", padding: "10px" }}
                 />
-                <Form.Control.Feedback type="invalid">Please provide a valid email.</Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group className="mb-4" controlId="validationCustom03">
@@ -101,7 +121,6 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   style={{ fontSize: "14px", padding: "10px" }}
                 />
-                <Form.Control.Feedback type="invalid">Please provide a password.</Form.Control.Feedback>
               </Form.Group>
 
               <div className="d-flex align-items-center justify-content-between mb-3">
@@ -112,6 +131,11 @@ const Login = () => {
                   Forgot Password?
                 </Link>
               </div>
+              {alert && (
+                <Alert variant="danger" className="h6 mx-3 mt-3">
+                  {alert}
+                </Alert>
+              )}
             </Form>
           </Card.Body>
         </Card>

@@ -9,6 +9,8 @@ import Button from 'react-bootstrap/Button';
 import axios from "axios";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useNavigate } from 'react-router-dom';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 
 const ManageUsers = () => {
@@ -27,6 +29,7 @@ const ManageUsers = () => {
     const[alert,setAlert]=useState();
 
 
+    const userId =localStorage.getItem("userId");
 
     const navigate = useNavigate(); 
 
@@ -49,7 +52,7 @@ const ManageUsers = () => {
         userType: selectedOption,
         password: password,
         status: 1, // You can adjust this based on your form inputs
-        createdBy: 87,
+        createdBy: userId,
         updatedBy: null,
         picture:image
       };
@@ -89,7 +92,8 @@ const ManageUsers = () => {
           }, 5000); // Hide alert after 3 seconds
         })
         .catch((error) => {
-          console.error('Error creating ad:', error); // Handle errors
+          console.error('Error creating user:', error); // Handle errors
+          setAlert('An error occurred. Please try again later.');
         });
     };
     
@@ -115,6 +119,7 @@ const ManageUsers = () => {
                                             aria-label="Select Option"
                                             value={selectedOption}
                                             onChange={(event) => setSelectedOption(event.target.value)}
+                                            required
                                         >
                                             <option>User Type</option>
                                             <option value="Admin">Admin</option>
@@ -129,6 +134,7 @@ const ManageUsers = () => {
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             value={first}
                                             onChange={(event) => setFirst(event.target.value)}
+                                            required
                                         />
                                     </Col>
                                     <Col className="p-3">
@@ -137,16 +143,18 @@ const ManageUsers = () => {
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             value={last}
                                             onChange={(event) => setLast(event.target.value)}
+                                            required
                                         />
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col className="p-3">
                                         <Form.Control
-                                            placeholder="Email Address"
+                                            placeholder="Username"
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             value={email}
                                             onChange={(event) => setEmail(event.target.value)}
+                                            required
                                         />
                                     </Col>
                                     <Col className="p-3">
@@ -157,6 +165,7 @@ const ManageUsers = () => {
             style={{ paddingLeft: '45px', fontSize: '12px' }}  // Adjust padding to accommodate the label
             value={dob}
             onChange={(event) => setDob(event.target.value)}
+            required
         />
     </Form.Group>
 
@@ -173,6 +182,7 @@ const ManageUsers = () => {
                                                     aria-label="Select Country Code"
                                                     value={countryCode}
                                                     onChange={(event) => setCountryCode(event.target.value)}
+                                                    required
                                                 >
                                                     <option>+91</option>
                                                     <option value="+91">+91 (India)</option>
@@ -188,6 +198,7 @@ const ManageUsers = () => {
                                                     style={{ padding: '8px', fontSize: '12px' }}
                                                     value={mob}
                                                     onChange={(event) => setMob(event.target.value)}
+                                                    required
                                                 />
                                             </Col>
                                         </Row>
@@ -212,6 +223,7 @@ const ManageUsers = () => {
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             value={password}
                                             onChange={(event) => setPassword(event.target.value)}
+                                            required
                                         />
                                     </Col>
                                     <Col className="p-3">
@@ -280,7 +292,7 @@ const ManageUsers = () => {
 
 
                                 {alert && (
-                <Alert variant="success" className="h6 mx-3">
+                <Alert variant="success" className="h6 mx-3 mt-3 w-50" >
                   {alert}
                 </Alert>
               )}

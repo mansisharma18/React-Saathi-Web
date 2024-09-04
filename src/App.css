@@ -334,3 +334,10 @@ img{
   pointer-events: none;  /* Ensure that the label doesn't interfere with clicking in the input */
   margin-right: 5px; /* Add some space after the label */
 }
+
+.was-validated .form-control:valid,
+.was-validated .form-select:valid {
+  border-color: inherit; /* Revert border color to the default */
+  padding-right: calc(1.5em + 0.75rem); /* Adjust padding */
+  background-image: none; /* Remove the green checkmark */
+}

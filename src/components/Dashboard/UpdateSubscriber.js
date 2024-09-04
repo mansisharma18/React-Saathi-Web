@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import axios from "axios";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const UpdateSubscriber = () => {
 
@@ -26,12 +27,13 @@ const UpdateSubscriber = () => {
     const [status, setStatus] = useState('');
     const[alert,setAlert]=useState();
 
+    const { id } = useParams();
 
     useEffect(() => {
         const fetchData = async () => {
           try {
            
-          axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/8/subscribers`)
+          axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${id}/subscribers`)
           .then(res => {
               console.log(res.data)
               console.log(res.data[0].firstName)

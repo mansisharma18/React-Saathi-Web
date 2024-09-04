@@ -95,6 +95,7 @@ const AssignSaathi = () => {
                                             aria-label="Select Option"
                                             value={selectedSub} 
                                             onChange={(event) => setSelectedSub(event.target.value)} 
+                                            required
                                         >
                                             <option value="">Select Subscriber</option>
                                             {sub.length > 0 && sub.map((subscriber) => (
@@ -110,6 +111,7 @@ const AssignSaathi = () => {
                                             aria-label="Select Option"
                                             value={selectedSaathi} 
                                             onChange={(event) => setSelectedSaathi(event.target.value)} 
+                                            required
                                         >
                                             <option value="">Select Saathi</option>
                                             {saathi.length > 0 && saathi.map((subscriber) => (
@@ -155,7 +157,7 @@ const AssignSaathi = () => {
 
 
                                 {alert && (
-                <Alert variant="success" className="h6 mx-3">
+                <Alert variant="success" className="h6 mx-3 mt-3 w-50">
                   {alert}
                 </Alert>
               )}

@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import axios from "axios";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const UpdateAdminUsers = () => {
     const [first, setFirst] = useState('');
@@ -25,13 +26,15 @@ const UpdateAdminUsers = () => {
     const [status, setStatus] = useState('');
     const[alert,setAlert]=useState();
 
+    const { id } = useParams();
+
 
     
   useEffect(() => {
     const fetchData = async () => {
       try {
        
-      axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/1`)
+      axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${id}`)
       .then(res => {
           console.log(res.data.firstName)
           setFirst(res.data.firstName)
@@ -53,6 +56,8 @@ const UpdateAdminUsers = () => {
     fetchData();
   }, []);
 
+  const userId =localStorage.getItem("userId");
+
   
   const navigate = useNavigate(); 
 
@@ -73,9 +78,9 @@ const UpdateAdminUsers = () => {
         briefBio: bio,
         userType: selectedOption,
         password: password,
-        status: 1, // You can adjust this based on your form inputs
+        status: status, // You can adjust this based on your form inputs
         // createdBy: 87,
-        updatedBy: 1,
+        updatedBy: userId,
         picture:image
       };
     
@@ -90,7 +95,7 @@ const UpdateAdminUsers = () => {
         console.log(`${key}: ${value}`);
       }
     axios
-    .post(`https://saathi.etheriumtech.com:444/Saathi/admin-users/1`, formData, {
+    .post(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -140,6 +145,7 @@ const UpdateAdminUsers = () => {
                                             aria-label="Select Option"
                                             value={selectedOption}
                                             onChange={(event) => setSelectedOption(event.target.value)}
+                                            required
                                         >
                                             <option>User Type</option>
                                             <option value="Admin">Admin</option>
@@ -154,6 +160,7 @@ const UpdateAdminUsers = () => {
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             value={first}
                                             onChange={(event) => setFirst(event.target.value)}
+                                            required
                                         />
                                     </Col>
                                     <Col className="p-3">
@@ -162,6 +169,7 @@ const UpdateAdminUsers = () => {
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             value={last}
                                             onChange={(event) => setLast(event.target.value)}
+                                            required
                                         />
                                     </Col>
                                 </Row>
@@ -172,6 +180,7 @@ const UpdateAdminUsers = () => {
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             value={email}
                                             onChange={(event) => setEmail(event.target.value)}
+                                            required
                                         />
                                     </Col>
                                     <Col className="p-3">
@@ -182,6 +191,7 @@ const UpdateAdminUsers = () => {
             style={{ paddingLeft: '45px', fontSize: '12px' }}  // Adjust padding to accommodate the label
             value={dob}
             onChange={(event) => setDob(event.target.value)}
+            required
         />
     </Form.Group>
 
@@ -213,6 +223,7 @@ const UpdateAdminUsers = () => {
                                                     style={{ padding: '8px', fontSize: '12px' }}
                                                     value={mob}
                                                     onChange={(event) => setMob(event.target.value)}
+                                                    required
                                                 />
                                             </Col>
                                         </Row>
@@ -245,6 +256,7 @@ const UpdateAdminUsers = () => {
                                             aria-label="Select Option"
                                             value={status}
                                             onChange={(event) => setStatus(event.target.value)} // Corrected setStatus
+                                            required
                                         >
                                             <option>Status</option>
                                             <option value="1">Active</option>
@@ -306,7 +318,7 @@ const UpdateAdminUsers = () => {
 
 
                                 {alert && (
-                <Alert variant="success" className="h6 mx-3">
+                <Alert variant="success" className="h6 mx-3 mt-3 w-50">
                   {alert}
                 </Alert>
               )}
