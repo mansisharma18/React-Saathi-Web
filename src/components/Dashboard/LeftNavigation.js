@@ -70,7 +70,7 @@ const LeftNavigation = () => {
             <Nav.Link href="/patronDetails"  className="nav-link"><ManageAccountsIcon className="me-2"/>Subscriber Registration</Nav.Link>
             <Nav.Link href="/patronDetails"  className="nav-link"><ManageAccountsIcon className="me-2"/>Patron Registration</Nav.Link>
             <Nav.Link href="/patronDetails"  className="nav-link"><ManageAccountsIcon className="me-2"/>Services Request</Nav.Link>
-            <Nav.Link href="/list"  className="nav-link"><AccountCircleIcon className="me-2"/>Manage Accounts</Nav.Link>
+            <Nav.Link href="/list"  className="nav-link"><AccountCircleIcon className="me-2"/>Subscribers</Nav.Link>
 
             
             </>)}

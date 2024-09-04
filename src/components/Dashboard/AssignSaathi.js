@@ -29,7 +29,7 @@ const AssignSaathi = () => {
     useEffect(() => {
         const fetchList = async () => {
             try {
-                const res = await axios.get(`https://saathi.etheriumtech.com:444/Saathi/subscribers/active`);
+                const res = await axios.get(`https://saathi.etheriumtech.com:444/Saathi/subscribers`);
                 console.log(res.data[0].firstName);
                 setSub(res.data);
             } catch (err) {

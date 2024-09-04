@@ -1,14 +1,37 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
+import axios from "axios";
+import { Link } from 'react-router-dom';
 
 
 
 const List = () => {
+
+  const [list, setList] = useState("");
+
+    
+  useEffect(() => {
+
+      console.log("hello")
+      const fetchData = async () => {
+     
+
+      axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/8/subscribers`)
+      .then(res => {
+          console.log(res.data[0].firstName)
+          setList(res.data)
+      })
+      .catch(err => 
+          console.log(err)
+      )
+      };
+      fetchData();
+    }, []);
   return (
     <div>
        <div className="d-flex">
@@ -26,49 +49,37 @@ const List = () => {
 </div>
 
 <div>
-  <table class="table table-striped">
+<table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
       <th scope="col">Email</th>
+      <th scope="col">Update</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>Barry</td>
-      <td>the Bird</td>
-      <td>@linkedin</td>
-    </tr>
-
-    <tr>
-      <th scope="row">5</th>
-      <td>Garry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-    
-  </tbody>
+                    {list.length > 0 ? list.map((item, index) => (
+                      <tr key={index}>
+                        <th scope="row">{index + 1}</th>
+                        <td>{item.firstName}</td>
+                        <td>{item.lastName}</td>
+                        <td>{item.email}</td>
+                        <td>
+                        <span className="text-decoration-none me-3">
+                          <Link to={`/updateSubscriber/${item.subscriberID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                            <i className="bi bi-pencil-fill"></i>
+                          </Link>
+                        </span>
+                        </td>
+                      </tr>
+                    )) : (
+                      <tr>
+                        <td colSpan="4">No data available</td>
+                      </tr>
+                    )}
+                  </tbody>
 </table>
   </div>
 
