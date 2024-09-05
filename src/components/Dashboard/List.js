@@ -12,6 +12,8 @@ import { Link } from 'react-router-dom';
 
 const List = () => {
 
+  const userId =localStorage.getItem("userId");
+
   const [list, setList] = useState("");
 
     
@@ -21,7 +23,7 @@ const List = () => {
       const fetchData = async () => {
      
 
-      axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/8/subscribers`)
+      axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers`)
       .then(res => {
           console.log(res.data[0].firstName)
           setList(res.data)
@@ -35,19 +37,19 @@ const List = () => {
   return (
     <div>
        <div className="d-flex">
-   <Container className="justify-content-center aligh-items-center mt-5" style={{margin:"25px"}}>
+   <Container className="justify-content-center aligh-items-center mt-5 px-5">
 
 <Card className="shadow-sm pb-3">
 <Card.Body>
 <div className="d-flex justify-content-center">
   <div className="mt-2">
       <h3>Subscriber's List</h3>
-      <hr/>
+      
   </div>
 
  
 </div>
-
+<hr/>
 <div>
 <table class="table table-striped">
   <thead>

@@ -79,7 +79,7 @@ const AssignSaathi = () => {
     return (
         <div>
             <div className="d-flex">
-                <Container className="justify-content-center aligh-items-center mt-5" style={{ margin: "25px" }}>
+                <Container className="justify-content-center aligh-items-center mt-5 px-5">
                     <Card className="shadow-sm pb-3">
                         <Card.Body>
                             <div className="d-flex justify-content-center">

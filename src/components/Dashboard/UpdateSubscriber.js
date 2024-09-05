@@ -28,25 +28,27 @@ const UpdateSubscriber = () => {
     const[alert,setAlert]=useState();
 
     const { id } = useParams();
+    const userId =localStorage.getItem("userId");
+
 
     useEffect(() => {
         const fetchData = async () => {
           try {
            
-          axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${id}/subscribers`)
+          axios.get(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${id}`)
           .then(res => {
               console.log(res.data)
-              console.log(res.data[0].firstName)
-              setFirst(res.data[0].firstName)
-              setLast(res.data[0].lastName)
-              setMob(res.data[0].contactNo)
-              setEmail(res.data[0].email)
-              setDob(res.data[0].dob)
+              console.log(res.data.firstName)
+              setFirst(res.data.firstName)
+              setLast(res.data.lastName)
+              setMob(res.data.contactNo)
+              setEmail(res.data.email)
+              setDob(res.data.dob)
               setBio(res.data.briefBio)
-              setSelectedOption(res.data[0].userType)
-              setPassword(res.data[0].password)
-              setCountryCode(res.data[0].countryCode)
-              setStatus(res.data[0].status)
+              setSelectedOption(res.data.userType)
+              setPassword(res.data.password)
+              setCountryCode(res.data.countryCode)
+              setStatus(res.data.status)
               
           })
           } catch (error) {
@@ -64,42 +66,25 @@ const UpdateSubscriber = () => {
       const handleSubmit=(e)=>{
         e.preventDefault()
     
-        const AdMap = {
-            firstName: first,
-            lastName: last,
-            email: email,
-            dob: dob,
-            contactNo: mob,
-            countryCode: countryCode,
-            briefBio: bio,
-            userType: selectedOption,
-            password: password,
-            status: 1, // You can adjust this based on your form inputs
-            // createdBy: 87,
-            updatedBy: 1,
-            picture:image
-          };
+       
         
-          console.log('AdMap:', AdMap);
-          const formData = new FormData();
-        
-          Object.keys(AdMap).forEach((key) => {
-            formData.append(key, AdMap[key]);
-          });
-        
-          for (let [key, value] of formData.entries()) {
-            console.log(`${key}: ${value}`);
-          }
         axios
-        .post(`https://saathi.etheriumtech.com:444/Saathi/admin-users/1`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          })
+      .put(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${id}`, {
+  
+       "firstName": first,
+       "lastName": last,
+        "email": email,
+        "contactNo": mob,
+        "countryCode": countryCode,
+        "status":status,
+        "updatedBy": parseInt(userId),
+       
+      }
+      )
         .then((response) => {
           console.log("Response:", response.data); 
           if (response.data) {
-            setAlert('User updated successfully!!');
+            setAlert('Subscriber Updated successfully!!');
           } 
         //   else if (response.data === 0) {
         //     setAlert('Company not created. Please check all fields and try again.');
@@ -115,15 +100,13 @@ const UpdateSubscriber = () => {
         .catch((error) => {
           console.error('Error creating ad:', error); // Handle errors
         });
-    
-        
-      }
+    }
 
   return (
     <div>
          <div>
             <div className="d-flex">
-            <Container className="justify-content-center aligh-items-center mt-5 ml-5" style={{ margin: "25px" }}>
+            <Container className="justify-content-center aligh-items-center mt-5 ml-5 px-5">
                 <Card className="shadow-sm pb-3">
                     <Card.Body>
                         <div className="d-flex justify-content-center">
@@ -322,7 +305,7 @@ const UpdateSubscriber = () => {
 
 
                                 {alert && (
-                <Alert variant="success" className="h6 mx-3">
+                <Alert variant="success" className="h6 mx-3 w-50">
                   {alert}
                 </Alert>
               )}

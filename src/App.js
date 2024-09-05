@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import DashboardLandingPage from "./components/Dashboard/DashboardLandingPage";
@@ -18,6 +18,7 @@ import SaathiLandingPage from "./components/Dashboard/SaathiLandingPage";
 import HomePage from "./components/LandingPage/HomePage";
 import UpdateSubscriber from "./components/Dashboard/UpdateSubscriber";
 import UpdateAdminSubscriber from "./components/Dashboard/UpdateAdminSubscriber";
+import SubscriberRegisteration from "./components/Dashboard/SubscriberRegisteration";
 
 function App() {
   const location = useLocation(); // Get the current location
@@ -51,6 +52,7 @@ function App() {
                 <Route path="/updateAdminUsers/:id" element={<UpdateAdminUsers />} />
                 <Route path="/updateSubscriber/:id" element={<UpdateSubscriber />} />
                 <Route path="/updateAdminSubscriber/:id" element={<UpdateAdminSubscriber />} />
+                <Route path="/subscriberRegisteration" element={<SubscriberRegisteration />} />
               </Routes>
             </div>
           </div>

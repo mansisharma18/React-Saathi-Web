@@ -8,11 +8,22 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useNavigate } from "react-router-dom";
 
 
 
 
 const TopBar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear the user session data from localStorage
+    localStorage.removeItem("userType");
+    localStorage.removeItem("userId");
+
+    // Redirect to the login page
+    navigate("/");
+  };
 
 
   return (
@@ -186,6 +197,19 @@ const TopBar = () => {
 
                    </div>
                  </li>
+
+                 {/* <li className="nav-item " style={{ marginRight: "20px" }}>
+                 
+                 <div>
+                    
+              <button onClick={handleLogout}>Logout</button>
+
+
+                 
+
+                   </div>
+                 </li> */}
+
 
 
 

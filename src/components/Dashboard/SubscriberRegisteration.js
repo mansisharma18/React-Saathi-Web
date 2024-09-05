@@ -1,18 +1,17 @@
-import React, { useState ,useEffect} from 'react';
+import React,{useState,useEffect} from 'react'
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import Alert from 'react-bootstrap/Alert';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
-import axios from "axios";
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import Alert from 'react-bootstrap/Alert';
 
 
-const UpdateAdminSubscriber = () => {
+
+const SubscriberRegisteration = () => {
 
     const [first, setFirst] = useState('');
     const [last, setLast] = useState('');
@@ -27,99 +26,141 @@ const UpdateAdminSubscriber = () => {
     const [countryCode, setCountryCode] = useState('');
     const [status, setStatus] = useState('');
     const[alert,setAlert]=useState();
+    const[list,setList]=useState('')
+    const[subId,setSubId]=useState('')
+   
 
-    const { id } = useParams();
+    
     const userId =localStorage.getItem("userId");
 
-
     useEffect(() => {
-        const fetchData = async () => {
-          try {
-           
-          axios.get(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${id}`)
-          .then(res => {
-              console.log(res.data)
-            //   console.log(res.data[0].firstName)
-              setFirst(res.data.firstName)
-              setLast(res.data.lastName)
-              setMob(res.data.contactNo)
-              setEmail(res.data.email)
-              setDob(res.data.dob)
-              setBio(res.data.briefBio)
-              setSelectedOption(res.data.userType)
-              setPassword(res.data.password)
-              setCountryCode(res.data.countryCode)
-              setStatus(res.data.status)
-              
-          })
-          } catch (error) {
-            console.error("Failed to fetch data:", error);
-          }
-        };
-        fetchData();
-      }, []);
 
-      const navigate = useNavigate(); 
+      console.log("hello")
+      const fetchSubList = async () => {
+     
 
-      const handleCancel = () => {
-          navigate('/dashboard'); 
-      };
-      const handleSubmit=(e)=>{
-        e.preventDefault()
-    
-       
-        
-        axios
-      .put(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${id}`, {
-
-       "firstName": first,
-       "lastName": last,
-        "email": email,
-        "contactNo": mob,
-        "countryCode": countryCode,
-        "status":status,
-        "updatedBy": parseInt(userId),
-       
-      }
+      axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers`)
+      .then(res => {
+          console.log(res.data[0].firstName)
+          setList(res.data)
+      })
+      .catch(err => 
+          console.log(err)
       )
-        .then((response) => {
-          console.log("Response:", response.data); 
-          if (response.data) {
-            setAlert('User updated successfully!!');
-          } 
-        //   else if (response.data === 0) {
-        //     setAlert('Company not created. Please check all fields and try again.');
-        //   }
-           else {
-            setAlert('An error occurred. Please contact the development team.');
-          }
-    
-          setTimeout(() => {
-            setAlert('');
-          }, 5000); // Hide alert after 3 seconds
-        })
-        .catch((error) => {
-          console.error('Error creating ad:', error); // Handle errors
-        });
-    }
+      };
+      fetchSubList();
 
+      const fetchData = async () => {
+        try {
+         
+        axios.get(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${subId}`)
+        .then(res => {
+            console.log(res.data)
+          //   console.log(res.data[0].firstName)
+            setFirst(res.data.firstName)
+            setLast(res.data.lastName)
+            setMob(res.data.contactNo)
+            setEmail(res.data.email)
+            setDob(res.data.dob)
+            setBio(res.data.briefBio)
+            setSelectedOption(res.data.userType)
+            setPassword(res.data.password)
+            setCountryCode(res.data.countryCode)
+            setStatus(res.data.status)
+            
+        })
+        } catch (error) {
+          console.error("Failed to fetch data:", error);
+        }
+      };
+      if(subId){
+      fetchData();
+      }
+
+      
+    }, [subId]);
+
+    const navigate = useNavigate(); 
+
+    const handleCancel = () => {
+        navigate('/dashboard'); 
+    };
+    const handleSubmit=(e)=>{
+      e.preventDefault()
+  
+     
+      
+      axios
+    .put(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${subId}`, {
+
+     "firstName": first,
+     "lastName": last,
+      "email": email,
+      "contactNo": mob,
+      "countryCode": countryCode,
+      "status":status,
+      "updatedBy": parseInt(userId),
+     
+    }
+    )
+      .then((response) => {
+        console.log("Response:", response.data); 
+        if (response.data) {
+          setAlert('Subscriber registered successfully!!');
+        } 
+      //   else if (response.data === 0) {
+      //     setAlert('Company not created. Please check all fields and try again.');
+      //   }
+         else {
+          setAlert('An error occurred. Please contact the development team.');
+        }
+  
+        setTimeout(() => {
+          setAlert('');
+        }, 5000); // Hide alert after 3 seconds
+      })
+      .catch((error) => {
+        console.error('Error creating ad:', error); // Handle errors
+      });
+  }
   return (
     <div>
-           <div>
+         <div>
+         <div>
             <div className="d-flex">
             <Container className="justify-content-center aligh-items-center mt-5 ml-5 px-5">
                 <Card className="shadow-sm pb-3">
                     <Card.Body>
                         <div className="d-flex justify-content-center">
                             <div className="mt-2">
-                                <h4>Update</h4>
+                                <h4>Register Subscriber</h4>
                             </div>
-                          
                         </div>
                         <hr/>
                         <div>
                             {/* Consolidated Form */}
                             <Form onSubmit={handleSubmit}>
+
+                            <Row>
+                                    <Col className="p-3" md={4}>
+                                    <Form.Label className="label-style">Select a Subscriber</Form.Label>
+                                        <Form.Select
+                                            style={{ padding: '8px', fontSize: "12px" }}
+                                            aria-label="Select Option"
+                                            value={subId} 
+                                            onChange={(event) => setSubId(event.target.value)} 
+                                            required
+                                        >
+                                          <option value="">Select Subscriber</option>
+                                            
+                                            {list.length > 0 && list.map((subscriber) => (
+                                                <option key={subscriber.subscriberID} value={subscriber.subscriberID}>
+                                                    {subscriber.firstName} {subscriber.lastName}
+                                                </option>
+                                            ))}
+                                        </Form.Select>
+                                    </Col>
+                                    </Row>
                                
                                 <Row>
                                     <Col className="p-3">
@@ -147,7 +188,7 @@ const UpdateAdminSubscriber = () => {
                                     <Col className="p-3">
                                     <Form.Label className="label-style">Username</Form.Label>
                                         <Form.Control
-                                            placeholder="Email Address"
+                                            placeholder="Username"
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             value={email}
                                             onChange={(event) => setEmail(event.target.value)}
@@ -155,7 +196,23 @@ const UpdateAdminSubscriber = () => {
                                         />
                                     </Col>
                                     <Col className="p-3">
-                                    <Row className="align-items-center">
+                                    <Form.Group className="position-relative">
+                                    <Form.Label className="label-style">Date of Birth</Form.Label>
+        <Form.Control
+            type="date"
+            className="date-input-with-label"
+            style={{ paddingLeft: '45px', fontSize: '12px' }}  // Adjust padding to accommodate the label
+            value={dob}
+            onChange={(event) => setDob(event.target.value)}
+        />
+    </Form.Group>
+
+                                        
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col className="p-3">
+                                        <Row className="align-items-center">
                                             {/* Country Code Select */}
                                             <Col xs="auto" lg={2}>
                                             <Form.Label className="label-style">Code</Form.Label>
@@ -164,7 +221,6 @@ const UpdateAdminSubscriber = () => {
                                                     aria-label="Select Country Code"
                                                     value={countryCode}
                                                     onChange={(event) => setCountryCode(event.target.value)}
-                                                    
                                                 >
                                                     <option>+91</option>
                                                     <option value="+91">+91 (India)</option>
@@ -185,22 +241,17 @@ const UpdateAdminSubscriber = () => {
                                                 />
                                             </Col>
                                         </Row>
-
-                                        
                                     </Col>
-                                </Row>
-                                <Row>
-                                   
-                                    <Col className="p-3" md={6}>
-                                    <Form.Label className="label-style">Select Status</Form.Label>
+                                    <Col className="p-3">
+                                    <Form.Label className="label-style">Status</Form.Label>
                                         <Form.Select
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             aria-label="Select Option"
                                             value={status}
-                                            onChange={(event) => setStatus(event.target.value)} 
-                                            required// Corrected setStatus
+                                            onChange={(event) => setStatus(event.target.value)} // Corrected setStatus
+                                            required
                                         >
-                                           
+                                            <option>Status</option>
                                             <option value="1">Active</option>
                                             <option value="2">Inactive</option>
                                         </Form.Select>
@@ -208,6 +259,36 @@ const UpdateAdminSubscriber = () => {
                                 </Row>
 
 
+
+                                <Row>
+                                    <Col className="p-3">
+                                    <Form.Label className="label-style">Credit card Number</Form.Label>
+                                        <Form.Control
+                                            placeholder="Credit card Number"
+                                            style={{ padding: '8px', fontSize: "12px" }}
+                                            value={""}
+                                            // onChange={(event) => setFirst(event.target.value)}
+                                        />
+                                    </Col>
+                                    <Col className="p-3">
+                                    <Form.Label className="label-style">Expiry Date</Form.Label>
+                                        <Form.Control
+                                            placeholder="Expiry Date"
+                                            style={{ padding: '8px', fontSize: "12px" }}
+                                            value={""}
+                                            // onChange={(event) => setLast(event.target.value)}
+                                        />
+                                    </Col>
+                                    <Col className="p-3">
+                                    <Form.Label className="label-style">CVV</Form.Label>
+                                        <Form.Control
+                                            placeholder="CVV"
+                                            style={{ padding: '8px', fontSize: "12px" }}
+                                            value={""}
+                                            // onChange={(event) => setFirst(event.target.value)}
+                                        />
+                                    </Col>
+                                </Row>
 
                                 <Row>
                                     {/* <Col className="p-3">
@@ -219,9 +300,7 @@ const UpdateAdminSubscriber = () => {
                                             onChange={(event) => setPassword(event.target.value)}
                                         />
                                     </Col> */}
-                                    <Col className="p-3" md={6}>
-                                  
-                                    </Col>
+                                   
                                 </Row>
 
 
@@ -264,7 +343,7 @@ const UpdateAdminSubscriber = () => {
     type="button"
     onClick={handleCancel}
     style={{
-     
+    
       color: 'white',
       margin: "4px",
       fontSize: "12px"
@@ -288,7 +367,8 @@ const UpdateAdminSubscriber = () => {
         </div>
     </div>
     </div>
+    </div>
   )
 }
 
-export default UpdateAdminSubscriber
+export default SubscriberRegisteration

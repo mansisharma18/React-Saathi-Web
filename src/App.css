@@ -94,6 +94,7 @@ body {
   font-size: 12px;     /* Adjust font size */
   font-weight: 500;    /* Adjust font weight */
   text-align: left;
+  padding-left: 0 !important;
   /* color: #ffffff;    */
   margin: 5px 0;       /* Margin between links */
   /* border-radius: 4px;  */
@@ -342,11 +343,20 @@ img{
   background-image: none; /* Remove the green checkmark */
 }
 .label-style{
-  font-size: 12px;
+  font-size: 10px;
 }
 .edit-btn-color{
   color:rgb(130, 121, 121)
 }
 .delete-btn-color{
   color:rgb(188, 72, 72)
+}
+
+.accordion-button{
+  font-size: 12px!important;
+  text-align: left !important;
+  padding-left: 3px !important;
+  font-family: "Raleway", sans-serif;
+  color: #444 !important
+  
 }

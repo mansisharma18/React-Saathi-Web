@@ -1,7 +1,7 @@
 import React ,{useState} from 'react'
 import { Link ,useLocation} from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
+import { Accordion, Nav } from 'react-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -67,10 +67,34 @@ const LeftNavigation = () => {
             <Nav.Link href="/saathis"  className="nav-link"><PeopleIcon className="me-2"/> Saathis</Nav.Link>
             <Nav.Link href="/myAccount"  className="nav-link"><AccountCircleIcon className="me-2"/>Manage Users</Nav.Link> */}
            
-            <Nav.Link href="/patronDetails"  className="nav-link"><ManageAccountsIcon className="me-2"/>Subscriber Registration</Nav.Link>
+            <Nav.Link href="/subscriberRegisteration"  className="nav-link"><ManageAccountsIcon className="me-2"/>Subscriber Registration</Nav.Link>
             <Nav.Link href="/patronDetails"  className="nav-link"><ManageAccountsIcon className="me-2"/>Patron Registration</Nav.Link>
             <Nav.Link href="/patronDetails"  className="nav-link"><ManageAccountsIcon className="me-2"/>Services Request</Nav.Link>
             <Nav.Link href="/list"  className="nav-link"><AccountCircleIcon className="me-2"/>Subscribers</Nav.Link>
+
+
+
+             {/* Main Link with Accordion for Submenu */}
+          <Accordion flush>
+            <Accordion.Item eventKey="0">
+              <Accordion.Header className="accordion-head">
+                <ManageAccountsIcon className="me-2" />
+                <span>Manage</span>
+              </Accordion.Header>
+              <Accordion.Body>
+                <Nav.Link href="/subscriberRegisteration" className="nav-link">
+                  Subscriber Registration
+                </Nav.Link>
+                <Nav.Link href="/patronDetails" className="nav-link">
+                  Patron Registration
+                </Nav.Link>
+                <Nav.Link href="/servicesRequest" className="nav-link">
+                  Services Request
+                </Nav.Link>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+
 
             
             </>)}
