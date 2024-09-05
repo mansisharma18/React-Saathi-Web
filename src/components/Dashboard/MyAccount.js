@@ -26,6 +26,10 @@ const MyAccount = () => {
   }, []);
 
   const handleDelete = async (id) => {
+
+    const confirmation = window.confirm('Are you sure you want to delete this user? This action cannot be undone.');
+
+    if (confirmation) {
     const AdMap = {
       status: 0,
     };
@@ -52,29 +56,34 @@ const MyAccount = () => {
     } catch (error) {
       console.error('Error deleting user:', error);
     }
+  }
   };
 
   return (
     <div>
+    <div className="d-flex">
       <Container className="justify-content-center align-items-center mt-5" style={{ margin: "25px" }}>
         <Card className="shadow-sm pb-3">
           <Card.Body>
             <div className="d-flex justify-content-center">
               <div className="mt-2">
                 <h3>Users List</h3>
-                <hr />
+                
               </div>
             </div>
+            <hr />
             <div>
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">S.No</th>
                     <th scope="col">User Type</th>
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Contact Number</th>
                     <th scope="col">Edit/Delete</th>
+                    
                   </tr>
                 </thead>
                 <tbody>
@@ -85,15 +94,16 @@ const MyAccount = () => {
                       <td>{item.firstName}</td>
                       <td>{item.lastName}</td>
                       <td>{item.email}</td>
+                      <td>{item.contactNo}</td>
                       <td>
                         <span className="text-decoration-none me-3">
                           <Link to={`/updateAdminUsers/${item.adminUserID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
-                            <i className="bi bi-pencil-fill"></i>
+                            <i className="bi bi-pencil-fill edit-btn-color"></i>
                           </Link>
                         </span>
                         <span>
                           <i
-                            className="bi bi-trash3-fill"
+                            className="bi bi-trash3-fill delete-btn-color"
                             onClick={() => handleDelete(item.adminUserID)}
                             style={{ cursor: 'pointer' }}
                           ></i>
@@ -111,6 +121,7 @@ const MyAccount = () => {
           </Card.Body>
         </Card>
       </Container>
+    </div>
     </div>
   );
 }

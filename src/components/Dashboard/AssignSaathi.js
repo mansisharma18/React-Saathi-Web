@@ -87,9 +87,11 @@ const AssignSaathi = () => {
                                     <h4>Assign a Saathi</h4>
                                 </div>
                             </div>
+                            <hr/>
                             <Form onSubmit={handleSubmit}>
                                 <Row>
                                     <Col className="p-3">
+                                    <Form.Label className="label-style">Select a Subscriber</Form.Label>
                                         <Form.Select
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             aria-label="Select Option"
@@ -106,6 +108,7 @@ const AssignSaathi = () => {
                                         </Form.Select>
                                     </Col>
                                     <Col className="p-3">
+                                    <Form.Label className="label-style">Select a Saathi</Form.Label>
                                         <Form.Select
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             aria-label="Select Option"
@@ -144,8 +147,6 @@ const AssignSaathi = () => {
     type="button"
     onClick={handleCancel}
     style={{
-      backgroundColor: '#009efb',
-      borderColor: '#009efb',
       color: 'white',
       margin: "4px",
       fontSize: "12px"

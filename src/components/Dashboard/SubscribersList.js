@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 
 
@@ -43,20 +44,24 @@ const SubscribersList = () => {
 <div className="d-flex justify-content-center">
   <div className="mt-2">
       <h3>Subscribers List</h3>
-      <hr/>
+      
   </div>
 
  
 </div>
+<hr/>
 
 <div>
   <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">S.No</th>
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
       <th scope="col">Email</th>
+      <th scope="col">Contact Number</th>
+      <th scope="col">Package</th>
+      <th scope="col">Edit/Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -66,6 +71,22 @@ const SubscribersList = () => {
                         <td>{item.firstName}</td>
                         <td>{item.lastName}</td>
                         <td>{item.email}</td>
+                        <td>{item.contactNo}</td>
+                        <td>Gold</td>
+                        <td>
+                        <span className="text-decoration-none me-3">
+                          <Link to={`/updateAdminsubscriber/${item.subscriberID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                            <i className="bi bi-pencil-fill edit-btn-color"></i>
+                          </Link>
+                        </span>
+                        <span>
+                          <i
+                            className="bi bi-trash3-fill delete-btn-color"
+                            // onClick={() => handleDelete(item.adminUserID)}
+                            style={{ cursor: 'pointer' }}
+                          ></i>
+                        </span>
+                      </td>
                       </tr>
                     )) : (
                       <tr>

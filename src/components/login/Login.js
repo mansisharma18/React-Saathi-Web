@@ -80,8 +80,15 @@ const Login = () => {
       })
       .catch((err) => {
         console.log(err);
-        // Handle other errors
-        setAlert('An error occurred. Please try again later.');
+        
+        if(err.response.data.includes('Invalid credentials')){
+          setAlert('Invalid Credentials.');
+          setTimeout(() => {
+            setAlert('');
+          }, 4000);
+
+        }
+        setAlert('Invalid Credentials.');
         setTimeout(() => {
           setAlert('');
         }, 4000);

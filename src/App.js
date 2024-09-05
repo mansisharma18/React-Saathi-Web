@@ -17,6 +17,7 @@ import UpdateAdminUsers from "./components/Dashboard/UpdateAdminUsers";
 import SaathiLandingPage from "./components/Dashboard/SaathiLandingPage";
 import HomePage from "./components/LandingPage/HomePage";
 import UpdateSubscriber from "./components/Dashboard/UpdateSubscriber";
+import UpdateAdminSubscriber from "./components/Dashboard/UpdateAdminSubscriber";
 
 function App() {
   const location = useLocation(); // Get the current location
@@ -49,6 +50,7 @@ function App() {
                 <Route path="/patronDetails" element={<PatronDetails />} />
                 <Route path="/updateAdminUsers/:id" element={<UpdateAdminUsers />} />
                 <Route path="/updateSubscriber/:id" element={<UpdateSubscriber />} />
+                <Route path="/updateAdminSubscriber/:id" element={<UpdateAdminSubscriber />} />
               </Routes>
             </div>
           </div>

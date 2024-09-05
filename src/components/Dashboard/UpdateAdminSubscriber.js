@@ -11,7 +11,9 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
-const UpdateAdminUsers = () => {
+
+const UpdateAdminSubscriber = () => {
+
     const [first, setFirst] = useState('');
     const [last, setLast] = useState('');
     const [middle, setMiddle] = useState('');
@@ -28,133 +30,112 @@ const UpdateAdminUsers = () => {
 
     const { id } = useParams();
 
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //       try {
+           
+    //       axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${id}/subscribers`)
+    //       .then(res => {
+    //           console.log(res.data)
+    //           console.log(res.data[0].firstName)
+    //           setFirst(res.data[0].firstName)
+    //           setLast(res.data[0].lastName)
+    //           setMob(res.data[0].contactNo)
+    //           setEmail(res.data[0].email)
+    //           setDob(res.data[0].dob)
+    //           setBio(res.data.briefBio)
+    //           setSelectedOption(res.data[0].userType)
+    //           setPassword(res.data[0].password)
+    //           setCountryCode(res.data[0].countryCode)
+    //           setStatus(res.data[0].status)
+              
+    //       })
+    //       } catch (error) {
+    //         console.error("Failed to fetch data:", error);
+    //       }
+    //     };
+    //     fetchData();
+    //   }, []);
 
-    
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-       
-      axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${id}`)
-      .then(res => {
-          console.log(res.data.firstName)
-          setFirst(res.data.firstName)
-          setLast(res.data.lastName)
-          setMob(res.data.contactNo)
-          setEmail(res.data.email)
-          setDob(res.data.dob)
-          setBio(res.data.briefBio)
-          setSelectedOption(res.data.userType)
-          setPassword(res.data.password)
-          setCountryCode(res.data.countryCode)
-          setStatus(res.data.status)
-          
-      })
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-      }
-    };
-    fetchData();
-  }, []);
+      const navigate = useNavigate(); 
 
-  const userId =localStorage.getItem("userId");
-
-  
-  const navigate = useNavigate(); 
-
-  const handleCancel = () => {
-      navigate('/dashboard'); 
-  };
-
-  const handleSubmit=(e)=>{
-    e.preventDefault()
-
-    const AdMap = {
-        firstName: first,
-        lastName: last,
-        email: email,
-        dob: dob,
-        contactNo: mob,
-        countryCode: countryCode,
-        briefBio: bio,
-        userType: selectedOption,
-        password: password,
-        status: status, // You can adjust this based on your form inputs
-        // createdBy: 87,
-        updatedBy: userId,
-        picture:image
+      const handleCancel = () => {
+          navigate('/dashboard'); 
       };
+      const handleSubmit=(e)=>{
+        e.preventDefault()
     
-      console.log('AdMap:', AdMap);
-      const formData = new FormData();
+        const AdMap = {
+            firstName: first,
+            lastName: last,
+            email: email,
+            dob: dob,
+            contactNo: mob,
+            countryCode: countryCode,
+            briefBio: bio,
+            userType: selectedOption,
+            password: password,
+            status: 1, // You can adjust this based on your form inputs
+            // createdBy: 87,
+            updatedBy: 1,
+            picture:image
+          };
+        
+          console.log('AdMap:', AdMap);
+          const formData = new FormData();
+        
+          Object.keys(AdMap).forEach((key) => {
+            formData.append(key, AdMap[key]);
+          });
+        
+          for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+          }
+        axios
+        .post(`https://saathi.etheriumtech.com:444/Saathi/admin-users/1`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+        .then((response) => {
+          console.log("Response:", response.data); 
+          if (response.data) {
+            setAlert('User updated successfully!!');
+          } 
+        //   else if (response.data === 0) {
+        //     setAlert('Company not created. Please check all fields and try again.');
+        //   }
+           else {
+            setAlert('An error occurred. Please contact the development team.');
+          }
     
-      Object.keys(AdMap).forEach((key) => {
-        formData.append(key, AdMap[key]);
-      });
-    
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
-    axios
-    .post(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${id}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-    .then((response) => {
-      console.log("Response:", response.data); 
-      if (response.data) {
-        setAlert('User updated successfully!!');
-      } 
-    //   else if (response.data === 0) {
-    //     setAlert('Company not created. Please check all fields and try again.');
-    //   }
-       else {
-        setAlert('An error occurred. Please contact the development team.');
-      }
-
-      setTimeout(() => {
-        setAlert('');
-      }, 5000); // Hide alert after 3 seconds
-    })
-    .catch((error) => {
-      console.error('Error creating ad:', error); // Handle errors
-    });
-
-    
-  }
-
+          setTimeout(() => {
+            setAlert('');
+          }, 5000); // Hide alert after 3 seconds
+        })
+        .catch((error) => {
+          console.error('Error creating ad:', error); // Handle errors
+        });
+    }
 
   return (
     <div>
+           <div>
             <div className="d-flex">
             <Container className="justify-content-center aligh-items-center mt-5 ml-5" style={{ margin: "25px" }}>
                 <Card className="shadow-sm pb-3">
                     <Card.Body>
                         <div className="d-flex justify-content-center">
                             <div className="mt-2">
-                                <h4>Update </h4>
+                                <h4>Update</h4>
                             </div>
+                          
                         </div>
+                        <hr/>
                         <div>
-                          <hr/>
                             {/* Consolidated Form */}
                             <Form onSubmit={handleSubmit}>
-                                <Row>
-                                    <Col lg={3} className="p-3">
-                                    <Form.Label className="label-style">User Type</Form.Label>
-                                        <Form.Select
-                                            style={{ padding: '8px', fontSize: "12px" }}
-                                            aria-label="Select Option"
-                                            value={selectedOption}
-                                            onChange={(event) => setSelectedOption(event.target.value)}
-                                            required
-                                        >
-                                            {/* <option>User Type</option> */}
-                                            <option value="Admin">Admin</option>
-                                            <option value="Saathi">Saathi</option>
-                                        </Form.Select>
-                                    </Col>
-                                </Row>
+                               
                                 <Row>
                                     <Col className="p-3">
                                     <Form.Label className="label-style">First Name</Form.Label>
@@ -163,7 +144,6 @@ const UpdateAdminUsers = () => {
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             value={first}
                                             onChange={(event) => setFirst(event.target.value)}
-                                            required
                                         />
                                     </Col>
                                     <Col className="p-3">
@@ -173,7 +153,6 @@ const UpdateAdminUsers = () => {
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             value={last}
                                             onChange={(event) => setLast(event.target.value)}
-                                            required
                                         />
                                     </Col>
                                 </Row>
@@ -185,7 +164,6 @@ const UpdateAdminUsers = () => {
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             value={email}
                                             onChange={(event) => setEmail(event.target.value)}
-                                            required
                                         />
                                     </Col>
                                     <Col className="p-3">
@@ -197,7 +175,6 @@ const UpdateAdminUsers = () => {
             style={{ paddingLeft: '45px', fontSize: '12px' }}  // Adjust padding to accommodate the label
             value={dob}
             onChange={(event) => setDob(event.target.value)}
-            required
         />
     </Form.Group>
 
@@ -231,7 +208,6 @@ const UpdateAdminUsers = () => {
                                                     style={{ padding: '8px', fontSize: '12px' }}
                                                     value={mob}
                                                     onChange={(event) => setMob(event.target.value)}
-                                                    required
                                                 />
                                             </Col>
                                         </Row>
@@ -249,6 +225,8 @@ const UpdateAdminUsers = () => {
                                     </Col>
                                 </Row>
 
+
+
                                 <Row>
                                     {/* <Col className="p-3">
                                         <Form.Control
@@ -260,15 +238,14 @@ const UpdateAdminUsers = () => {
                                         />
                                     </Col> */}
                                     <Col className="p-3" md={6}>
-                                    <Form.Label className="label-style">Select Option</Form.Label>
+                                    <Form.Label className="label-style">Select Status</Form.Label>
                                         <Form.Select
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             aria-label="Select Option"
                                             value={status}
                                             onChange={(event) => setStatus(event.target.value)} // Corrected setStatus
-                                            required
                                         >
-                                            {/* <option>Status</option> */}
+                                           
                                             <option value="1">Active</option>
                                             <option value="2">Inactive</option>
                                         </Form.Select>
@@ -281,7 +258,6 @@ const UpdateAdminUsers = () => {
 (
     <Row>
     <Col className="p-3">
-    <Form.Label className="label-style">Brief Bio</Form.Label>
         <Form.Control
             as="textarea"
             placeholder="Brief Bio"
@@ -328,7 +304,7 @@ const UpdateAdminUsers = () => {
 
 
                                 {alert && (
-                <Alert variant="success" className="h6 mx-3 mt-3 w-50">
+                <Alert variant="success" className="h6 mx-3">
                   {alert}
                 </Alert>
               )}
@@ -339,7 +315,8 @@ const UpdateAdminUsers = () => {
             </Container>
         </div>
     </div>
+    </div>
   )
 }
 
-export default UpdateAdminUsers
+export default UpdateAdminSubscriber

@@ -310,8 +310,7 @@ const UpdateSubscriber = () => {
     type="button"
     onClick={handleCancel}
     style={{
-      backgroundColor: '#009efb',
-      borderColor: '#009efb',
+    
       color: 'white',
       margin: "4px",
       fontSize: "12px"

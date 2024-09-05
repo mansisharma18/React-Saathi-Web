@@ -100,6 +100,7 @@ const ManageUsers = () => {
     
 
     return (
+        <div>
         <div className="d-flex">
             <Container className="justify-content-center aligh-items-center mt-5 ml-5" style={{ margin: "25px" }}>
                 <Card className="shadow-sm pb-3">
@@ -109,11 +110,13 @@ const ManageUsers = () => {
                                 <h4>Add New User</h4>
                             </div>
                         </div>
+                        <hr/>
                         <div>
                             {/* Consolidated Form */}
                             <Form onSubmit={handleSubmit}>
                                 <Row>
                                     <Col lg={3} className="p-3">
+                                    <Form.Label className="label-style">User Type</Form.Label>
                                         <Form.Select
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             aria-label="Select Option"
@@ -121,7 +124,7 @@ const ManageUsers = () => {
                                             onChange={(event) => setSelectedOption(event.target.value)}
                                             required
                                         >
-                                            <option>User Type</option>
+                                            {/* <option>User Type</option> */}
                                             <option value="Admin">Admin</option>
                                             <option value="Saathi">Saathi</option>
                                         </Form.Select>
@@ -129,6 +132,7 @@ const ManageUsers = () => {
                                 </Row>
                                 <Row>
                                     <Col className="p-3">
+                                    <Form.Label className="label-style">First Name</Form.Label>
                                         <Form.Control
                                             placeholder="First name"
                                             style={{ padding: '8px', fontSize: "12px" }}
@@ -138,6 +142,7 @@ const ManageUsers = () => {
                                         />
                                     </Col>
                                     <Col className="p-3">
+                                    <Form.Label className="label-style">Last Name</Form.Label>
                                         <Form.Control
                                             placeholder="Last name"
                                             style={{ padding: '8px', fontSize: "12px" }}
@@ -149,6 +154,7 @@ const ManageUsers = () => {
                                 </Row>
                                 <Row>
                                     <Col className="p-3">
+                                    <Form.Label className="label-style">UserName</Form.Label>
                                         <Form.Control
                                             placeholder="Username"
                                             style={{ padding: '8px', fontSize: "12px" }}
@@ -159,6 +165,7 @@ const ManageUsers = () => {
                                     </Col>
                                     <Col className="p-3">
                                     <Form.Group className="position-relative">
+                                    <Form.Label className="label-style">Date of Birth</Form.Label>
         <Form.Control
             type="date"
             className="date-input-with-label"
@@ -177,6 +184,7 @@ const ManageUsers = () => {
                                         <Row className="align-items-center">
                                             {/* Country Code Select */}
                                             <Col xs="auto" lg={2}>
+                                            <Form.Label className="label-style">Code</Form.Label>
                                                 <Form.Select
                                                     style={{ padding: '8px', fontSize: '12px' }}
                                                     aria-label="Select Country Code"
@@ -193,6 +201,7 @@ const ManageUsers = () => {
 
                                             {/* Phone Number Input */}
                                             <Col>
+                                            <Form.Label className="label-style">Phone Number</Form.Label>
                                                 <Form.Control
                                                     placeholder="Phone Number"
                                                     style={{ padding: '8px', fontSize: '12px' }}
@@ -204,6 +213,7 @@ const ManageUsers = () => {
                                         </Row>
                                     </Col>
                                     <Col className="p-3">
+                                    <Form.Label className="label-style">Upload Image</Form.Label>
                                         <Form.Control
                                             type="file"
                                             accept="image/*"
@@ -217,6 +227,7 @@ const ManageUsers = () => {
 
                                 <Row>
                                     <Col className="p-3">
+                                    <Form.Label className="label-style">Set Password</Form.Label>
                                         <Form.Control
                                         type="password"
                                             placeholder="Password"
@@ -227,13 +238,14 @@ const ManageUsers = () => {
                                         />
                                     </Col>
                                     <Col className="p-3">
+                                    <Form.Label className="label-style">Select Status</Form.Label>
                                         <Form.Select
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             aria-label="Select Option"
                                             value={status}
                                             onChange={(event) => setStatus(event.target.value)} // Corrected setStatus
                                         >
-                                            <option>Status</option>
+                                            {/* <option>Status</option> */}
                                             <option value="1">Active</option>
                                             <option value="2">Inactive</option>
                                         </Form.Select>
@@ -246,6 +258,7 @@ const ManageUsers = () => {
 (
     <Row>
     <Col className="p-3">
+    <Form.Label className="label-style">Brief Bio</Form.Label>
         <Form.Control
             as="textarea"
             placeholder="Brief Bio"
@@ -253,6 +266,7 @@ const ManageUsers = () => {
             rows={3}
             value={bio}
             onChange={(event) => setBio(event.target.value)}
+            required
         />
     </Col>
 </Row>
@@ -279,8 +293,7 @@ const ManageUsers = () => {
     type="button"
     onClick={handleCancel}
     style={{
-      backgroundColor: '#009efb',
-      borderColor: '#009efb',
+   
       color: 'white',
       margin: "4px",
       fontSize: "12px"
@@ -301,6 +314,7 @@ const ManageUsers = () => {
                     </Card.Body>
                 </Card>
             </Container>
+        </div>
         </div>
     );
 }

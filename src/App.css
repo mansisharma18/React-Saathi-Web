@@ -341,3 +341,12 @@ img{
   padding-right: calc(1.5em + 0.75rem); /* Adjust padding */
   background-image: none; /* Remove the green checkmark */
 }
+.label-style{
+  font-size: 12px;
+}
+.edit-btn-color{
+  color:rgb(130, 121, 121)
+}
+.delete-btn-color{
+  color:rgb(188, 72, 72)
+}
