@@ -198,7 +198,7 @@ const TopBar = () => {
                    </div>
                  </li>
 
-                 <li className="nav-item" style={{ marginRight: "20px" }}>
+                 {/* <li className="nav-item" style={{ marginRight: "20px" }}>
   <div>
     <button
       className="btn btn-outline-light"
@@ -208,7 +208,7 @@ const TopBar = () => {
       Logout
     </button>
   </div>
-</li>
+</li> */}
 
 
 

@@ -139,7 +139,8 @@ body {
 
 /* Active link styling */
 .navbar-nav .nav-link.active {
-  background-color: #009efb; /* Active link background */
+  background-color: #cfe2ff; /* Active link background */
+
   color: #ffffff; /* Active link text color */
   border-left: 4px solid #009efb;
 }

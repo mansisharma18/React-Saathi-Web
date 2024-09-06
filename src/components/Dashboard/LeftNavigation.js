@@ -8,16 +8,29 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PeopleIcon from '@mui/icons-material/People';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import { useNavigate } from "react-router-dom";
+import LogoutIcon from '@mui/icons-material/Logout';
+
 
 
 
 
 const LeftNavigation = () => {
 
+  const navigate = useNavigate();
   const location = useLocation(); 
   
   const user = localStorage.getItem('userType');
   console.log("user",user)
+
+  const handleLogout = () => {
+    // Clear the user session data from localStorage
+    localStorage.removeItem("userType");
+    localStorage.removeItem("userId");
+
+    // Redirect to the login page
+    navigate("/");
+  };
 
  
   return (
@@ -92,6 +105,8 @@ const LeftNavigation = () => {
                
                 <Nav.Link href="/subscribers"  className="nav-link"><PeopleIcon className="me-2"/> Subscribers</Nav.Link>
                 <Nav.Link href="/saathis"  className="nav-link"><PeopleIcon className="me-2"/> Saathis</Nav.Link>
+                <Nav.Link onClick={handleLogout}  className=""><LogoutIcon className="me-2"/>Logout</Nav.Link>
+
               
                
                 {/* <Nav.Link href="/patronDetails"  className="nav-link"><ManageAccountsIcon className="me-2"/>Subscriber Registration</Nav.Link> */}
@@ -148,7 +163,7 @@ const LeftNavigation = () => {
 
           <Nav.Link href="/services"  className="nav-link"><ManageAccountsIcon className="me-2"/>Services</Nav.Link>
 
-          <Nav.Link href="/saathiDetails"  className="nav-link"><ManageAccountsIcon className="me-2"/>Saathi Details</Nav.Link>
+          <Nav.Link onClick={handleLogout}  className=""><LogoutIcon className="me-2"/>Logout</Nav.Link>
 
 
 

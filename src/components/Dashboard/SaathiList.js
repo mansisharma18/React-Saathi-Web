@@ -21,7 +21,11 @@ const SaathiList = () => {
         axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/saathi`)
         .then(res => {
             console.log(res.data[0].firstName)
-            setList(res.data)
+            const activeUsers = res.data.filter(user => user.status === 1);
+            // Sort by createdDate in descending order (latest first)
+     const sortedUsers = activeUsers.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+     
+     setList(sortedUsers);
         })
         .catch(err => 
             console.log(err)
