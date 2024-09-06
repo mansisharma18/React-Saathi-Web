@@ -360,3 +360,10 @@ img{
   color: #444 !important
   
 }
+
+.logout{
+  padding: '6px 12px';
+  border-radius: '4px'; 
+  cursor: 'pointer' ;
+
+}

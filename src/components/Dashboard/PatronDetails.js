@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Alert from 'react-bootstrap/Alert';
 
 
 const PatronDetails = () => {
@@ -86,7 +87,7 @@ const PatronDetails = () => {
       .then((response) => {
         console.log("Response:", response.data); 
         if (response.data) {
-          setAlert('User created successfully!!');
+          setAlert('Patron created successfully!!');
         } 
       //   else if (response.data === 0) {
       //     setAlert('Company not created. Please check all fields and try again.');
@@ -333,6 +334,12 @@ const PatronDetails = () => {
   </Button>
 </div>
 
+
+{alert && (
+                <Alert variant="success" className="h6 mx-3 mt-3 w-50" >
+                  {alert}
+                </Alert>
+              )}
     </Form>
       </Card.Body>
     </Card>

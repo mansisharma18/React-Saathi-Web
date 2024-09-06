@@ -198,17 +198,17 @@ const TopBar = () => {
                    </div>
                  </li>
 
-                 {/* <li className="nav-item " style={{ marginRight: "20px" }}>
-                 
-                 <div>
-                    
-              <button onClick={handleLogout}>Logout</button>
-
-
-                 
-
-                   </div>
-                 </li> */}
+                 <li className="nav-item" style={{ marginRight: "20px" }}>
+  <div>
+    <button
+      className="btn btn-outline-light"
+      onClick={handleLogout}
+      
+    >
+      Logout
+    </button>
+  </div>
+</li>
 
 
 
