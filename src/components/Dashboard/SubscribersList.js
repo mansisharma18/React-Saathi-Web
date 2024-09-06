@@ -32,6 +32,34 @@ const SubscribersList = () => {
         };
         fetchData();
       }, []);
+
+      const handleDelete = async (id) => {
+
+        const confirmation = window.confirm('Are you sure you want to delete this user? This action cannot be undone.');
+    
+        if (confirmation) {
+       
+    
+        try {
+          const response = await axios.put(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${id}`,{
+
+            "status":0
+            
+           })
+    
+          if (response.data) {
+            // Filter the list locally after deleting
+            const updatedList = list.filter(user => user.subscriberID !== id);
+            setList(updatedList);
+          } else {
+            console.error('An error occurred. Please contact the development team.');
+          }
+        } catch (error) {
+          console.error('Error deleting user:', error);
+        }
+      }
+      };
+    
   return (
     <div>
            <div>
@@ -82,7 +110,7 @@ const SubscribersList = () => {
                         <span>
                           <i
                             className="bi bi-trash3-fill delete-btn-color"
-                            // onClick={() => handleDelete(item.adminUserID)}
+                            onClick={() => handleDelete(item.subscriberID)}
                             style={{ cursor: 'pointer' }}
                           ></i>
                         </span>
