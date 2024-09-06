@@ -55,6 +55,31 @@ body {
   
 }
 
+@media (min-width: 989px) and (max-width: 1189px) {
+  .navbar-nav .nav-link {
+    padding: 10px 20px;  /* Adjust padding */
+    font-size: 9px!important;    
+    font-weight: 500;    /* Adjust font weight */
+    text-align: left;
+    padding-left: 0 !important;
+    /* color: #ffffff;    */
+    margin: 5px 0;       /* Margin between links */
+    /* border-radius: 4px;  */
+     /* Rounded corners */
+    /* transition: background-color 0.3s ease;  */
+     /* Smooth hover effect */
+  }
+  .accordion-button{
+    font-size: 9px!important;
+    text-align: left !important;
+    padding-left: 3px !important;
+    font-family: "Raleway", sans-serif;
+    color: #444 !important
+    
+  }
+ 
+}
+
 @media (max-width: 992px) {
   .leftbar {
    
@@ -361,9 +386,24 @@ img{
   
 }
 
+@media (min-width: 989px) and (max-width: 1189px) {
+  
+  .accordion-button{
+    font-size: 9px!important;
+    text-align: left !important;
+    padding-left: 3px !important;
+    font-family: "Raleway", sans-serif;
+    color: #444 !important
+    
+  }
+ 
+}
+
+
 .logout{
   padding: '6px 12px';
   border-radius: '4px'; 
   cursor: 'pointer' ;
+  font-size: 12px;
 
 }
