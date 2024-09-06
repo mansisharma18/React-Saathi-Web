@@ -111,9 +111,10 @@ const UpdateSubscriber = () => {
                     <Card.Body>
                         <div className="d-flex justify-content-center">
                             <div className="mt-2">
-                                {/* <h4>Update User</h4> */}
+                                <h4>Update Subscriber</h4>
                             </div>
                         </div>
+                        <hr/>
                         <div>
                             {/* Consolidated Form */}
                             <Form onSubmit={handleSubmit}>

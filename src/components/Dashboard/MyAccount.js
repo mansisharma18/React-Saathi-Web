@@ -67,15 +67,15 @@ const MyAccount = () => {
           <Card.Body>
             <div className="d-flex justify-content-center">
               <div className="mt-2">
-                <h3>Users List</h3>
+                <h4>Users List</h4>
                 
               </div>
             </div>
             <hr />
             <div>
-              <table className="table table-striped">
+              <table className="table table-striped table-font-size">
                 <thead>
-                  <tr>
+                  <tr  class="table-info">
                     <th scope="col">S.No</th>
                     <th scope="col">User Type</th>
                     <th scope="col">First Name</th>

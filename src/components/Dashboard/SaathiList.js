@@ -40,7 +40,7 @@ const SaathiList = () => {
 <Card.Body>
 <div className="d-flex justify-content-center">
   <div className="mt-2">
-      <h3>Saathis List</h3>
+      <h4>Saathis List</h4>
      
   </div>
 
@@ -49,9 +49,9 @@ const SaathiList = () => {
 <hr/>
 
 <div>
-  <table class="table table-striped">
+  <table class="table table-striped table-font-size">
   <thead>
-    <tr>
+    <tr  class="table-info">
       <th scope="col">S.No</th>
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>

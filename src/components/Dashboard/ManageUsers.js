@@ -107,7 +107,7 @@ const ManageUsers = () => {
                     <Card.Body>
                         <div className="d-flex justify-content-center">
                             <div className="mt-2">
-                                <h4>Add New User</h4>
+                                <h4 className="heading-color">Add New User</h4>
                             </div>
                         </div>
                         <hr/>
@@ -116,7 +116,7 @@ const ManageUsers = () => {
                             <Form onSubmit={handleSubmit}>
                                 <Row>
                                     <Col lg={3} className="p-3">
-                                    <Form.Label className="label-style">User Type</Form.Label>
+                                    <Form.Label className="label-style  ">User Type</Form.Label>
                                         <Form.Select
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             aria-label="Select Option"

@@ -30,6 +30,7 @@ const PatronDetails = () => {
     const[alert,setAlert]=useState('')
     const[list,setList]=useState('')
     const[subId,setSubId]=useState('')
+    const[newPatron,setNewPatron]=useState(false)
    
 
     const userId =localStorage.getItem("userId");
@@ -57,6 +58,14 @@ const PatronDetails = () => {
     const handleCancel = () => {
       navigate('/dashboard'); 
   };
+
+  const handlePatron =()=>{
+    setNewPatron(true)
+  }
+  const cancelPatron =()=>{
+    setNewPatron(false)
+  }
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -162,8 +171,8 @@ const PatronDetails = () => {
       </Row>
       <Row>
       <Col className="p-3">
-      <Form.Label className="label-style">Username</Form.Label>
-      <Form.Control placeholder="Username"
+      <Form.Label className="label-style">Email</Form.Label>
+      <Form.Control placeholder="Email"
             style={{ padding: '8px',fontSize:"12px" }}
           value={email} 
             onChange={(event) => setEmail(event.target.value)} 
@@ -182,62 +191,6 @@ const PatronDetails = () => {
         </Col>
       </Row>
 
-
-      <Row>
-      <Col className="p-3">
-      <Form.Label className="label-style">Select Status</Form.Label>
-      <Form.Select
-           style={{ padding: '8px',fontSize:"12px" }}
-          aria-label="Select Option"
-          value={sub} 
-          onChange={(event) => setSub(event.target.value)} 
-          required
-        >
-          {/* <option>Select Subscriber</option> */}
-          <option value="1">Active</option>
-          <option value="2">Inactive</option>
-          
-        </Form.Select>
-        </Col>
-        <Col className="p-3">
-        <Form.Label className="label-style">Relation</Form.Label>
-        <Form.Control placeholder="Relation"
-          style={{ padding: '8px',fontSize:"12px" }}
-          value={relation} 
-            onChange={(event) => setRelation(event.target.value)}
-            required
-          />
-        </Col>
-      </Row>
-
-
-
-      <Row>
-        <Col className="p-3">
-        <Form.Label className="label-style">Address Line 1</Form.Label>
-        <Form.Control
-            as="textarea"
-            placeholder="Address line 1"
-            style={{ padding: '8px',fontSize:"12px" }}
-            rows={3} 
-            value={add1} 
-            onChange={(event) => setAdd1(event.target.value)}
-            required
-          />
-        </Col>
-        <Col className="p-3">
-        <Form.Label className="label-style">Address Line 2</Form.Label>
-        <Form.Control
-            as="textarea"
-            placeholder="Address Line 2"
-            style={{ padding: '8px',fontSize:"12px" }}
-            rows={3} 
-            value={add2} 
-            onChange={(event) => setAdd2(event.target.value)}
-            required
-          />
-        </Col>
-      </Row>
 
       <Row>
       <Col className="p-3">
@@ -273,6 +226,48 @@ const PatronDetails = () => {
   </Row>
         </Col>
         <Col className="p-3">
+        <Form.Label className="label-style">Relation</Form.Label>
+        <Form.Control placeholder="Relation"
+          style={{ padding: '8px',fontSize:"12px" }}
+          value={relation} 
+            onChange={(event) => setRelation(event.target.value)}
+            required
+          />
+        </Col>
+      </Row>
+
+
+
+      <Row>
+        <Col className="p-3">
+        <Form.Label className="label-style">Address Line 1</Form.Label>
+        <Form.Control
+            as="textarea"
+            placeholder="Address line 1"
+            style={{ padding: '8px',fontSize:"12px" }}
+            rows={2} 
+            value={add1} 
+            onChange={(event) => setAdd1(event.target.value)}
+            required
+          />
+        </Col>
+        <Col className="p-3">
+        <Form.Label className="label-style">Address Line 2</Form.Label>
+        <Form.Control
+            as="textarea"
+            placeholder="Address Line 2"
+            style={{ padding: '8px',fontSize:"12px" }}
+            rows={2} 
+            value={add2} 
+            onChange={(event) => setAdd2(event.target.value)}
+            required
+          />
+        </Col>
+      </Row>
+
+      <Row>
+
+      <Col className="p-3">
         <Form.Label className="label-style">City</Form.Label>
         <Form.Control placeholder="City"
           style={{ padding: '8px',fontSize:"12px" }}
@@ -280,9 +275,6 @@ const PatronDetails = () => {
             onChange={(event) => setCity(event.target.value)}
             required/>
         </Col>
-      </Row>
-
-      <Row>
         <Col className="p-3">
         <Form.Label className="label-style">State</Form.Label>
           <Form.Control placeholder="State"
@@ -302,7 +294,193 @@ const PatronDetails = () => {
         </Col>
       </Row>
    
-      
+      {newPatron && (
+        <>
+
+
+<div className="d-flex justify-content-center">
+        <div className="mt-2">
+            <h4> Add Another Patron</h4>
+        </div>
+     </div>
+<hr/>
+      <Row>
+        <Col className="p-3">
+        <Form.Label className="label-style">First Name</Form.Label>
+          <Form.Control placeholder="First name"
+          style={{ padding: '8px',fontSize:"12px" }}
+          value={first} 
+            onChange={(event) => setFirst(event.target.value)}
+            required
+          />
+        </Col>
+        <Col className="p-3">
+        <Form.Label className="label-style">Last Name</Form.Label>
+        <Form.Control placeholder="Last name"
+            style={{ padding: '8px',fontSize:"12px" }} 
+          value={last} 
+            onChange={(event) => setLast(event.target.value)}
+            required/>
+        </Col>
+      </Row>
+      <Row>
+      <Col className="p-3">
+      <Form.Label className="label-style">Email</Form.Label>
+      <Form.Control placeholder="Email"
+            style={{ padding: '8px',fontSize:"12px" }}
+          value={email} 
+            onChange={(event) => setEmail(event.target.value)} 
+            required/>
+        </Col>
+        <Col className="p-3">
+        <Form.Label className="label-style">Date of Birth</Form.Label>
+        <Form.Control
+            type="date"
+            placeholder="D.O.B"
+            style={{ padding: '8px',fontSize:"12px" }}
+            value={dob} 
+            onChange={(event) => setDob(event.target.value)}
+            required
+          />
+        </Col>
+      </Row>
+
+
+      <Row>
+      <Col className="p-3">
+      <Row className="align-items-center">
+    {/* Country Code Select */}
+    <Col xs="auto" lg={2}>
+    <Form.Label className="label-style">Code</Form.Label>
+      <Form.Select
+        style={{ padding: '8px', fontSize: '12px' }}
+        aria-label="Select Country Code"
+        value={countryCode} // Add a state for countryCode
+        onChange={(event) => setCountryCode(event.target.value)} // Set the state for countryCode
+      >
+        {/* Replace the options below with a full list of country codes as needed */}
+        <option >+91</option>
+        <option value="+91">+91 (India)</option>
+        <option value="+44">+44 (UK)</option>
+        {/* Add more options as needed */}
+      </Form.Select>
+    </Col>
+    
+    {/* Phone Number Input */}
+    <Col>
+    <Form.Label className="label-style">Phone No</Form.Label>
+      <Form.Control
+        placeholder="Phone Number"
+        style={{ padding: '8px', fontSize: '12px' }}
+        value={mob} // Use state to manage the phone number input
+        onChange={(event) => setMob(event.target.value)} // Update state on change
+        required
+      />
+    </Col>
+  </Row>
+        </Col>
+        <Col className="p-3">
+        <Form.Label className="label-style">Relation</Form.Label>
+        <Form.Control placeholder="Relation"
+          style={{ padding: '8px',fontSize:"12px" }}
+          value={relation} 
+            onChange={(event) => setRelation(event.target.value)}
+            required
+          />
+        </Col>
+      </Row>
+
+
+
+      <Row>
+        <Col className="p-3">
+        <Form.Label className="label-style">Address Line 1</Form.Label>
+        <Form.Control
+            as="textarea"
+            placeholder="Address line 1"
+            style={{ padding: '8px',fontSize:"12px" }}
+            rows={2} 
+            value={add1} 
+            onChange={(event) => setAdd1(event.target.value)}
+            required
+          />
+        </Col>
+        <Col className="p-3">
+        <Form.Label className="label-style">Address Line 2</Form.Label>
+        <Form.Control
+            as="textarea"
+            placeholder="Address Line 2"
+            style={{ padding: '8px',fontSize:"12px" }}
+            rows={2} 
+            value={add2} 
+            onChange={(event) => setAdd2(event.target.value)}
+            required
+          />
+        </Col>
+      </Row>
+
+    
+      <Row>
+      <Col className="p-3">
+        <Form.Label className="label-style">City</Form.Label>
+        <Form.Control placeholder="City"
+          style={{ padding: '8px',fontSize:"12px" }}
+          value={city} 
+            onChange={(event) => setCity(event.target.value)}
+            required/>
+        </Col>
+
+        <Col className="p-3">
+        <Form.Label className="label-style">State</Form.Label>
+          <Form.Control placeholder="State"
+          style={{ padding: '8px',fontSize:"12px" }}
+          value={state} 
+            onChange={(event) => setState(event.target.value)}
+            required
+          />
+        </Col>
+        <Col className="p-3">
+        <Form.Label className="label-style">Country</Form.Label>
+        <Form.Control placeholder="Country"
+            style={{ padding: '8px',fontSize:"12px" }} 
+          value={country} 
+            onChange={(event) => setCountry(event.target.value)}
+            required/>
+        </Col>
+      </Row>
+   
+        </>
+      )}
+
+<div className="d-flex">
+      <Button
+    variant="primary"
+    onClick={handlePatron}
+    style={{
+      backgroundColor: '#009efb',
+      borderColor: '#009efb',
+      color: 'white',
+      margin: "4px",
+      fontSize: "12px"
+    }}
+  >
+    Add Patron
+  </Button>
+
+  <Button
+    variant="secondary"
+    type="button"
+    onClick={cancelPatron}
+    style={{
+   
+      color: 'white',
+      margin: "4px",
+      fontSize: "12px"
+    }}
+  >
+    Cancel
+  </Button>
+  </div>
            
       <div className="d-flex justify-content-between mt-3">
   <Button

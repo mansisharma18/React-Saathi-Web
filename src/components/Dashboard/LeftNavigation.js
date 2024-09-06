@@ -43,12 +43,56 @@ const LeftNavigation = () => {
               <>
                 <Nav.Link href="/dashboard"  className="nav-link"><HomeIcon  className="me-2"/><span>Home</span></Nav.Link>
                 {/* <Nav.Link href="/list"  className="nav-link"><PeopleIcon className="me-2"/>My Subscribers</Nav.Link> */}
+
+
+                <Accordion flush>
+            <Accordion.Item eventKey="0">
+              <Accordion.Header className="accordion-head">
+              <Nav.Link as="div" className="nav-link">
+                <ManageAccountsIcon className="me-2" />
+                <span>Manage Accounts</span>
+              </Nav.Link>
+              </Accordion.Header>
+              <Accordion.Body>
+              <Nav.Link href="/userRegisteration"  className="nav-link"><ManageAccountsIcon className="me-2"/>User Registration</Nav.Link>
+              <Nav.Link href="/assignSaathi"  className="nav-link"><AdminPanelSettingsIcon className="me-2"/>Assign a Saathi</Nav.Link>
+              <Nav.Link href="/myAccount"  className="nav-link"><AccountCircleIcon className="me-2"/>Manage Users</Nav.Link>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+
+
+
+
+
+
+          <Accordion flush>
+            <Accordion.Item eventKey="0">
+              <Accordion.Header className="accordion-head">
+              <Nav.Link as="div" className="nav-link">
+                <ManageAccountsIcon className="me-2" />
+                <span>Packages & Services</span>
+                </Nav.Link>
+              </Accordion.Header>
+              <Accordion.Body>
+              <Nav.Link href="/createPackage"  className="nav-link"><ManageAccountsIcon className="me-2"/>Create New Package</Nav.Link>
+              <Nav.Link href="/createService"  className="nav-link"><AdminPanelSettingsIcon className="me-2"/>Create New Service</Nav.Link>
+              <Nav.Link href="/packages"  className="nav-link"><AccountCircleIcon className="me-2"/>Packages</Nav.Link>
+              <Nav.Link href="/services"  className="nav-link"><AccountCircleIcon className="me-2"/>Services</Nav.Link>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+
+
+          
+
+
                
-                <Nav.Link href="/userRegisteration"  className="nav-link"><ManageAccountsIcon className="me-2"/>User Registration</Nav.Link>
-                <Nav.Link href="/assignSaathi"  className="nav-link"><AdminPanelSettingsIcon className="me-2"/>Assign a Saathi</Nav.Link>
+               
+               
                 <Nav.Link href="/subscribers"  className="nav-link"><PeopleIcon className="me-2"/> Subscribers</Nav.Link>
                 <Nav.Link href="/saathis"  className="nav-link"><PeopleIcon className="me-2"/> Saathis</Nav.Link>
-                <Nav.Link href="/myAccount"  className="nav-link"><AccountCircleIcon className="me-2"/>Manage Users</Nav.Link>
+              
                
                 {/* <Nav.Link href="/patronDetails"  className="nav-link"><ManageAccountsIcon className="me-2"/>Subscriber Registration</Nav.Link> */}
                 </>
@@ -66,11 +110,15 @@ const LeftNavigation = () => {
             {/* <Nav.Link href="/subscribers"  className="nav-link"><PeopleIcon className="me-2"/> Subscribers</Nav.Link>
             <Nav.Link href="/saathis"  className="nav-link"><PeopleIcon className="me-2"/> Saathis</Nav.Link>
             <Nav.Link href="/myAccount"  className="nav-link"><AccountCircleIcon className="me-2"/>Manage Users</Nav.Link> */}
-           
+
+
+
+
+{/*            
             <Nav.Link href="/subscriberRegisteration"  className="nav-link"><ManageAccountsIcon className="me-2"/>Subscriber Registration</Nav.Link>
             <Nav.Link href="/patronDetails"  className="nav-link"><ManageAccountsIcon className="me-2"/>Patron Registration</Nav.Link>
-            <Nav.Link href="/patronDetails"  className="nav-link"><ManageAccountsIcon className="me-2"/>Services Request</Nav.Link>
-            <Nav.Link href="/list"  className="nav-link"><AccountCircleIcon className="me-2"/>Subscribers</Nav.Link>
+           
+            <Nav.Link href="/list"  className="nav-link"><AccountCircleIcon className="me-2"/>Subscribers</Nav.Link> */}
 
 
 
@@ -78,8 +126,10 @@ const LeftNavigation = () => {
           <Accordion flush>
             <Accordion.Item eventKey="0">
               <Accordion.Header className="accordion-head">
+              <Nav.Link as="div" className="nav-link">
                 <ManageAccountsIcon className="me-2" />
-                <span>Manage</span>
+                <span>Manage Accounts</span>
+                </Nav.Link>
               </Accordion.Header>
               <Accordion.Body>
                 <Nav.Link href="/subscriberRegisteration" className="nav-link">
@@ -88,12 +138,18 @@ const LeftNavigation = () => {
                 <Nav.Link href="/patronDetails" className="nav-link">
                   Patron Registration
                 </Nav.Link>
-                <Nav.Link href="/servicesRequest" className="nav-link">
-                  Services Request
+                <Nav.Link href="/list" className="nav-link">
+                  Manage Users
                 </Nav.Link>
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
+
+
+          <Nav.Link href="/services"  className="nav-link"><ManageAccountsIcon className="me-2"/>Services</Nav.Link>
+
+          <Nav.Link href="/saathiDetails"  className="nav-link"><ManageAccountsIcon className="me-2"/>Saathi Details</Nav.Link>
+
 
 
             

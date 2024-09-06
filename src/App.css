@@ -49,7 +49,7 @@ body {
   .leftbar{
     height:100vh;
     /* background-color: darkslateblue; */
-    width:15%;
+    width:17%;
     
   }
   
@@ -368,13 +368,14 @@ img{
   background-image: none; /* Remove the green checkmark */
 }
 .label-style{
-  font-size: 10px;
+  font-size: 14px;
+  color:rgb(159, 152, 152)
 }
 .edit-btn-color{
   color:rgb(130, 121, 121)
 }
 .delete-btn-color{
-  color:rgb(188, 72, 72)
+  color:rgb(241, 15, 15)
 }
 
 .accordion-button{
@@ -388,12 +389,10 @@ img{
 
 @media (min-width: 989px) and (max-width: 1189px) {
   
-  .accordion-button{
-    font-size: 9px!important;
-    text-align: left !important;
-    padding-left: 3px !important;
-    font-family: "Raleway", sans-serif;
-    color: #444 !important
+  .leftbar{
+    height:100vh;
+    /* background-color: darkslateblue; */
+    width:20% !important;
     
   }
  
@@ -406,4 +405,24 @@ img{
   cursor: 'pointer' ;
   font-size: 12px;
 
+}
+
+h4 {
+  color:#009efb !important;
+  
+}
+.table-info {
+  --bs-table-bg: #c1d6e2!important; /* Custom background color */
+}
+
+.table-font-size{
+  font-size:14px;
+}
+
+.accordion-button::after {
+  content: none !important; /* Removes the default accordion icon */
+}
+
+.accordion-button{
+  padding:0 !important;
 }

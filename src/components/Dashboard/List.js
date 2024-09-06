@@ -43,7 +43,7 @@ const List = () => {
 <Card.Body>
 <div className="d-flex justify-content-center">
   <div className="mt-2">
-      <h3>Subscriber's List</h3>
+      <h4>Subscriber's List</h4>
       
   </div>
 
@@ -51,9 +51,9 @@ const List = () => {
 </div>
 <hr/>
 <div>
-<table class="table table-striped">
+<table class="table table-striped table-font-size">
   <thead>
-    <tr>
+    <tr  class="table-info">
       <th scope="col">S.No</th>
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
@@ -71,7 +71,7 @@ const List = () => {
                         <td>
                         <span className="text-decoration-none me-3">
                           <Link to={`/updateSubscriber/${item.subscriberID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
-                            <i className="bi bi-pencil-fill"></i>
+                            <i className="bi bi-pencil-fill edit-btn-color"></i>
                           </Link>
                         </span>
                         </td>
