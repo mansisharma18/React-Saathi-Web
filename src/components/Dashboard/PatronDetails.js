@@ -226,7 +226,7 @@ const PatronDetails = () => {
   </Row>
         </Col>
         <Col className="p-3">
-        <Form.Label className="label-style">Relation</Form.Label>
+        <Form.Label className="label-style">Relation with Subscriber</Form.Label>
         <Form.Control placeholder="Relation"
           style={{ padding: '8px',fontSize:"12px" }}
           value={relation} 
@@ -380,7 +380,7 @@ const PatronDetails = () => {
   </Row>
         </Col>
         <Col className="p-3">
-        <Form.Label className="label-style">Relation</Form.Label>
+        <Form.Label className="label-style">Relation with Subscriber</Form.Label>
         <Form.Control placeholder="Relation"
           style={{ padding: '8px',fontSize:"12px" }}
           value={relation} 

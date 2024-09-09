@@ -28,6 +28,13 @@ const SubscriberRegisteration = () => {
     const[alert,setAlert]=useState();
     const[list,setList]=useState('')
     const[subId,setSubId]=useState('')
+    const[packages,setPackages]=useState('')
+    const[cardName,setCardName]=useState('')
+    const[cardNo,setCardNo]=useState('')
+    const[cardExpiry,setCardExpiry]=useState('')
+    const[cardCvv,setCardCvv]=useState('')
+    const[comments,setComments]=useState('')
+
    
 
     
@@ -67,6 +74,7 @@ const SubscriberRegisteration = () => {
             setPassword(res.data.password)
             setCountryCode(res.data.countryCode)
             setStatus(res.data.status)
+            setPackages(res.data.packageName)
             
         })
         } catch (error) {
@@ -133,7 +141,7 @@ const SubscriberRegisteration = () => {
                     <Card.Body>
                         <div className="d-flex justify-content-center">
                             <div className="mt-2">
-                                <h4>Register Subscriber</h4>
+                                <h4>Activate Subscriber</h4>
                             </div>
                         </div>
                         <hr/>
@@ -195,23 +203,8 @@ const SubscriberRegisteration = () => {
                                             required
                                         />
                                     </Col>
-                                    <Col className="p-3">
-                                    <Form.Group className="position-relative">
-                                    <Form.Label className="label-style">Date of Birth</Form.Label>
-        <Form.Control
-            type="date"
-            className="date-input-with-label"
-            style={{ paddingLeft: '45px', fontSize: '12px' }}  // Adjust padding to accommodate the label
-            value={dob}
-            onChange={(event) => setDob(event.target.value)}
-        />
-    </Form.Group>
-
-                                        
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col className="p-3">
+                                  
+<Col className="p-3">
                                         <Row className="align-items-center">
                                             {/* Country Code Select */}
                                             <Col xs="auto" lg={2}>
@@ -242,6 +235,26 @@ const SubscriberRegisteration = () => {
                                             </Col>
                                         </Row>
                                     </Col>
+                                </Row>
+                                <Row>
+
+                                <Col className="p-3">
+                                
+                                <Form.Label className="label-style">Package</Form.Label>
+    <Form.Control
+        type="text"
+        className=""
+        style={{ padding: '8px', fontSize: "12px" }}
+        value={packages}
+        placeholder="Package"
+        onChange={(event) => setPackages(event.target.value)}
+    />
+
+
+                                    
+                                </Col>
+
+                                  
                                     <Col className="p-3">
                                     <Form.Label className="label-style">Status</Form.Label>
                                         <Form.Select
@@ -261,22 +274,33 @@ const SubscriberRegisteration = () => {
 
 
                                 <Row>
+
+                                <Col className="p-3">
+                                    <Form.Label className="label-style">Name on the Card</Form.Label>
+                                        <Form.Control
+                                            placeholder="Name on the Card"
+                                            style={{ padding: '8px', fontSize: "12px" }}
+                                            value={cardName}
+                                            onChange={(event) => setCardName(event.target.value)}
+                                        />
+                                    </Col>
                                     <Col className="p-3">
-                                    <Form.Label className="label-style">Credit card Number</Form.Label>
+                                    <Form.Label className="label-style">Credit Card Number</Form.Label>
                                         <Form.Control
                                             placeholder="Credit card Number"
                                             style={{ padding: '8px', fontSize: "12px" }}
-                                            value={""}
-                                            // onChange={(event) => setFirst(event.target.value)}
+                                            value={cardNo}
+                                            onChange={(event) => setCardNo(event.target.value)}
                                         />
                                     </Col>
                                     <Col className="p-3">
                                     <Form.Label className="label-style">Expiry Date</Form.Label>
                                         <Form.Control
+                                        type="date"
                                             placeholder="Expiry Date"
                                             style={{ padding: '8px', fontSize: "12px" }}
-                                            value={""}
-                                            // onChange={(event) => setLast(event.target.value)}
+                                            value={cardExpiry}
+                                            onChange={(event) => setCardExpiry(event.target.value)}
                                         />
                                     </Col>
                                     <Col className="p-3">
@@ -284,8 +308,8 @@ const SubscriberRegisteration = () => {
                                         <Form.Control
                                             placeholder="CVV"
                                             style={{ padding: '8px', fontSize: "12px" }}
-                                            value={""}
-                                            // onChange={(event) => setFirst(event.target.value)}
+                                            value={cardCvv}
+                                            onChange={(event) => setCardCvv(event.target.value)}
                                         />
                                     </Col>
                                 </Row>
@@ -303,6 +327,21 @@ const SubscriberRegisteration = () => {
                                    
                                 </Row>
 
+
+                                <Row>
+        <Col className="p-3">
+        <Form.Label className="label-style">Add Comments</Form.Label>
+        <Form.Control
+            as="textarea"
+            placeholder="Add Comments"
+            style={{ padding: '8px',fontSize:"12px" }}
+            rows={2} 
+            value={comments} 
+            onChange={(event) => setComments(event.target.value)}
+            required
+          />
+        </Col>
+        </Row>
 
 
 {selectedOption== "Saathi" &&

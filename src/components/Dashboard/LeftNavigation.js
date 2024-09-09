@@ -150,7 +150,7 @@ const LeftNavigation = () => {
               </Accordion.Header>
               <Accordion.Body>
                 <Nav.Link href="/dashboard/subscriberRegisteration" className="nav-link">
-                  Subscriber Registration
+                  Subscriber Activation
                 </Nav.Link>
                 <Nav.Link href="/dashboard/patronDetails" className="nav-link">
                   Patron Registration
