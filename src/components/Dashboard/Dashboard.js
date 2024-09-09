@@ -11,6 +11,7 @@ import PatronDetails from './PatronDetails';
 import AssignSaathi from './AssignSaathi';
 import SubscribersList from './SubscribersList';
 import SaathiList from './SaathiList';
+import { Outlet } from 'react-router-dom';
 
 
 const Dashboard = () => {
@@ -23,43 +24,15 @@ const Dashboard = () => {
   const isLoginPage = location.pathname === '/login';
   
   return (
-    <div>
-
-{!isLoginPage && (
-  
-      <div className="d-flex">
+    <div className="d-flex">
       <LeftNavigation />
       <div className="flex-grow-1">
         <TopBar />
-        {/* Add your page content here */}
-        <div className=" content">
-        <Routes>
-      <Route path="/dashboard" element={<DashboardLandingPage/>}/>
-      <Route path="/list" element={<List/>}/>
-      
-      <Route path="/createSaathi" element={<CreateSaathi/>}/>
-      <Route path="/myAccount" element={<MyAccount/>}/>
-      <Route path="/userRegisteration" element={<ManageUsers/>}/>
-      <Route path="/assignSaathi" element={<AssignSaathi/>}/>
-      <Route path="/subscribers" element={<SubscribersList/>}/>
-      <Route path="/saathis" element={<SaathiList/>}/>
-      <Route path="/patronDetails" element={<PatronDetails/>}/>
-
-      </Routes>
+        <div className="content">
+          {/* Outlet will render the nested dashboard routes */}
+          <Outlet />
         </div>
-      
-
-       
-
-        
-
-
       </div>
-    </div>
-      
-      
-      
-)}
     </div>
   )
 }

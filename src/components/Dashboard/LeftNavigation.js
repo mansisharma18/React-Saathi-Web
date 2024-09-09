@@ -27,9 +27,11 @@ const LeftNavigation = () => {
     // Clear the user session data from localStorage
     localStorage.removeItem("userType");
     localStorage.removeItem("userId");
+    
 
-    // Redirect to the login page
-    navigate("/");
+    // Redirect to the login page using window.location to remove items cached by the browser
+    // navigate("/");
+    window.location.href = "/";
   };
 
  
@@ -67,9 +69,9 @@ const LeftNavigation = () => {
               </Nav.Link>
               </Accordion.Header>
               <Accordion.Body>
-              <Nav.Link href="/userRegisteration"  className="nav-link"><ManageAccountsIcon className="me-2"/>User Registration</Nav.Link>
-              <Nav.Link href="/assignSaathi"  className="nav-link"><AdminPanelSettingsIcon className="me-2"/>Assign a Saathi</Nav.Link>
-              <Nav.Link href="/myAccount"  className="nav-link"><AccountCircleIcon className="me-2"/>Manage Users</Nav.Link>
+              <Nav.Link href="/dashboard/userRegisteration"  className="nav-link"><ManageAccountsIcon className="me-2"/>User Registration</Nav.Link>
+              <Nav.Link href="/dashboard/assignSaathi"  className="nav-link"><AdminPanelSettingsIcon className="me-2"/>Assign a Saathi</Nav.Link>
+              <Nav.Link href="/dashboard/myAccount"  className="nav-link"><AccountCircleIcon className="me-2"/>Manage Users</Nav.Link>
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
@@ -88,10 +90,10 @@ const LeftNavigation = () => {
                 </Nav.Link>
               </Accordion.Header>
               <Accordion.Body>
-              <Nav.Link href="/createPackage"  className="nav-link"><ManageAccountsIcon className="me-2"/>Create New Package</Nav.Link>
-              <Nav.Link href="/createService"  className="nav-link"><AdminPanelSettingsIcon className="me-2"/>Create New Service</Nav.Link>
-              <Nav.Link href="/packages"  className="nav-link"><AccountCircleIcon className="me-2"/>Packages</Nav.Link>
-              <Nav.Link href="/services"  className="nav-link"><AccountCircleIcon className="me-2"/>Services</Nav.Link>
+              <Nav.Link href="/dashboard/createPackage"  className="nav-link"><ManageAccountsIcon className="me-2"/>Create New Package</Nav.Link>
+              <Nav.Link href="/dashboard/createService"  className="nav-link"><AdminPanelSettingsIcon className="me-2"/>Create New Service</Nav.Link>
+              <Nav.Link href="/dashboard/packages"  className="nav-link"><AccountCircleIcon className="me-2"/>Packages</Nav.Link>
+              <Nav.Link href="/dashboard/services"  className="nav-link"><AccountCircleIcon className="me-2"/>Services</Nav.Link>
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
@@ -103,8 +105,8 @@ const LeftNavigation = () => {
                
                
                
-                <Nav.Link href="/subscribers"  className="nav-link"><PeopleIcon className="me-2"/> Subscribers</Nav.Link>
-                <Nav.Link href="/saathis"  className="nav-link"><PeopleIcon className="me-2"/> Saathis</Nav.Link>
+                <Nav.Link href="/dashboard/subscribers"  className="nav-link"><PeopleIcon className="me-2"/> Subscribers</Nav.Link>
+                <Nav.Link href="/dashboard/saathis"  className="nav-link"><PeopleIcon className="me-2"/> Saathis</Nav.Link>
                 <Nav.Link onClick={handleLogout}  className=""><LogoutIcon className="me-2"/>Logout</Nav.Link>
 
               
@@ -117,7 +119,7 @@ const LeftNavigation = () => {
               <>
             
 
-              <Nav.Link href="/saathiDashboard"  className="nav-link"><HomeIcon  className="me-2"/><span>Home</span></Nav.Link>
+              <Nav.Link href="/dashboard"  className="nav-link"><HomeIcon  className="me-2"/><span>Home</span></Nav.Link>
             {/* <Nav.Link href="/list"  className="nav-link"><PeopleIcon className="me-2"/>My Subscribers</Nav.Link> */}
            
             {/* <Nav.Link href="/userRegisteration"  className="nav-link"><ManageAccountsIcon className="me-2"/>User Registration</Nav.Link>
@@ -147,13 +149,13 @@ const LeftNavigation = () => {
                 </Nav.Link>
               </Accordion.Header>
               <Accordion.Body>
-                <Nav.Link href="/subscriberRegisteration" className="nav-link">
+                <Nav.Link href="/dashboard/subscriberRegisteration" className="nav-link">
                   Subscriber Registration
                 </Nav.Link>
-                <Nav.Link href="/patronDetails" className="nav-link">
+                <Nav.Link href="/dashboard/patronDetails" className="nav-link">
                   Patron Registration
                 </Nav.Link>
-                <Nav.Link href="/list" className="nav-link">
+                <Nav.Link href="/dashboard/list" className="nav-link">
                   Manage Users
                 </Nav.Link>
               </Accordion.Body>
@@ -161,7 +163,7 @@ const LeftNavigation = () => {
           </Accordion>
 
 
-          <Nav.Link href="/services"  className="nav-link"><ManageAccountsIcon className="me-2"/>Services</Nav.Link>
+          <Nav.Link href="/dashboard/services"  className="nav-link"><ManageAccountsIcon className="me-2"/>Services</Nav.Link>
 
           <Nav.Link onClick={handleLogout}  className=""><LogoutIcon className="me-2"/>Logout</Nav.Link>
 
