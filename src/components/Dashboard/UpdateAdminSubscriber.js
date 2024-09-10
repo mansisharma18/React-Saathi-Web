@@ -104,6 +104,9 @@ const UpdateAdminSubscriber = () => {
           if(err.status==500){
               setAlert("Some error occured. Please try again later")
           }
+          else if(err.status==400){
+            setAlert("Some error occured. Please try again later")
+        }
           else{
           setAlert(err.response.data)
           }

@@ -45,13 +45,13 @@ const ManageUsers = () => {
         firstName: first,
         lastName: last,
         email: email,
-        dob: dob,
+        // dob: dob,
         contactNo: mob,
         countryCode: countryCode,
         briefBio: bio,
         userType: selectedOption,
         password: password,
-        status: 1, // You can adjust this based on your form inputs
+        status: 1,
         createdBy: userId,
         updatedBy: null,
         picture:image
@@ -95,6 +95,10 @@ const ManageUsers = () => {
         .catch((err) => {
             console.log(err);
             if(err.status==500){
+                setAlert("Some error occured. Please try again later")
+            }
+            
+           else if(err.status==400){
                 setAlert("Some error occured. Please try again later")
             }
             else{
