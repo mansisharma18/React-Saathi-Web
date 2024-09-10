@@ -174,19 +174,15 @@ const ManageUsers = () => {
                                         />
                                     </Col>
                                     <Col className="p-3">
-                                    <Form.Group className="position-relative">
-                                    <Form.Label className="label-style">Date of Birth</Form.Label>
-        <Form.Control
-            type="date"
-            className="date-input-with-label"
-            style={{ paddingLeft: '45px', fontSize: '12px' }}  // Adjust padding to accommodate the label
-            value={dob}
-            onChange={(event) => setDob(event.target.value)}
-            required
-        />
-    </Form.Group>
-
-                                        
+                                    <Form.Label className="label-style">Set Password</Form.Label>
+                                        <Form.Control
+                                        type="password"
+                                            placeholder="Password"
+                                            style={{ padding: '8px', fontSize: "12px" }}
+                                            value={password}
+                                            onChange={(event) => setPassword(event.target.value)}
+                                            required
+                                        />
                                     </Col>
                                 </Row>
                                 <Row>
@@ -236,30 +232,9 @@ const ManageUsers = () => {
                                 </Row>
 
                                 <Row>
-                                    <Col className="p-3">
-                                    <Form.Label className="label-style">Set Password</Form.Label>
-                                        <Form.Control
-                                        type="password"
-                                            placeholder="Password"
-                                            style={{ padding: '8px', fontSize: "12px" }}
-                                            value={password}
-                                            onChange={(event) => setPassword(event.target.value)}
-                                            required
-                                        />
-                                    </Col>
-                                    <Col className="p-3">
-                                    <Form.Label className="label-style">Select Status</Form.Label>
-                                        <Form.Select
-                                            style={{ padding: '8px', fontSize: "12px" }}
-                                            aria-label="Select Option"
-                                            value={status}
-                                            onChange={(event) => setStatus(event.target.value)} // Corrected setStatus
-                                        >
-                                            <option value="">Status</option>
-                                            <option value="1">Active</option>
-                                            <option value="2">Inactive</option>
-                                        </Form.Select>
-                                    </Col>
+
+                                   
+                                   
                                 </Row>
 
 

@@ -15,7 +15,7 @@ const MyAccount = () => {
       try {
         const res = await axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users`);
         // Filter users with status 1
-        const activeUsers = res.data.filter(user => user.status === 1);
+        const activeUsers = res.data.filter(user => user.status == 1);
         // Sort by createdDate in descending order (latest first)
         const sortedUsers = activeUsers.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
 
