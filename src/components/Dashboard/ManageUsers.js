@@ -89,11 +89,20 @@ const ManageUsers = () => {
   
           setTimeout(() => {
             setAlert('');
+            navigate('/dashboard')
           }, 5000); // Hide alert after 3 seconds
         })
-        .catch((error) => {
-          console.error('Error creating user:', error.response.data); // Handle errors
-          setAlert(error.response.data);
+        .catch((err) => {
+            console.log(err);
+            if(err.status==500){
+                setAlert("Some error occured. Please try again later")
+            }
+            else{
+            setAlert(err.response.data)
+            }
+            setTimeout(() => {
+                setAlert('');
+              }, 5000); // Hide alert after 3 seconds
         });
     };
     
@@ -246,7 +255,7 @@ const ManageUsers = () => {
                                             value={status}
                                             onChange={(event) => setStatus(event.target.value)} // Corrected setStatus
                                         >
-                                            {/* <option>Status</option> */}
+                                            <option value="">Status</option>
                                             <option value="1">Active</option>
                                             <option value="2">Inactive</option>
                                         </Form.Select>

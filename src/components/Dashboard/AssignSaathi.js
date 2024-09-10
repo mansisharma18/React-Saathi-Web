@@ -29,7 +29,7 @@ const AssignSaathi = () => {
     useEffect(() => {
         const fetchList = async () => {
             try {
-                const res = await axios.get(`https://saathi.etheriumtech.com:444/Saathi/subscribers`);
+                const res = await axios.get(`https://saathi.etheriumtech.com:444/Saathi/subscribers/without-saathi`);
                 console.log(res.data[0].firstName);
                 setSub(res.data);
             } catch (err) {
@@ -41,8 +41,9 @@ const AssignSaathi = () => {
         const fetchData = async () => {
             try {
                 const res = await axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/saathi`);
-                console.log(res.data[0].firstName);
-                setSaathi(res.data);
+                const filteredData = res.data.filter(user => user.status === 1); // Filter users with status 1
+                console.log(filteredData[0]?.firstName); // Optional: log the first user's name (if exists)
+                setSaathi(filteredData); // Set only filtered users in state
             } catch (err) {
                 console.log(err);
             }
@@ -52,9 +53,8 @@ const AssignSaathi = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
-        axios.put(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${selectedSub}`, {
-            saathiID: parseInt(selectedSaathi), // Use the selectedSaathi state
-        })
+        axios.put(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${parseInt(selectedSub)}/assign-saathi?saathiID=${parseInt(selectedSaathi)}`
+        )
         .then((response) => {
           console.log("Response:", response.data); 
           if (response.data) {
@@ -69,10 +69,21 @@ const AssignSaathi = () => {
   
           setTimeout(() => {
             setAlert('');
+            navigate('/dashboard')
+
           }, 5000); // Hide alert after 3 seconds
         })
         .catch((err) => {
             console.log(err);
+            if(err.status==500){
+                setAlert("Some error occured. Please try again later")
+            }
+            else{
+            setAlert(err.response.data)
+            }
+            setTimeout(() => {
+                setAlert('');
+              }, 5000); // Hide alert after 3 seconds
         });
     }
 
@@ -101,7 +112,7 @@ const AssignSaathi = () => {
                                         >
                                             <option value="">Select Subscriber</option>
                                             {sub.length > 0 && sub.map((subscriber) => (
-                                                <option key={subscriber.subscriberID} value={subscriber.subscriberID}>
+                                                <option key={subscriber.subscriberID} value={subscriber.subscriberId}>
                                                     {subscriber.firstName} {subscriber.lastName}
                                                 </option>
                                             ))}

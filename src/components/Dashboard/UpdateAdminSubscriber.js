@@ -96,11 +96,20 @@ const UpdateAdminSubscriber = () => {
     
           setTimeout(() => {
             setAlert('');
+            navigate('/dashboard')
           }, 5000); // Hide alert after 3 seconds
         })
-        .catch((error) => {
-          console.error('Error', error); // Handle errors
-          setAlert(error.response.data);
+        .catch((err) => {
+          console.log(err);
+          if(err.status==500){
+              setAlert("Some error occured. Please try again later")
+          }
+          else{
+          setAlert(err.response.data)
+          }
+          setTimeout(() => {
+              setAlert('');
+            }, 5000); // Hide alert after 3 seconds
         });
     }
 
