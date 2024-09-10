@@ -58,6 +58,7 @@ const List = () => {
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
       <th scope="col">Email</th>
+      <th scope="col">Package</th>
       <th scope="col">Update</th>
     </tr>
   </thead>
@@ -68,9 +69,10 @@ const List = () => {
                         <td>{item.firstName}</td>
                         <td>{item.lastName}</td>
                         <td>{item.email}</td>
+                        <td>{item.packageName}</td>
                         <td>
                         <span className="text-decoration-none me-3">
-                          <Link to={`/updateSubscriber/${item.subscriberID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                          <Link to={`/dashboard/updateSubscriber/${item.subscriberID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
                             <i className="bi bi-pencil-fill edit-btn-color"></i>
                           </Link>
                         </span>

@@ -100,7 +100,7 @@ const MyAccount = () => {
                       <td>{item.contactNo}</td>
                       <td>
                         <span className="text-decoration-none me-3">
-                          <Link to={`/updateAdminUsers/${item.adminUserID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                          <Link to={`/dashboard/updateAdminUsers/${item.adminUserID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
                             <i className="bi bi-pencil-fill edit-btn-color"></i>
                           </Link>
                         </span>

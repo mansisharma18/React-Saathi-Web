@@ -112,7 +112,7 @@ const SubscribersList = () => {
                         <td>Gold</td>
                         <td>
                         <span className="text-decoration-none me-3">
-                          <Link to={`/updateAdminsubscriber/${item.subscriberID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                          <Link to={`/dashboard/updateAdminsubscriber/${item.subscriberID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
                             <i className="bi bi-pencil-fill edit-btn-color"></i>
                           </Link>
                         </span>

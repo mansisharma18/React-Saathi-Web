@@ -117,7 +117,8 @@ const UpdateAdminUsers = () => {
       }, 5000); // Hide alert after 3 seconds
     })
     .catch((error) => {
-      console.error('Error creating ad:', error); // Handle errors
+      console.error('Error', error); // Handle errors
+      setAlert(error.response.data);
     });
 
     

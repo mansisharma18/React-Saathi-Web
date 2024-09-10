@@ -37,7 +37,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}>
           <Route index element={<DashboardLandingPage />} />
           <Route path="list" element={<List />} />
-          <Route path="createPackage" element={<CreateSaathi />} />
+          <Route path="create" element={<CreateSaathi />} />
           <Route path="myAccount" element={<MyAccount />} />
           <Route path="userRegisteration" element={<ManageUsers />} />
           <Route path="assignSaathi" element={<AssignSaathi />} />

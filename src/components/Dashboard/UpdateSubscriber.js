@@ -26,6 +26,14 @@ const UpdateSubscriber = () => {
     const [countryCode, setCountryCode] = useState('');
     const [status, setStatus] = useState('');
     const[alert,setAlert]=useState();
+    const[list,setList]=useState('')
+    const[subId,setSubId]=useState('')
+    const[packages,setPackages]=useState('')
+    const[cardName,setCardName]=useState('')
+    const[cardNo,setCardNo]=useState('')
+    const[cardExpiry,setCardExpiry]=useState('')
+    const[cardCvv,setCardCvv]=useState('')
+    const[comments,setComments]=useState('')
 
     const { id } = useParams();
     const userId =localStorage.getItem("userId");
@@ -98,7 +106,8 @@ const UpdateSubscriber = () => {
           }, 5000); // Hide alert after 3 seconds
         })
         .catch((error) => {
-          console.error('Error creating ad:', error); // Handle errors
+          console.error('Error:', error); // Handle errors
+          setAlert(error.response.data);
         });
     }
 
@@ -118,199 +127,238 @@ const UpdateSubscriber = () => {
                         <div>
                             {/* Consolidated Form */}
                             <Form onSubmit={handleSubmit}>
-                               
-                                <Row>
-                                    <Col className="p-3">
-                                        <Form.Control
-                                            placeholder="First name"
-                                            style={{ padding: '8px', fontSize: "12px" }}
-                                            value={first}
-                                            onChange={(event) => setFirst(event.target.value)}
-                                        />
-                                    </Col>
-                                    <Col className="p-3">
-                                        <Form.Control
-                                            placeholder="Last name"
-                                            style={{ padding: '8px', fontSize: "12px" }}
-                                            value={last}
-                                            onChange={(event) => setLast(event.target.value)}
-                                        />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col className="p-3">
-                                        <Form.Control
-                                            placeholder="Email Address"
-                                            style={{ padding: '8px', fontSize: "12px" }}
-                                            value={email}
-                                            onChange={(event) => setEmail(event.target.value)}
-                                        />
-                                    </Col>
-                                    <Col className="p-3">
-                                    <Form.Group className="position-relative">
-        <Form.Control
+
+
+   
+    <Row>
+        <Col className="p-3">
+        <Form.Label className="label-style">First Name</Form.Label>
+            <Form.Control
+                placeholder="First name"
+                style={{ padding: '8px', fontSize: "12px" }}
+                value={first}
+                onChange={(event) => setFirst(event.target.value)}
+                required
+            />
+        </Col>
+        <Col className="p-3">
+        <Form.Label className="label-style">Last Name</Form.Label>
+            <Form.Control
+                placeholder="Last name"
+                style={{ padding: '8px', fontSize: "12px" }}
+                value={last}
+                onChange={(event) => setLast(event.target.value)}
+                required
+            />
+        </Col>
+    </Row>
+    <Row>
+        <Col className="p-3">
+        <Form.Label className="label-style">Username</Form.Label>
+            <Form.Control
+                placeholder="Username"
+                style={{ padding: '8px', fontSize: "12px" }}
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
+            />
+        </Col>
+      
+<Col className="p-3">
+            <Row className="align-items-center">
+                {/* Country Code Select */}
+                <Col xs="auto" lg={2}>
+                <Form.Label className="label-style">Code</Form.Label>
+                    <Form.Select
+                        style={{ padding: '8px', fontSize: '12px' }}
+                        aria-label="Select Country Code"
+                        value={countryCode}
+                        onChange={(event) => setCountryCode(event.target.value)}
+                    >
+                        <option>+91</option>
+                        <option value="+91">+91 (India)</option>
+                        <option value="+44">+44 (UK)</option>
+                        {/* Add more options as needed */}
+                    </Form.Select>
+                </Col>
+
+                {/* Phone Number Input */}
+                <Col>
+                <Form.Label className="label-style">Phone Number</Form.Label>
+                    <Form.Control
+                        placeholder="Phone Number"
+                        style={{ padding: '8px', fontSize: '12px' }}
+                        value={mob}
+                        onChange={(event) => setMob(event.target.value)}
+                        required
+                    />
+                </Col>
+            </Row>
+        </Col>
+    </Row>
+    <Row>
+
+    <Col className="p-3">
+    
+    <Form.Label className="label-style">Package</Form.Label>
+<Form.Control
+type="text"
+className=""
+style={{ padding: '8px', fontSize: "12px" }}
+value={packages}
+placeholder="Package"
+onChange={(event) => setPackages(event.target.value)}
+/>
+
+
+        
+    </Col>
+
+      
+        <Col className="p-3">
+        <Form.Label className="label-style">Status</Form.Label>
+            <Form.Select
+                style={{ padding: '8px', fontSize: "12px" }}
+                aria-label="Select Option"
+                value={status}
+                onChange={(event) => setStatus(event.target.value)} // Corrected setStatus
+                required
+            >
+                <option value="">Status</option>
+                <option value="1">Active</option>
+                <option value="2">Inactive</option>
+            </Form.Select>
+        </Col>
+    </Row>
+
+
+
+    <Row>
+
+    <Col className="p-3">
+        <Form.Label className="label-style">Name on the Card</Form.Label>
+            <Form.Control
+                placeholder="Name on the Card"
+                style={{ padding: '8px', fontSize: "12px" }}
+                value={cardName}
+                onChange={(event) => setCardName(event.target.value)}
+            />
+        </Col>
+        <Col className="p-3">
+        <Form.Label className="label-style">Credit Card Number</Form.Label>
+            <Form.Control
+                placeholder="Credit card Number"
+                style={{ padding: '8px', fontSize: "12px" }}
+                value={cardNo}
+                onChange={(event) => setCardNo(event.target.value)}
+            />
+        </Col>
+        <Col className="p-3">
+        <Form.Label className="label-style">Expiry Date</Form.Label>
+            <Form.Control
             type="date"
-            className="date-input-with-label"
-            style={{ paddingLeft: '45px', fontSize: '12px' }}  // Adjust padding to accommodate the label
-            value={dob}
-            onChange={(event) => setDob(event.target.value)}
-        />
-    </Form.Group>
+                placeholder="Expiry Date"
+                style={{ padding: '8px', fontSize: "12px" }}
+                value={cardExpiry}
+                onChange={(event) => setCardExpiry(event.target.value)}
+            />
+        </Col>
+        <Col className="p-3">
+        <Form.Label className="label-style">CVV</Form.Label>
+            <Form.Control
+                placeholder="CVV"
+                style={{ padding: '8px', fontSize: "12px" }}
+                value={cardCvv}
+                onChange={(event) => setCardCvv(event.target.value)}
+            />
+        </Col>
+    </Row>
 
-                                        
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col className="p-3">
-                                        <Row className="align-items-center">
-                                            {/* Country Code Select */}
-                                            <Col xs="auto" lg={2}>
-                                                <Form.Select
-                                                    style={{ padding: '8px', fontSize: '12px' }}
-                                                    aria-label="Select Country Code"
-                                                    value={countryCode}
-                                                    onChange={(event) => setCountryCode(event.target.value)}
-                                                >
-                                                    <option>+91</option>
-                                                    <option value="+91">+91 (India)</option>
-                                                    <option value="+44">+44 (UK)</option>
-                                                    {/* Add more options as needed */}
-                                                </Form.Select>
-                                            </Col>
-
-                                            {/* Phone Number Input */}
-                                            <Col>
-                                                <Form.Control
-                                                    placeholder="Phone Number"
-                                                    style={{ padding: '8px', fontSize: '12px' }}
-                                                    value={mob}
-                                                    onChange={(event) => setMob(event.target.value)}
-                                                />
-                                            </Col>
-                                        </Row>
-                                    </Col>
-                                    <Col className="p-3">
-                                        <Form.Control
-                                            type="file"
-                                            accept="image/*"
-                                            placeholder="Select Image"
-                                            style={{ padding: '8px', fontSize: "12px" }}
-                                            value={image}
-                                            onChange={(event) => setImage(event.target.value)}
-                                        />
-                                    </Col>
-                                </Row>
+    <Row>
+        {/* <Col className="p-3">
+            <Form.Control
+            type="password"
+                placeholder="Password"
+                style={{ padding: '8px', fontSize: "12px" }}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+            />
+        </Col> */}
+       
+    </Row>
 
 
-
-                                <Row>
-                                    <Col className="p-3">
-                                        <Form.Control
-                                            placeholder="Credit card Number"
-                                            style={{ padding: '8px', fontSize: "12px" }}
-                                            value={""}
-                                            // onChange={(event) => setFirst(event.target.value)}
-                                        />
-                                    </Col>
-                                    <Col className="p-3">
-                                        <Form.Control
-                                            placeholder="Expiry Date"
-                                            style={{ padding: '8px', fontSize: "12px" }}
-                                            value={""}
-                                            // onChange={(event) => setLast(event.target.value)}
-                                        />
-                                    </Col>
-                                    <Col className="p-3">
-                                        <Form.Control
-                                            placeholder="CVV"
-                                            style={{ padding: '8px', fontSize: "12px" }}
-                                            value={""}
-                                            // onChange={(event) => setFirst(event.target.value)}
-                                        />
-                                    </Col>
-                                </Row>
-
-                                <Row>
-                                    {/* <Col className="p-3">
-                                        <Form.Control
-                                        type="password"
-                                            placeholder="Password"
-                                            style={{ padding: '8px', fontSize: "12px" }}
-                                            value={password}
-                                            onChange={(event) => setPassword(event.target.value)}
-                                        />
-                                    </Col> */}
-                                    <Col className="p-3" md={6}>
-                                        <Form.Select
-                                            style={{ padding: '8px', fontSize: "12px" }}
-                                            aria-label="Select Option"
-                                            value={status}
-                                            onChange={(event) => setStatus(event.target.value)} // Corrected setStatus
-                                        >
-                                            <option>Status</option>
-                                            <option value="1">Active</option>
-                                            <option value="2">Inactive</option>
-                                        </Form.Select>
-                                    </Col>
-                                </Row>
-
+    <Row>
+<Col className="p-3">
+<Form.Label className="label-style">Add Comments</Form.Label>
+<Form.Control
+as="textarea"
+placeholder="Add Comments"
+style={{ padding: '8px',fontSize:"12px" }}
+rows={2} 
+value={comments} 
+onChange={(event) => setComments(event.target.value)}
+required
+/>
+</Col>
+</Row>
 
 
 {selectedOption== "Saathi" &&
 (
-    <Row>
-    <Col className="p-3">
-        <Form.Control
-            as="textarea"
-            placeholder="Brief Bio"
-            style={{ padding: '8px', fontSize: "12px" }}
-            rows={3}
-            value={bio}
-            onChange={(event) => setBio(event.target.value)}
-        />
-    </Col>
+<Row>
+<Col className="p-3">
+<Form.Control
+as="textarea"
+placeholder="Brief Bio"
+style={{ padding: '8px', fontSize: "12px" }}
+rows={3}
+value={bio}
+onChange={(event) => setBio(event.target.value)}
+/>
+</Col>
 </Row>
 
 )}
-                             
+ 
 
-                             <div className="d-flex justify-content-between mt-3">
-  <Button
-    variant="primary"
-    type="submit"
-    style={{
-      backgroundColor: '#009efb',
-      borderColor: '#009efb',
-      color: 'white',
-      margin: "4px",
-      fontSize: "12px"
-    }}
-  >
-    Update
-  </Button>
+ <div className="d-flex justify-content-between mt-3">
+<Button
+variant="primary"
+type="submit"
+style={{
+backgroundColor: '#009efb',
+borderColor: '#009efb',
+color: 'white',
+margin: "4px",
+fontSize: "12px"
+}}
+>
+Update
+</Button>
 
-  <Button
-    variant="secondary"
-    type="button"
-    onClick={handleCancel}
-    style={{
-    
-      color: 'white',
-      margin: "4px",
-      fontSize: "12px"
-    }}
-  >
-    Cancel
-  </Button>
+<Button
+variant="secondary"
+type="button"
+onClick={handleCancel}
+style={{
+
+color: 'white',
+margin: "4px",
+fontSize: "12px"
+}}
+>
+Cancel
+</Button>
 </div>
 
 
-                                {alert && (
-                <Alert variant="success" className="h6 mx-3 w-50">
-                  {alert}
-                </Alert>
-              )}
-                            </Form>
+    {alert && (
+<Alert variant="success" className="h6 mx-3 w-50">
+{alert}
+</Alert>
+)}
+</Form>
                         </div>
                     </Card.Body>
                 </Card>
