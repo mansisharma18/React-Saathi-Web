@@ -14,23 +14,41 @@ const PatronDetails = () => {
 
   
     const[first,setFirst]=useState('')
+    const[first1,setFirst1]=useState('')
     const[last,setLast]=useState('')
+    const[last1,setLast1]=useState('')
     const[middle,setMiddle]=useState('')
     const[mob,setMob]=useState('')
+    const[mob1,setMob1]=useState('')
     const[email,setEmail]=useState('')
+    const[email1,setEmail1]=useState('')
     const[dob,setDob]=useState('')
+    const[dob1,setDob1]=useState('')
     const[add1,setAdd1]=useState('')
+    const[add1Second,setAdd1Second]=useState('')
     const[add2,setAdd2]=useState('')
+    const[add2Second,setAdd2Second]=useState('')
     const[city,setCity]=useState('')
+    const[city1,setCity1]=useState('')
     const[state,setState]=useState('')
+    const[state1,setState1]=useState('')
     const[country,setCountry]=useState('')
+    const[country1,setCountry1]=useState('')
     const[relation,setRelation]=useState('')
+    const[relation1,setRelation1]=useState('')
     const[countryCode,setCountryCode]=useState('')
+    const[countryCode1,setCountryCode1]=useState('')
     const[sub,setSub]=useState('')
     const[alert,setAlert]=useState('')
     const[list,setList]=useState('')
     const[subId,setSubId]=useState('')
     const[newPatron,setNewPatron]=useState(false)
+    const[comments,setComments]=useState('')
+    const[comments1,setComments1]=useState('')
+    const[displayAddButton,setDisplayAddButton]=useState(true)
+    const[displayCancelButton,setDisplayCancelButton]=useState(true)
+    
+
    
 
     const userId =localStorage.getItem("userId");
@@ -61,9 +79,12 @@ const PatronDetails = () => {
 
   const handlePatron =()=>{
     setNewPatron(true)
+    setDisplayAddButton(false)
+
   }
   const cancelPatron =()=>{
     setNewPatron(false)
+    setDisplayCancelButton(false)
   }
 
 
@@ -71,27 +92,48 @@ const PatronDetails = () => {
     event.preventDefault();
    
   
-    // Send a POST request using Axios with the form data
-    axios
-      .post(`https://saathi.etheriumtech.com:444/Saathi/patrons`, {
-
-       "firstName": first,
-       "lastName": last,
-        "email": email,
-        "dob": dob,
-        "contactNo": mob,
-        "countryCode": countryCode,
-        "status": 1, // You can adjust this based on your form inputs
-        "createdBy": parseInt(userId),
-        "updatedBy": null,
-        "address1":add1,
-        "address2":add2,
-        "city":city,
-        "state":state,
-        "country":country,
-        "relation":relation,
-        "subscriberID":parseInt(subId)
+    const payload = [
+      {
+        firstName: first,
+        lastName: last,
+        email: email,
+        dob: dob,
+        contactNo: mob,
+        countryCode: countryCode,
+        createdBy: parseInt(userId),
+        updatedBy: null,
+        address1: add1,
+        address2: add2,
+        city: city,
+        state: state,
+        country: country,
+        relation: relation,
+        subscriberID: parseInt(subId),
       }
+    ];
+
+    // Only add the second patron's data if the fields are filled out
+    if (first1 && last1 && email1 && mob1 && countryCode1) {
+      payload.push({
+        firstName: first1,
+        lastName: last1,
+        email: email1,
+        dob: dob1,
+        contactNo: mob1,
+        countryCode: countryCode1,
+        createdBy: parseInt(userId),
+        updatedBy: null,
+        address1: add1Second,
+        address2: add2Second,
+        city: city1,
+        state: state1,
+        country: country1,
+        relation: relation1,
+        subscriberID: parseInt(subId),
+      });
+    }
+    axios
+      .post(`https://saathi.etheriumtech.com:444/Saathi/patrons`,payload
       )
       .then((response) => {
         console.log("Response:", response.data); 
@@ -107,11 +149,23 @@ const PatronDetails = () => {
 
         setTimeout(() => {
           setAlert('');
+          navigate('/dashboard')
         }, 5000); // Hide alert after 3 seconds
       })
-      .catch((error) => {
-        console.error('Error creating user:', error); // Handle errors
-        setAlert('An error occurred. Please try again later.');
+      .catch((err) => {
+        console.log(err);
+        if(err.status==500){
+            setAlert("Some error occured. Please try again later")
+        }
+        else if(err.status==400){
+          setAlert("Some error occured. Please try again later")
+      }
+        else{
+        setAlert(err.response.data)
+        }
+        setTimeout(() => {
+            setAlert('');
+          }, 5000); // Hide alert after 3 seconds
       });
   };
   
@@ -153,7 +207,7 @@ const PatronDetails = () => {
       <Row>
         <Col className="p-3">
         <Form.Label className="label-style">First Name</Form.Label>
-          <Form.Control placeholder="First name"
+          <Form.Control placeholder=" Patron's First name"
           style={{ padding: '8px',fontSize:"12px" }}
           value={first} 
             onChange={(event) => setFirst(event.target.value)}
@@ -162,7 +216,7 @@ const PatronDetails = () => {
         </Col>
         <Col className="p-3">
         <Form.Label className="label-style">Last Name</Form.Label>
-        <Form.Control placeholder="Last name"
+        <Form.Control placeholder="  Patron's Last name"
             style={{ padding: '8px',fontSize:"12px" }} 
           value={last} 
             onChange={(event) => setLast(event.target.value)}
@@ -172,7 +226,7 @@ const PatronDetails = () => {
       <Row>
       <Col className="p-3">
       <Form.Label className="label-style">Email</Form.Label>
-      <Form.Control placeholder="Email"
+      <Form.Control placeholder="Patron's Email"
             style={{ padding: '8px',fontSize:"12px" }}
           value={email} 
             onChange={(event) => setEmail(event.target.value)} 
@@ -216,7 +270,7 @@ const PatronDetails = () => {
     <Col>
     <Form.Label className="label-style">Phone No</Form.Label>
       <Form.Control
-        placeholder="Phone Number"
+        placeholder="Patron's Phone Number"
         style={{ padding: '8px', fontSize: '12px' }}
         value={mob} // Use state to manage the phone number input
         onChange={(event) => setMob(event.target.value)} // Update state on change
@@ -227,7 +281,7 @@ const PatronDetails = () => {
         </Col>
         <Col className="p-3">
         <Form.Label className="label-style">Relation with Subscriber</Form.Label>
-        <Form.Control placeholder="Relation"
+        <Form.Control placeholder="Patron's Relation with Subscriber"
           style={{ padding: '8px',fontSize:"12px" }}
           value={relation} 
             onChange={(event) => setRelation(event.target.value)}
@@ -293,6 +347,21 @@ const PatronDetails = () => {
             required/>
         </Col>
       </Row>
+
+      <Row>
+        <Col className="p-3">
+        <Form.Label className="label-style">Add Comments</Form.Label>
+        <Form.Control
+            as="textarea"
+            placeholder="Add Comments"
+            style={{ padding: '8px',fontSize:"12px" }}
+            rows={2} 
+            value={comments} 
+            onChange={(event) => setComments(event.target.value)}
+            required
+          />
+        </Col>
+        </Row>
    
       {newPatron && (
         <>
@@ -307,29 +376,29 @@ const PatronDetails = () => {
       <Row>
         <Col className="p-3">
         <Form.Label className="label-style">First Name</Form.Label>
-          <Form.Control placeholder="First name"
+          <Form.Control placeholder="Patron's First name"
           style={{ padding: '8px',fontSize:"12px" }}
-          value={first} 
-            onChange={(event) => setFirst(event.target.value)}
+          value={first1} 
+            onChange={(event) => setFirst1(event.target.value)}
             required
           />
         </Col>
         <Col className="p-3">
         <Form.Label className="label-style">Last Name</Form.Label>
-        <Form.Control placeholder="Last name"
+        <Form.Control placeholder="Patron's Last name"
             style={{ padding: '8px',fontSize:"12px" }} 
-          value={last} 
-            onChange={(event) => setLast(event.target.value)}
+          value={last1} 
+            onChange={(event) => setLast1(event.target.value)}
             required/>
         </Col>
       </Row>
       <Row>
       <Col className="p-3">
       <Form.Label className="label-style">Email</Form.Label>
-      <Form.Control placeholder="Email"
+      <Form.Control placeholder="Patron's Email"
             style={{ padding: '8px',fontSize:"12px" }}
-          value={email} 
-            onChange={(event) => setEmail(event.target.value)} 
+          value={email1} 
+            onChange={(event) => setEmail1(event.target.value)} 
             required/>
         </Col>
         <Col className="p-3">
@@ -338,8 +407,8 @@ const PatronDetails = () => {
             type="date"
             placeholder="D.O.B"
             style={{ padding: '8px',fontSize:"12px" }}
-            value={dob} 
-            onChange={(event) => setDob(event.target.value)}
+            value={dob1} 
+            onChange={(event) => setDob1(event.target.value)}
             required
           />
         </Col>
@@ -355,8 +424,8 @@ const PatronDetails = () => {
       <Form.Select
         style={{ padding: '8px', fontSize: '12px' }}
         aria-label="Select Country Code"
-        value={countryCode} // Add a state for countryCode
-        onChange={(event) => setCountryCode(event.target.value)} // Set the state for countryCode
+        value={countryCode1} // Add a state for countryCode
+        onChange={(event) => setCountryCode1(event.target.value)} // Set the state for countryCode
       >
         {/* Replace the options below with a full list of country codes as needed */}
         <option >+91</option>
@@ -370,10 +439,10 @@ const PatronDetails = () => {
     <Col>
     <Form.Label className="label-style">Phone No</Form.Label>
       <Form.Control
-        placeholder="Phone Number"
+        placeholder="Patron'sPhone Number"
         style={{ padding: '8px', fontSize: '12px' }}
-        value={mob} // Use state to manage the phone number input
-        onChange={(event) => setMob(event.target.value)} // Update state on change
+        value={mob1} 
+        onChange={(event) => setMob1(event.target.value)} 
         required
       />
     </Col>
@@ -381,10 +450,10 @@ const PatronDetails = () => {
         </Col>
         <Col className="p-3">
         <Form.Label className="label-style">Relation with Subscriber</Form.Label>
-        <Form.Control placeholder="Relation"
+        <Form.Control placeholder="Patron's Relation with Subscriber"
           style={{ padding: '8px',fontSize:"12px" }}
-          value={relation} 
-            onChange={(event) => setRelation(event.target.value)}
+          value={relation1} 
+            onChange={(event) => setRelation1(event.target.value)}
             required
           />
         </Col>
@@ -400,8 +469,8 @@ const PatronDetails = () => {
             placeholder="Address line 1"
             style={{ padding: '8px',fontSize:"12px" }}
             rows={2} 
-            value={add1} 
-            onChange={(event) => setAdd1(event.target.value)}
+            value={add1Second} 
+            onChange={(event) => setAdd1Second(event.target.value)}
             required
           />
         </Col>
@@ -412,8 +481,8 @@ const PatronDetails = () => {
             placeholder="Address Line 2"
             style={{ padding: '8px',fontSize:"12px" }}
             rows={2} 
-            value={add2} 
-            onChange={(event) => setAdd2(event.target.value)}
+            value={add2Second} 
+            onChange={(event) => setAdd2Second(event.target.value)}
             required
           />
         </Col>
@@ -425,8 +494,8 @@ const PatronDetails = () => {
         <Form.Label className="label-style">City</Form.Label>
         <Form.Control placeholder="City"
           style={{ padding: '8px',fontSize:"12px" }}
-          value={city} 
-            onChange={(event) => setCity(event.target.value)}
+          value={city1} 
+            onChange={(event) => setCity1(event.target.value)}
             required/>
         </Col>
 
@@ -434,8 +503,8 @@ const PatronDetails = () => {
         <Form.Label className="label-style">State</Form.Label>
           <Form.Control placeholder="State"
           style={{ padding: '8px',fontSize:"12px" }}
-          value={state} 
-            onChange={(event) => setState(event.target.value)}
+          value={state1} 
+            onChange={(event) => setState1(event.target.value)}
             required
           />
         </Col>
@@ -443,17 +512,35 @@ const PatronDetails = () => {
         <Form.Label className="label-style">Country</Form.Label>
         <Form.Control placeholder="Country"
             style={{ padding: '8px',fontSize:"12px" }} 
-          value={country} 
-            onChange={(event) => setCountry(event.target.value)}
+          value={country1} 
+            onChange={(event) => setCountry1(event.target.value)}
             required/>
         </Col>
       </Row>
+
+      <Row>
+        <Col className="p-3">
+        <Form.Label className="label-style">Add Comments</Form.Label>
+        <Form.Control
+            as="textarea"
+            placeholder="Add Comments"
+            style={{ padding: '8px',fontSize:"12px" }}
+            rows={2} 
+            value={comments1} 
+            onChange={(event) => setComments1(event.target.value)}
+            required
+          />
+        </Col>
+        </Row>
    
         </>
       )}
 
 <div className="d-flex">
-      <Button
+
+  {displayAddButton && (
+    
+    <Button
     variant="primary"
     onClick={handlePatron}
     style={{
@@ -467,19 +554,26 @@ const PatronDetails = () => {
     Add Patron
   </Button>
 
-  <Button
-    variant="secondary"
-    type="button"
-    onClick={cancelPatron}
-    style={{
-   
-      color: 'white',
-      margin: "4px",
-      fontSize: "12px"
-    }}
-  >
-    Cancel
-  </Button>
+  )}
+
+  {displayCancelButton && (
+     <Button
+     variant="secondary"
+     type="button"
+     onClick={cancelPatron}
+     style={{
+    
+       color: 'white',
+       margin: "4px",
+       fontSize: "12px"
+     }}
+   >
+     Cancel
+   </Button>
+
+  )}
+
+ 
   </div>
            
       <div className="d-flex justify-content-between mt-3">

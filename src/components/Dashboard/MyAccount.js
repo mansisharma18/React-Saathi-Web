@@ -15,7 +15,7 @@ const MyAccount = () => {
       try {
         const res = await axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users`);
         // Filter users with status 1
-        const activeUsers = res.data.filter(user => user.status === 1);
+        const activeUsers = res.data.filter(user => user.status == 1);
         // Sort by createdDate in descending order (latest first)
         const sortedUsers = activeUsers.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
 
@@ -100,7 +100,7 @@ const MyAccount = () => {
                       <td>{item.contactNo}</td>
                       <td>
                         <span className="text-decoration-none me-3">
-                          <Link to={`/updateAdminUsers/${item.adminUserID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                          <Link to={`/dashboard/updateAdminUsers/${item.adminUserID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
                             <i className="bi bi-pencil-fill edit-btn-color"></i>
                           </Link>
                         </span>

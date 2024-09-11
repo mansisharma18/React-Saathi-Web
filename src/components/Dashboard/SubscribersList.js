@@ -108,11 +108,11 @@ const SubscribersList = () => {
                         <td>{item.lastName}</td>
                         <td>{item.email}</td>
                         <td>{item.contactNo}</td>
-                        <td>..</td>
-                        <td>Gold</td>
+                        <td>{item.saathi.firstName} {item.saathi.lastName}</td>
+                        <td>{item.packageName}</td>
                         <td>
                         <span className="text-decoration-none me-3">
-                          <Link to={`/updateAdminsubscriber/${item.subscriberID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                          <Link to={`/dashboard/updateAdminsubscriber/${item.subscriberID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
                             <i className="bi bi-pencil-fill edit-btn-color"></i>
                           </Link>
                         </span>

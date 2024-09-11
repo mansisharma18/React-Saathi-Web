@@ -25,15 +25,47 @@ const List = () => {
 
       axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers`)
       .then(res => {
-          console.log(res.data[0].firstName)
-          setList(res.data)
-      })
+        // Filter the data where status is 1
+        const filteredData = res.data.filter(subscriber => subscriber.status === 1);
+        
+        console.log(filteredData[0]?.firstName); 
+        setList(filteredData); 
+    })
       .catch(err => 
           console.log(err)
       )
       };
       fetchData();
     }, []);
+
+    const handleDelete = async (id) => {
+
+      const confirmation = window.confirm('Are you sure you want to delete this user? This action cannot be undone.');
+  
+      if (confirmation) {
+     
+  
+      try {
+        const response = await axios.put(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${id}`,{
+
+          "status":0
+          
+         })
+  
+        if (response.data) {
+          // Filter the list locally after deleting
+          const updatedList = list.filter(user => user.subscriberID !== id);
+          setList(updatedList);
+        } else {
+          console.error('An error occurred. Please contact the development team.');
+        }
+      } catch (error) {
+        console.error('Error deleting user:', error);
+      }
+    }
+    };
+
+    
   return (
     <div>
        <div className="d-flex">
@@ -58,7 +90,8 @@ const List = () => {
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
       <th scope="col">Email</th>
-      <th scope="col">Update</th>
+      <th scope="col">Package</th>
+      <th scope="col">Edit/Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -68,11 +101,19 @@ const List = () => {
                         <td>{item.firstName}</td>
                         <td>{item.lastName}</td>
                         <td>{item.email}</td>
+                        <td>{item.packageName}</td>
                         <td>
                         <span className="text-decoration-none me-3">
-                          <Link to={`/updateSubscriber/${item.subscriberID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                          <Link to={`/dashboard/updateSubscriber/${item.subscriberID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
                             <i className="bi bi-pencil-fill edit-btn-color"></i>
                           </Link>
+                        </span>
+                        <span>
+                          <i
+                            className="bi bi-trash3-fill delete-btn-color"
+                            onClick={() => handleDelete(item.subscriberID)}
+                            style={{ cursor: 'pointer' }}
+                          ></i>
                         </span>
                         </td>
                       </tr>
