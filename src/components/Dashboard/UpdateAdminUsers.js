@@ -62,7 +62,7 @@ const UpdateAdminUsers = () => {
   const navigate = useNavigate(); 
 
   const handleCancel = () => {
-      navigate('/dashboard'); 
+      navigate('/dashboard/myAccount'); 
   };
 
   const handleSubmit=(e)=>{
@@ -114,7 +114,7 @@ const UpdateAdminUsers = () => {
 
       setTimeout(() => {
         setAlert('');
-        navigate('/dashboard')
+        navigate('/dashboard/myAccount')
       }, 5000); // Hide alert after 3 seconds
     })
     .catch((err) => {
@@ -281,9 +281,9 @@ const UpdateAdminUsers = () => {
                                             onChange={(event) => setStatus(event.target.value)} // Corrected setStatus
                                             required
                                         >
-                                            {/* <option>Status</option> */}
+                                            <option value="">Status</option>
                                             <option value="1">Active</option>
-                                            <option value="2">Inactive</option>
+                                            <option value="0">Inactive</option>
                                         </Form.Select>
                                     </Col>
                                 </Row>
