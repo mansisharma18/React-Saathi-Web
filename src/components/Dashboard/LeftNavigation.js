@@ -117,6 +117,13 @@ const LeftNavigation = () => {
                         >
                           Services
                         </Nav.Link>
+
+                        <Nav.Link
+                          href="/dashboard/createPackageServices"
+                          className="nav-link"
+                        >
+                          Package Services
+                        </Nav.Link>
                         <Nav.Link
                           href="/dashboard/servicesList"
                           className="nav-link"

@@ -106,7 +106,7 @@ function AllServices() {
                   <th>Description</th>
                   <th>Price INR</th>
                   <th>Price USD</th>
-                  <th>Frequency (Unit)</th>
+                  <th>Frequency </th>
                   <th>Duration (Hours)</th>
                   <th>Business Hours</th>
                   <th>Status</th>

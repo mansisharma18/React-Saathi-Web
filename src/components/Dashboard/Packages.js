@@ -35,7 +35,9 @@ const Packages = () => {
         const response = await axios.get(
           `https://saathi.etheriumtech.com:444/Saathi/alacarteservices`
         );
-        setServices(response.data);
+        const res = response.data;
+        const data = res.filter((item) => item.isAlaCarte == 0);
+        setServices(data);
       } catch (error) {
         console.error("Error fetching services:", error);
       }
@@ -119,6 +121,7 @@ const Packages = () => {
       setAlert("Package created successfully!");
       setTimeout(() => {
         setAlert("");
+        navigate("/dashboard");
       }, 5000); // Hide alert after 5 seconds
     } catch (error) {
       console.error("Error creating package:", error);
@@ -256,8 +259,7 @@ const Packages = () => {
                           margin: "0 auto", // Auto margins to center
                         }}
                       >
-                        {openServices ? "Hide Services" : "Add Service"}
-                     
+                        {openServices ? "Hide Services" : "Show Service"}
                       </Button>
                       <Collapse in={openServices}>
                         <div
