@@ -18,7 +18,7 @@ const SubscriberRegisteration = () => {
   const [dob, setDob] = useState("");
   const [image, setImage] = useState("");
   const [bio, setBio] = useState("");
-  const [selectedOption, setSelectedOption] = useState("Admin");
+  const [selectedOption, setSelectedOption] = useState("");
   const [password, setPassword] = useState("");
   const [countryCode, setCountryCode] = useState("");
   const [status, setStatus] = useState("");
@@ -72,7 +72,8 @@ const SubscriberRegisteration = () => {
             setPassword(res.data.password);
             setCountryCode(res.data.countryCode);
             setStatus(res.data.status);
-            setSelectedPackage(res.data.packageName);
+            setSelectedPackage(res.data.packageID);
+            setAmount(` USD ${res.data.priceUSD} / INR ${res.data.priceINR}`)
           });
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -297,7 +298,7 @@ const SubscriberRegisteration = () => {
                                 // Set the amount to the package's price if the package is found
                                 if (selectedPkg) {
                                     console.log(selectedPkg.priceUSD)
-                                    const  price= `USD ${selectedPkg.priceUSD}  - INR ${selectedPkg.priceINR}`
+                                    const  price= `USD ${selectedPkg.priceUSD}  / INR ${selectedPkg.priceINR}`
                                   setAmount(price);
                                 } else {
                                   setAmount(""); // Reset if no package is found

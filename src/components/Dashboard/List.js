@@ -83,7 +83,7 @@ const List = () => {
 </div>
 <hr/>
 <div>
-<table class="table table-striped table-font-size">
+<table class="table  table-bordered table-striped table-font-size">
   <thead>
     <tr  class="table-info">
       <th scope="col">S.No</th>

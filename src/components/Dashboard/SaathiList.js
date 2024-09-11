@@ -44,7 +44,7 @@ const SaathiList = () => {
 <Card.Body>
 <div className="d-flex justify-content-center">
   <div className="mt-2">
-      <h4>Saathis List</h4>
+      <h4>Saathis- Subscribers Associated</h4>
      
   </div>
 
@@ -53,14 +53,15 @@ const SaathiList = () => {
 <hr/>
 
 <div>
-  <table class="table table-striped table-font-size">
+  <table class="table  table-bordered   table-striped table-font-size">
   <thead>
     <tr  class="table-info">
       <th scope="col">S.No</th>
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">Contact No</th>
+      {/* <th scope="col">Email</th> */}
+      <th scope="col">Subscribers</th>
+      {/* <th scope="col">Contact No</th> */}
     </tr>
   </thead>
   <tbody>
@@ -69,8 +70,9 @@ const SaathiList = () => {
                         <th scope="row">{index + 1}</th>
                         <td>{item.firstName}</td>
                         <td>{item.lastName}</td>
-                        <td>{item.email}</td>
-                        <td>{item.contactNo}</td>
+                        {/* <td>{item.email}</td> */}
+                        <td>..</td>
+                        {/* <td>{item.contactNo}</td> */}
                       </tr>
                     )) : (
                       <tr>

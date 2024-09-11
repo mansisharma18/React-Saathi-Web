@@ -132,7 +132,7 @@ const UpdateSubscriber = () => {
                     <Card.Body>
                         <div className="d-flex justify-content-center">
                             <div className="mt-2">
-                                <h4>Update Subscriber</h4>
+                                <h4>Update Subscriber Details</h4>
                             </div>
                         </div>
                         <hr/>

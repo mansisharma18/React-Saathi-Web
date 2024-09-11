@@ -76,7 +76,7 @@ const MyAccount = () => {
             </div>
             <hr />
             <div>
-              <table className="table table-striped table-font-size">
+              <table className="table table-striped  table-bordered table-font-size">
                 <thead>
                   <tr  class="table-info">
                     <th scope="col">S.No</th>
