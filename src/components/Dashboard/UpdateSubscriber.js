@@ -57,6 +57,8 @@ const UpdateSubscriber = () => {
               setPassword(res.data.password)
               setCountryCode(res.data.countryCode)
               setStatus(res.data.status)
+              setPackages(res.data.packageName)
+              setComments(res.data.comments)
               
           })
           } catch (error) {
@@ -69,7 +71,7 @@ const UpdateSubscriber = () => {
       const navigate = useNavigate(); 
 
       const handleCancel = () => {
-          navigate('/dashboard'); 
+          navigate('/dashboard/list'); 
       };
       const handleSubmit=(e)=>{
         e.preventDefault()
@@ -86,6 +88,7 @@ const UpdateSubscriber = () => {
         "countryCode": countryCode,
         "status":status,
         "updatedBy": parseInt(userId),
+        "comments":comments,
        
       }
       )
@@ -103,7 +106,7 @@ const UpdateSubscriber = () => {
     
           setTimeout(() => {
             setAlert('');
-            navigate('/dashboard')
+            navigate('/dashboard/list')
           }, 5000); // Hide alert after 3 seconds
         })
         .catch((err) => {
@@ -238,7 +241,7 @@ onChange={(event) => setPackages(event.target.value)}
             >
                 <option value="">Status</option>
                 <option value="1">Active</option>
-                <option value="2">Inactive</option>
+                <option value="0">Inactive</option>
             </Form.Select>
         </Col>
     </Row>

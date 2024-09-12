@@ -6,6 +6,8 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
+import Avatar from '@mui/material/Avatar';
+import { imagePath } from '../../ImagePath';
 
 
 const SaathiList = () => {
@@ -21,6 +23,7 @@ const SaathiList = () => {
         axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/saathi`)
         .then(res => {
             console.log(res.data[0].firstName)
+            console.log(res.data[0].picture.split('webapps/')[1])
             const activeUsers = res.data.filter(user => user.status === 1);
             // Sort by createdDate in descending order (latest first)
      const sortedUsers = activeUsers.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
@@ -57,29 +60,43 @@ const SaathiList = () => {
   <thead>
     <tr  class="table-info">
       <th scope="col">S.No</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
+      <th scope="col">Saathi Name</th>
+     
       {/* <th scope="col">Email</th> */}
       <th scope="col">Subscribers</th>
       {/* <th scope="col">Contact No</th> */}
     </tr>
   </thead>
   <tbody>
-                    {list.length > 0 ? list.map((item, index) => (
-                      <tr key={index}>
-                        <th scope="row">{index + 1}</th>
-                        <td>{item.firstName}</td>
-                        <td>{item.lastName}</td>
-                        {/* <td>{item.email}</td> */}
-                        <td>..</td>
-                        {/* <td>{item.contactNo}</td> */}
-                      </tr>
-                    )) : (
-                      <tr>
-                        <td colSpan="4">No data available</td>
-                      </tr>
-                    )}
-                  </tbody>
+  {list.length > 0 ? list.map((item, index) => {
+    // Extract the image path or provide a fallback if the picture is null
+    const picturePath = item.picture ? `${imagePath}${item.picture.split('webapps/')[1]}` : null;
+
+    return (
+      <tr key={index}>
+        <th scope="row">{index + 1}</th>
+        <td>
+          <div className="d-flex align-items-center">
+            <div className="me-3">
+              <Avatar 
+                alt={`${item.firstName} ${item.lastName}`} 
+                src={picturePath} 
+                sx={{ width: 34, height: 34 }} 
+              />
+            </div>
+            <div>{item.firstName} {item.lastName}</div>
+          </div>
+        </td>
+        <td>..</td>
+      </tr>
+    );
+  }) : (
+    <tr>
+      <td colSpan="4">No data available</td>
+    </tr>
+  )}
+</tbody>
+
 </table>
   </div>
 

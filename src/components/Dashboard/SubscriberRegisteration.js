@@ -72,8 +72,11 @@ const SubscriberRegisteration = () => {
             setPassword(res.data.password);
             setCountryCode(res.data.countryCode);
             setStatus(res.data.status);
-            setSelectedPackage(res.data.packageID);
-            setAmount(` USD ${res.data.priceUSD} / INR ${res.data.priceINR}`)
+            setComments(res.data.comments)
+            setSelectedPackage(res.data.packageServiceID || "")
+            setAmount(res.data.priceUSD && res.data.priceINR 
+                ? `USD ${res.data.priceUSD} / INR ${res.data.priceINR}` 
+                : "");
           });
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -90,6 +93,7 @@ const SubscriberRegisteration = () => {
         )
         .then((res) => {
           console.log("packagess", res.data);
+          console.log("packaged",res.data[0].packageServices[0].packageServiceID)
           setPackageList(res.data);
         })
         .catch((err) => console.log(err));
@@ -115,7 +119,7 @@ const SubscriberRegisteration = () => {
         status: status,
         updatedBy: parseInt(userId),
         comments:comments,
-        packageServiceId:selectedPackageID,
+        packageServiceID:parseInt(selectedPackage),
         creditCard: {
             nameOnCard: cardName,
             creditCardNumber: cardNo,
@@ -292,7 +296,7 @@ const SubscriberRegisteration = () => {
                             
                                 // Find the selected package based on packageID
                                 const selectedPkg = packageList.find(
-                                  (pkg) => pkg.packageID == selectedPackageId
+                                  (pkg) => pkg.packageServices[0].packageServiceID == selectedPackageId
                                 );
                                 console.log("Selected package:", selectedPkg)
                                 // Set the amount to the package's price if the package is found
@@ -310,8 +314,8 @@ const SubscriberRegisteration = () => {
                             {packageList &&
                               packageList.map((pkg) => (
                                 <option
-                                  key={pkg.packageID}
-                                  value={pkg.packageID}
+                                  key={pkg.packageServices[0].packageServiceID}
+                                  value={pkg.packageServices[0].packageServiceID}
                                 >
                                   {pkg.packageName}
                                 </option>
@@ -434,7 +438,7 @@ const SubscriberRegisteration = () => {
                         >
                           <option>Status</option>
                           <option value="1">Active</option>
-                          <option value="2">Inactive</option>
+                          <option value="0">Inactive</option>
                         </Form.Select>
                       </Col>
                       </Row>

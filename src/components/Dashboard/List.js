@@ -103,6 +103,7 @@ const List = () => {
                         <td>{item.email}</td>
                         <td>{item.packageName}</td>
                         <td>
+                        
                         <span className="text-decoration-none me-3">
                           <Link to={`/dashboard/updateSubscriber/${item.subscriberID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
                             <i className="bi bi-pencil-fill edit-btn-color"></i>
@@ -115,6 +116,7 @@ const List = () => {
                             style={{ cursor: 'pointer' }}
                           ></i>
                         </span>
+                        
                         </td>
                       </tr>
                     )) : (

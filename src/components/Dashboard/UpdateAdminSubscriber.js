@@ -62,7 +62,7 @@ const UpdateAdminSubscriber = () => {
       const navigate = useNavigate(); 
 
       const handleCancel = () => {
-          navigate('/dashboard'); 
+          navigate('/dashboard/subscribers'); 
       };
       const handleSubmit=(e)=>{
         e.preventDefault()
@@ -96,7 +96,7 @@ const UpdateAdminSubscriber = () => {
     
           setTimeout(() => {
             setAlert('');
-            navigate('/dashboard')
+            navigate('/dashboard/subscribers')
           }, 5000); // Hide alert after 3 seconds
         })
         .catch((err) => {
@@ -213,9 +213,9 @@ const UpdateAdminSubscriber = () => {
                                             onChange={(event) => setStatus(event.target.value)} 
                                             required// Corrected setStatus
                                         >
-                                           
+                                           <option value="">Select Status</option>
                                             <option value="1">Active</option>
-                                            <option value="2">Inactive</option>
+                                            <option value="0">Inactive</option>
                                         </Form.Select>
                                     </Col>
                                 </Row>

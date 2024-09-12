@@ -27,6 +27,9 @@ const ManageUsers = () => {
     const [countryCode, setCountryCode] = useState('');
     const [status, setStatus] = useState('');
     const[alert,setAlert]=useState();
+    const [passwordIcon, setPasswordIcon] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
 
 
     const userId =localStorage.getItem("userId");
@@ -36,7 +39,17 @@ const ManageUsers = () => {
     const handleCancel = () => {
         navigate('/dashboard'); 
     };
+    const handleImageChange = async (e) => {
+      const file = e.target.files[0];
+      setImage(file);
+    
+      console.log('Image selected:', {
+        image: file.name,
+      });
+    }
 
+
+    
     const handleSubmit = async (event) => {
       event.preventDefault();
     
@@ -54,11 +67,15 @@ const ManageUsers = () => {
         status: 1,
         createdBy: userId,
         updatedBy: null,
-        picture:image
+        // picture:image
       };
     
       console.log('AdMap:', AdMap);
       const formData = new FormData();
+
+      if (image) {
+        formData.append('picture', image); // 'picture' is the field name expected by the backend
+      }
     
       Object.keys(AdMap).forEach((key) => {
         formData.append(key, AdMap[key]);
@@ -170,7 +187,7 @@ const ManageUsers = () => {
                                     <Col className="p-3">
                                     <Form.Label className="label-style">UserName</Form.Label>
                                         <Form.Control
-                                            placeholder="Username"
+                                            placeholder="user@etheriumtech.com"
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             value={email}
                                             onChange={(event) => setEmail(event.target.value)}
@@ -179,14 +196,29 @@ const ManageUsers = () => {
                                     </Col>
                                     <Col className="p-3">
                                     <Form.Label className="label-style">Set Password</Form.Label>
-                                        <Form.Control
-                                        type="password"
+                                    <div style={{ position: 'relative' }}>
+                                    <Form.Control
+                                        type={showPassword ? 'text' : 'password'}
                                             placeholder="Password"
                                             style={{ padding: '8px', fontSize: "12px" }}
                                             value={password}
                                             onChange={(event) => setPassword(event.target.value)}
                                             required
                                         />
+                                          <span 
+          onClick={() => setShowPassword(!showPassword)} 
+          style={{
+            position: 'absolute', 
+            right: '10px', 
+            top: '50%', 
+            transform: 'translateY(-50%)', 
+            cursor: 'pointer'
+          }}
+        >
+          {showPassword ? <i class="bi bi-eye-slash-fill"></i> : <i class="bi bi-eye-fill"></i>}
+          </span>
+                                    </div>
+                                      
                                     </Col>
                                 </Row>
                                 <Row>
@@ -223,14 +255,14 @@ const ManageUsers = () => {
                                         </Row>
                                     </Col>
                                     <Col className="p-3">
-                                    <Form.Label className="label-style">Upload Image</Form.Label>
+                                    <Form.Label className="label-style">Upload Photograph</Form.Label>
                                         <Form.Control
                                             type="file"
                                             accept="image/*"
                                             placeholder="Select Image"
                                             style={{ padding: '8px', fontSize: "12px" }}
-                                            value={image}
-                                            onChange={(event) => setImage(event.target.value)}
+                                           
+                                            onChange={handleImageChange}
                                         />
                                     </Col>
                                 </Row>
