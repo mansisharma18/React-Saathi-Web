@@ -34,6 +34,10 @@ const UpdateSubscriber = () => {
     const[cardExpiry,setCardExpiry]=useState('')
     const[cardCvv,setCardCvv]=useState('')
     const[comments,setComments]=useState('')
+    const [packageList, setPackageList] = useState("");
+    const [selectedPackage, setSelectedPackage] = useState("");
+    const [selectedPackageID, setSelectedPackageId] = useState("");
+    const [amount, setAmount] = useState("");
 
     const { id } = useParams();
     const userId =localStorage.getItem("userId");
@@ -59,6 +63,10 @@ const UpdateSubscriber = () => {
               setStatus(res.data.status)
               setPackages(res.data.packageName)
               setComments(res.data.comments)
+              setSelectedPackage(res.data.packageServiceID || "")
+              setAmount(res.data.priceUSD && res.data.priceINR 
+                  ? `USD ${res.data.priceUSD} / INR ${res.data.priceINR}` 
+                  : "");
               
           })
           } catch (error) {
@@ -66,6 +74,20 @@ const UpdateSubscriber = () => {
           }
         };
         fetchData();
+
+        const fetchPackageList = async () => {
+            axios
+              .get(
+                `https://saathi.etheriumtech.com:444/Saathi/subscription-package/all`
+              )
+              .then((res) => {
+                console.log("packagess", res.data);
+                console.log("packaged",res.data[0].packageServices[0].packageServiceID)
+                setPackageList(res.data);
+              })
+              .catch((err) => console.log(err));
+          };
+          fetchPackageList();
       }, []);
 
       const navigate = useNavigate(); 
@@ -89,6 +111,13 @@ const UpdateSubscriber = () => {
         "status":status,
         "updatedBy": parseInt(userId),
         "comments":comments,
+        packageServiceID:parseInt(selectedPackage),
+        creditCard: {
+            nameOnCard: cardName,
+            creditCardNumber: cardNo,
+            expiryDate: cardExpiry,
+            cvv: cardCvv,
+          },
        
       }
       )
@@ -214,17 +243,44 @@ const UpdateSubscriber = () => {
     <Row>
 
     <Col className="p-3">
-    
-    <Form.Label className="label-style">Package</Form.Label>
-<Form.Control
-type="text"
-className=""
-style={{ padding: '8px', fontSize: "12px" }}
-value={packages}
-placeholder="Package"
-onChange={(event) => setPackages(event.target.value)}
-/>
-
+    <Form.Label className="label-style">
+                            Package
+                          </Form.Label>
+                          <Form.Select
+                            style={{ padding: "8px", fontSize: "12px" }}
+                            value={selectedPackage}
+                            onChange={(event) => {
+                                const selectedPackageId = event.target.value;
+                                setSelectedPackage( event.target.value);
+                                console.log("Selected package:", event.target.value)
+                            
+                                // Find the selected package based on packageID
+                                const selectedPkg = packageList.find(
+                                  (pkg) => pkg.packageServices[0].packageServiceID == selectedPackageId
+                                );
+                                console.log("Selected package:", selectedPkg)
+                                // Set the amount to the package's price if the package is found
+                                if (selectedPkg) {
+                                    console.log(selectedPkg.priceUSD)
+                                    const  price= `USD ${selectedPkg.priceUSD}  / INR ${selectedPkg.priceINR}`
+                                  setAmount(price);
+                                } else {
+                                  setAmount(""); // Reset if no package is found
+                                }
+                            }}
+                            required
+                          >
+                            <option value="">Select a package</option>
+                            {packageList &&
+                              packageList.map((pkg) => (
+                                <option
+                                  key={pkg.packageServices[0].packageServiceID}
+                                  value={pkg.packageServices[0].packageServiceID}
+                                >
+                                  {pkg.packageName}
+                                </option>
+                              ))}
+                          </Form.Select>
 
         
     </Col>

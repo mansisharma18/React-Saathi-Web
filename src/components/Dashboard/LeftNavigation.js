@@ -204,6 +204,35 @@ const LeftNavigation = () => {
                     </Accordion.Item>
                   </Accordion>
 
+                  <Accordion flush>
+                    <Accordion.Item eventKey="0">
+                      <Accordion.Header className="accordion-head">
+                        <Nav.Link as="div" className="nav-link">
+                          <ManageAccountsIcon className="me-2" />
+                          <span>Packages & Services</span>
+                        </Nav.Link>
+                      </Accordion.Header>
+                      <Accordion.Body>
+                      
+                       
+
+                       
+                        <Nav.Link
+                          href="/dashboard/servicesList"
+                          className="nav-link"
+                        >
+                          All Services
+                        </Nav.Link>
+                        <Nav.Link
+                          href="/dashboard/packages"
+                          className="nav-link"
+                        >
+                          All Package
+                        </Nav.Link>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+
                   <Nav.Link href="/dashboard/services" className="nav-link">
                     <ManageAccountsIcon className="me-2" />
                     Services

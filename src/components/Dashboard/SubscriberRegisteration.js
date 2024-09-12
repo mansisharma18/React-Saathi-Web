@@ -43,7 +43,7 @@ const SubscriberRegisteration = () => {
     const fetchSubList = async () => {
       axios
         .get(
-          `https://saathi.etheriumtech.com:444/Saathi/subscribers`
+          `https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers`
         )
         .then((res) => {
           console.log(res.data[0].firstName);

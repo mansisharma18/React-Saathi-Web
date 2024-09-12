@@ -87,8 +87,9 @@ const List = () => {
   <thead>
     <tr  class="table-info">
       <th scope="col">S.No</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
+      <th scope="col">Subscriber Name</th>
+      <th scope="col">Patron Name</th>
+      <th scope="col">Contact No.</th>
       <th scope="col">Email</th>
       <th scope="col">Package</th>
       <th scope="col">Edit/Delete</th>
@@ -98,8 +99,9 @@ const List = () => {
                     {list.length > 0 ? list.map((item, index) => (
                       <tr key={index}>
                         <th scope="row">{index + 1}</th>
-                        <td>{item.firstName}</td>
-                        <td>{item.lastName}</td>
+                        <td>{item.firstName} {item.lastName}</td>
+                        <td>..</td>
+                        <td>{item.contactNo}</td>
                         <td>{item.email}</td>
                         <td>{item.packageName}</td>
                         <td>

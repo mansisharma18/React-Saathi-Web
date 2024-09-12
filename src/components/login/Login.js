@@ -63,10 +63,12 @@ const Login = () => {
           // Assuming the API response has a success field
           localStorage.setItem("userType", res.data.userType);
           localStorage.setItem("userId", res.data.adminUserID);
+          localStorage.setItem("userPhoto", res.data.picture);
           const user = localStorage.getItem("userType");
           const userId = localStorage.getItem("userId");
           console.log("userId", userId);
           console.log("user", user);
+          console.log("pic",res.data.picture);
           // Redirect to /dashboard after successful login
           navigate("/dashboard");
         } else if (res.data =="Invalid credentials for Admin") {

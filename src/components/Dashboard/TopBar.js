@@ -9,6 +9,8 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from "react-router-dom";
+import { imagePath } from '../../ImagePath';
+
 
 
 
@@ -16,6 +18,9 @@ import { useNavigate } from "react-router-dom";
 const TopBar = () => {
   const navigate = useNavigate();
 
+  const image = localStorage.getItem("userPhoto");
+
+  const imageUrl=`${imagePath}${image.split('webapps/')[1]}`
   const handleLogout = () => {
     // Clear the user session data from localStorage
     localStorage.removeItem("userType");
@@ -189,7 +194,7 @@ const TopBar = () => {
                  
                  <div>
                     
-                 <Avatar alt="Remy Sharp" src={avimg}
+                 <Avatar alt="Remy Sharp" src={''}
                   sx={{ width: 34, height: 34 }} />
 
 

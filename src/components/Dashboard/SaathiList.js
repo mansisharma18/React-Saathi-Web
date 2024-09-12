@@ -20,15 +20,16 @@ const SaathiList = () => {
         const fetchData = async () => {
        
 
-        axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/saathi`)
+        axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/saathi/subscribers`)
         .then(res => {
             console.log(res.data[0].firstName)
-            console.log(res.data[0].picture.split('webapps/')[1])
+            // console.log(res.data[0].picture.split('webapps/')[1])
             const activeUsers = res.data.filter(user => user.status === 1);
             // Sort by createdDate in descending order (latest first)
      const sortedUsers = activeUsers.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
      
-     setList(sortedUsers);
+    //  setList(sortedUsers);
+    setList(res.data)
         })
         .catch(err => 
             console.log(err)
@@ -59,11 +60,11 @@ const SaathiList = () => {
   <table class="table  table-bordered   table-striped table-font-size">
   <thead>
     <tr  class="table-info">
-      <th scope="col">S.No</th>
-      <th scope="col">Saathi Name</th>
+      <th scope="col"className="col-1">S.No</th>
+      <th scope="col" className="col-5">Saathi Name</th>
      
       {/* <th scope="col">Email</th> */}
-      <th scope="col">Subscribers</th>
+      <th scope="col" className="col-6">Subscribers</th>
       {/* <th scope="col">Contact No</th> */}
     </tr>
   </thead>
@@ -87,7 +88,15 @@ const SaathiList = () => {
             <div>{item.firstName} {item.lastName}</div>
           </div>
         </td>
-        <td>..</td>
+        <td>
+        <ol>
+              <li>Mansi</li>
+              <li>Hamza</li>
+              <li>Arnav</li>
+              <li>Diksha</li>
+            </ol>
+        </td>
+       
       </tr>
     );
   }) : (
