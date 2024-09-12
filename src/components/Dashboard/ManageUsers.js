@@ -39,7 +39,17 @@ const ManageUsers = () => {
     const handleCancel = () => {
         navigate('/dashboard'); 
     };
+    const handleImageChange = async (e) => {
+      const file = e.target.files[0];
+      setImage(file);
+    
+      console.log('Image selected:', {
+        image: file.name,
+      });
+    }
 
+
+    
     const handleSubmit = async (event) => {
       event.preventDefault();
     
@@ -57,11 +67,15 @@ const ManageUsers = () => {
         status: 1,
         createdBy: userId,
         updatedBy: null,
-        picture:image
+        // picture:image
       };
     
       console.log('AdMap:', AdMap);
       const formData = new FormData();
+
+      if (image) {
+        formData.append('picture', image); // 'picture' is the field name expected by the backend
+      }
     
       Object.keys(AdMap).forEach((key) => {
         formData.append(key, AdMap[key]);
@@ -247,8 +261,8 @@ const ManageUsers = () => {
                                             accept="image/*"
                                             placeholder="Select Image"
                                             style={{ padding: '8px', fontSize: "12px" }}
-                                            value={image}
-                                            onChange={(event) => setImage(event.target.value)}
+                                           
+                                            onChange={handleImageChange}
                                         />
                                     </Col>
                                 </Row>

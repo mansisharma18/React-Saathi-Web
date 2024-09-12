@@ -65,6 +65,15 @@ const UpdateAdminUsers = () => {
       navigate('/dashboard/myAccount'); 
   };
 
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+  
+    console.log('Image selected:', {
+      image: file.name,
+    });
+  }
+
   const handleSubmit=(e)=>{
     e.preventDefault()
 
@@ -81,11 +90,15 @@ const UpdateAdminUsers = () => {
         status: status, // You can adjust this based on your form inputs
         // createdBy: 87,
         updatedBy: userId,
-        picture:image
+        // picture:image
       };
     
       console.log('AdMap:', AdMap);
       const formData = new FormData();
+      if (image) {
+        formData.append('picture', image); // 'picture' is the field name expected by the backend
+      }
+    
     
       Object.keys(AdMap).forEach((key) => {
         formData.append(key, AdMap[key]);
@@ -256,8 +269,8 @@ const UpdateAdminUsers = () => {
                                             accept="image/*"
                                             placeholder="Select Image"
                                             style={{ padding: '8px', fontSize: "12px" }}
-                                            value={image}
-                                            onChange={(event) => setImage(event.target.value)}
+                                           
+                                            onChange={handleImageChange}
                                         />
                                     </Col>
                                 </Row>
