@@ -194,9 +194,15 @@ const TopBar = () => {
                  
                  <div>
                     
-                 <Avatar alt="Remy Sharp" src={''}
-                  sx={{ width: 34, height: 34 }} />
-
+                 <Avatar 
+  src={imageUrl} 
+  alt=''
+  sx={{ 
+    width: 34, 
+    height: 34, 
+    borderRadius: '50%' // Ensures the avatar is circular
+  }} 
+/>
 
                  
 

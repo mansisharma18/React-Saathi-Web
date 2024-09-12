@@ -20,7 +20,7 @@ const SaathiList = () => {
         const fetchData = async () => {
        
 
-        axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/saathi/subscribers`)
+        axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/saathi`)
         .then(res => {
             console.log(res.data[0].firstName)
             // console.log(res.data[0].picture.split('webapps/')[1])
