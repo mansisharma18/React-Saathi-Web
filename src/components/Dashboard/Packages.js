@@ -6,24 +6,22 @@ import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
-import Collapse from "react-bootstrap/Collapse";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Table } from "react-bootstrap";
 
 const Packages = () => {
   const [packageName, setPackageName] = useState("");
   const [packageDescription, setPackageDescription] = useState("");
-  const [priceUSD, setPriceUSD] = useState("");
-  const [priceINR, setPriceINR] = useState("");
+  const [priceINR, setPriceINR] = useState(0); // Store the total price in INR
+  const [packagePriceINR, setPackagePriceINR] = useState(0); // Store final discounted price
   const [packageStatus, setPackageStatus] = useState("");
   const [services, setServices] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
   const [serviceFrequencies, setServiceFrequencies] = useState({});
-  const [openServices, setOpenServices] = useState(false);
-  const [discountPercentage, setDiscountPercentage] = useState("");
+  const [discountPercentage, setDiscountPercentage] = useState(0); // Discount percentage
   const [alert, setAlert] = useState("");
   const [errors, setErrors] = useState({});
-
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
 
@@ -43,10 +41,7 @@ const Packages = () => {
     fetchServices();
   }, []);
 
-  const handleCancel = () => {
-    navigate("/dashboard");
-  };
-
+  // Handle service selection and total price calculation
   const handleServiceSelection = (serviceID) => {
     if (selectedServices.includes(serviceID)) {
       setSelectedServices(selectedServices.filter((id) => id !== serviceID));
@@ -55,9 +50,10 @@ const Packages = () => {
       setServiceFrequencies(newFrequencies);
     } else {
       setSelectedServices([...selectedServices, serviceID]);
-      const cost = selectedServices?.priceINR;
-      const total = cost?.reduce((a, b) => a + b, 0);
-      setPriceINR(total);
+      setServiceFrequencies({
+        ...serviceFrequencies,
+        [serviceID]: 1, // Default frequency to 1 when the service is selected
+      });
     }
   };
 
@@ -68,26 +64,41 @@ const Packages = () => {
     });
   };
 
+  useEffect(() => {
+    // Calculate total price in INR when services are selected/deselected or frequency is updated
+    const calculateTotalPrice = () => {
+      const total = selectedServices.reduce((acc, serviceID) => {
+        const service = services.find((s) => s.serviceID === serviceID);
+        const frequency = serviceFrequencies[serviceID] || 1; // Get the selected frequency or default to 1
+        return acc + (service?.priceINR || 0) * frequency; // Multiply price by frequency
+      }, 0);
+      setPriceINR(total);
+    };
+
+    calculateTotalPrice();
+  }, [selectedServices, services, serviceFrequencies]);
+
+  // Handle discount calculation
+  useEffect(() => {
+    const applyDiscount = () => {
+      const discountedPrice = priceINR - (priceINR * discountPercentage) / 100;
+      setPackagePriceINR(discountedPrice); // Store discounted price
+    };
+
+    applyDiscount();
+  }, [discountPercentage, priceINR]);
+
   const handleSubmitPackage = async (event) => {
     event.preventDefault();
-
-    // const validationErrors = validateFields();
-    // if (Object.keys(validationErrors).length > 0) {
-    //   setErrors(validationErrors);
-    //   return;
-    // }
 
     const packageServices = selectedServices.map((serviceID) => {
       const service = services.find((s) => s.serviceID === serviceID);
       const selectedFrequency =
         parseInt(serviceFrequencies[serviceID], 10) || 1;
 
-      // Calculate the new frequency for the package
-      const updatedFrequency = (service.frequency || 1) * selectedFrequency;
-
       return {
         serviceID: service.serviceID,
-        frequency: updatedFrequency, // Send updated frequency
+        frequency: selectedFrequency,
         frequencyUnit: service.frequencyUnit,
         priceUSD: service.priceUSD,
         priceINR: service.priceINR,
@@ -98,8 +109,8 @@ const Packages = () => {
     const packageData = {
       packageName,
       packageDescription,
-      priceUSD: parseFloat(priceUSD),
-      priceINR: parseFloat(priceINR),
+      priceINR: parseFloat(priceINR), // Use total price in INR
+      packagePriceINR: parseFloat(packagePriceINR), // Use final discounted price
       status: parseInt(packageStatus),
       createdBy: parseInt(userId),
       packageServices,
@@ -110,7 +121,6 @@ const Packages = () => {
         `https://saathi.etheriumtech.com:444/Saathi/subscription-package`,
         packageData
       );
-      console.log("Response:", response.data);
       setAlert("Package created successfully!");
       setTimeout(() => {
         setAlert("");
@@ -122,6 +132,10 @@ const Packages = () => {
     }
   };
 
+  const handleCancel = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <div className="d-flex">
       <Container className="justify-content-center align-items-center mt-5 px-5">
@@ -130,6 +144,7 @@ const Packages = () => {
             <h4 className="heading-color text-center">Add New Package</h4>
             <hr />
             <Form onSubmit={handleSubmitPackage}>
+              {/* Package Name, Description, and other details */}
               <Row>
                 <Col className="p-3">
                   <Form.Group controlId="packageName">
@@ -142,9 +157,6 @@ const Packages = () => {
                       isInvalid={!!errors.packageName}
                       required
                     />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.packageName}
-                    </Form.Control.Feedback>
                   </Form.Group>
                 </Col>
               </Row>
@@ -168,166 +180,145 @@ const Packages = () => {
                   </Form.Group>
                 </Col>
               </Row>
+
+              {/* Service selection */}
+              <div className="text-center mt-2">
+                <h4 style={{ fontSize: "18px", fontWeight: "bold" }}>
+                  List of All Services
+                </h4>
+              </div>
+
+              <div className="d-flex">
+                <Card className="shadow-sm w-100 pb-3">
+                  <Card.Body>
+                    {/* Services Table */}
+                    {services.length > 0 ? (
+                      <Table
+                        striped
+                        bordered
+                        hover
+                        responsive
+                        className="table-font-size"
+                        style={{ height: "300px", overflowY: "scroll" }}
+                      >
+                        <thead>
+                          <tr className="table-info">
+                            <th>Add a Service</th>
+                            <th>Service Name</th>
+                            <th>Price (INR)</th>
+                            <th>Frequency of Service</th>
+                            <th>Duration (Hours)</th>
+                            <th>Business Hours</th>
+                            <th>No. of Services</th>
+                            <th>Total Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {services.map((service) => (
+                            <tr key={service.serviceID}>
+                              <td className="d-flex justify-content-center">
+                             
+                                {/* Centered checkbox */}
+                                <Form.Check
+                                  type="checkbox"
+                                  id={`service-${service.serviceID}`}
+                                  checked={selectedServices.includes(
+                                    service.serviceID
+                                  )}
+                                  onChange={() =>
+                                    handleServiceSelection(service.serviceID)
+                                  }
+                                />
+                              </td>
+                              <td>{service.serviceName}</td>
+                              <td>{service.priceINR}</td>
+                              <td>{service.frequencyUnit}</td>
+                              <td>{service.durationInHours}</td>
+                              <td style={{ maxWidth: "100px" }}>
+                                {service.businessHoursStart}-
+                                {service.businessHoursEnd}
+                              </td>
+                              <td>
+                                {selectedServices.includes(
+                                  service.serviceID
+                                ) && (
+                                  <Form.Group
+                                    controlId={`frequency-${service.serviceID}`}
+                                  >
+                                    <Form.Control
+                                      type="number"
+                                      placeholder="Enter frequency"
+                                      value={
+                                        serviceFrequencies[service.serviceID] ||
+                                        1
+                                      }
+                                      onChange={(e) =>
+                                        handleFrequencyChange(
+                                          service.serviceID,
+                                          e.target.value
+                                        )
+                                      }
+                                      style={{ width: "80px" }}
+                                      required
+                                    />
+                                  </Form.Group>
+                                )}
+                              </td>
+                              <td>
+                                ₹
+                                {selectedServices.includes(service.serviceID)
+                                  ? service.priceINR *
+                                    (serviceFrequencies[service.serviceID] || 1)
+                                  : service.priceINR}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </Table>
+                    ) : (
+                      <div className="d-flex justify-content-center my-4">
+                        <p>No services available</p>
+                      </div>
+                    )}
+                  </Card.Body>
+                </Card>
+              </div>
+
+              {/* Price and Discount Section */}
               <Row>
                 <Col className="p-3">
                   <Row>
                     <Col>
                       <Form.Group controlId="priceINR">
-                        <Form.Label>Price in INR</Form.Label>
-                        <Form.Control
-                          type="number"
-                          placeholder="Enter Price in INR"
-                          value={priceINR}
-                          onChange={(event) => setPriceINR(event.target.value)}
-                          isInvalid={!!errors.priceUSD}
-                          required
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {errors.priceUSD}
-                        </Form.Control.Feedback>
+                        <Form.Label>Package Price in INR</Form.Label>
+                        <Form.Control type="number" value={priceINR} readOnly />
                       </Form.Group>
                     </Col>
                     <Col>
-                      <Form.Group controlId="Disc">
-                        <Form.Label>Price in USD</Form.Label>
+                      <Form.Group controlId="discountPercentage">
+                        <Form.Label>Package Discount (%)</Form.Label>
                         <Form.Control
                           type="number"
-                          placeholder="Enter Price in USD"
-                          value={priceUSD}
-                          onChange={(event) => setPriceUSD(event.target.value)}
-                          isInvalid={!!errors.priceUSD}
-                          required
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {errors.priceUSD}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    </Col>
-                    <Col>
-                      <Form.Group controlId="priceINR">
-                        <Form.Label>Discount Percentage </Form.Label>
-                        <Form.Control
-                          type="number"
-                          placeholder="Discounted Price"
+                          placeholder="Enter Discount Percentage"
                           value={discountPercentage}
                           onChange={(event) =>
                             setDiscountPercentage(event.target.value)
                           }
-                          isInvalid={!!errors.priceINR}
                           required
                         />
-                        <Form.Control.Feedback type="invalid">
-                          {errors.priceINR}
-                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group controlId="packagePriceINR">
+                        <Form.Label>Final Package Price in INR</Form.Label>
+                        <Form.Control
+                          type="number"
+                          value={packagePriceINR}
+                          readOnly
+                        />
                       </Form.Group>
                     </Col>
                   </Row>
-                </Col>
-              </Row>
-
-              <Row className="d-flex justify-content-center align-items-center">
-                <Col xs={12} sm={10} md={8} lg={8} className="p-3">
-                  <Button
-                    variant="primary"
-                    onClick={() => setOpenServices(!openServices)}
-                    aria-controls="service-collapse"
-                    aria-expanded={openServices}
-                    style={{
-                      width: "100%", // Full width for consistency
-                      marginBottom: "15px", // Add space below the button
-                      padding: "12px 20px", // Increase padding for a larger clickable area
-                      fontSize: "16px", // Increase font size for better readability
-                      backgroundColor: "#007bff", // Use Bootstrap's primary color
-                      borderColor: "#007bff",
-                      borderRadius: "30px", // Rounder button
-                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Subtle shadow for depth
-                    }}
-                  >
-                    {openServices ? "Hide Services" : "Show Services"}
-                  </Button>
-                  <Collapse in={openServices}>
-                    <div
-                      id="service-collapse"
-                      className="services-list"
-                      style={{
-                        marginTop: "15px",
-                        padding: "20px",
-                        backgroundColor: "#f9f9f9", // Light grey for better contrast
-                        borderRadius: "10px", // Smooth borders
-                        boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)", // Subtle shadow
-                        borderColor: "#ddd",
-                        borderWidth: "1px", // Add border
-                        overflowY: "auto",
-                        maxHeight: "300px", // Limit the height for scrollability
-                      }}
-                    >
-                      {services.map((service) => (
-                        <div
-                          key={service.serviceID}
-                          className="mb-4"
-                          style={{
-                            padding: "15px",
-                            backgroundColor: "white", // White background for each item
-                            borderRadius: "8px", // Rounded edges
-                            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)", // Soft shadow for better separation
-                          }}
-                        >
-                          <Form.Check
-                            type="checkbox"
-                            id={`service-${service.serviceID}`}
-                            label={
-                              <span
-                                style={{ fontSize: "16px", fontWeight: "500" }}
-                              >
-                                {service.serviceName}
-                              </span>
-                            }
-                            checked={selectedServices.includes(
-                              service.serviceID
-                            )}
-                            onChange={() =>
-                              handleServiceSelection(service.serviceID)
-                            }
-                            style={{ marginBottom: "10px" }} // Better spacing between the checkbox and the frequency input
-                          />
-                          {selectedServices.includes(service.serviceID) && (
-                            <Form.Group
-                              controlId={`frequency-${service.serviceID}`}
-                            >
-                              <Form.Label style={{ fontWeight: "bold" }}>
-                                Frequency of this Service in this Package
-                              </Form.Label>
-                              <Form.Control
-                                type="number"
-                                placeholder="Enter frequency of this service"
-                                value={
-                                  serviceFrequencies[service.serviceID] || ""
-                                }
-                                onChange={(e) =>
-                                  handleFrequencyChange(
-                                    service.serviceID,
-                                    e.target.value
-                                  )
-                                }
-                                isInvalid={
-                                  !!errors[`frequency-${service.serviceID}`]
-                                }
-                                style={{
-                                  padding: "10px",
-                                  borderRadius: "8px",
-                                  borderColor: "#ced4da",
-                                }}
-                                required
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                {errors[`frequency-${service.serviceID}`]}
-                              </Form.Control.Feedback>
-                            </Form.Group>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </Collapse>
                 </Col>
               </Row>
 
@@ -338,7 +329,6 @@ const Packages = () => {
                     <Form.Select
                       value={packageStatus}
                       onChange={(event) => setPackageStatus(event.target.value)}
-                      isInvalid={!!errors.packageStatus}
                       required
                     >
                       <option value="">Select Status</option>
