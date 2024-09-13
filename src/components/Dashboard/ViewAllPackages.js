@@ -10,6 +10,7 @@ import {
   Form,
 } from "react-bootstrap";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const ViewAllPackages = () => {
   const [list, setList] = useState([]);
@@ -21,7 +22,7 @@ const ViewAllPackages = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `https://saathi.etheriumtech.com:444/Saathi/subscription-package/all`
+          `https://saathi.etheriumtech.com:444/Saathi/subscription-package/active`
         );
         setList(res.data);
       } catch (err) {
@@ -45,7 +46,17 @@ const ViewAllPackages = () => {
   const handlePackageChange = (e) => {
     setCurrentPackage({ ...currentPackage, [e.target.name]: e.target.value });
   };
+  const handleDelete = async (packageID) => {
+    console.log("package ID", packageID);
 
+    const updatedPackage = {
+      status: 0,
+    };
+    const response = await axios.put(
+      `https://saathi.etheriumtech.com:444/Saathi/api/packageServices/${packageID}`,
+      updatedPackage
+    );
+  };
   const handleServiceStatusChange = (index, value) => {
     const updatedServices = [...currentPackage.packageServices];
     updatedServices[index].status = value;
@@ -92,8 +103,11 @@ const ViewAllPackages = () => {
         <Card className="shadow-sm pb-3">
           <Card.Body>
             <div className="d-flex justify-content-center">
-              <h4>All Subscription Packages</h4>
+              <div className="mt-2">
+                <h4 className="heading-color">List of Packages</h4>
+              </div>
             </div>
+            <hr />
             <Table striped bordered hover responsive className="mt-4">
               <thead className="table-info">
                 <tr>
@@ -102,7 +116,7 @@ const ViewAllPackages = () => {
                   <th>Description</th>
                   <th>Price (USD/INR)</th>
                   <th>Services</th>
-                  <th>Actions</th>
+                  <th>Edit/Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -135,10 +149,27 @@ const ViewAllPackages = () => {
                           )}
                         </td>
                         <td>
-                          <i
-                            className="bi bi-pencil-fill edit-btn-color"
-                            onClick={() => handleEditClick(item)}
-                          ></i>
+                          <span className="text-decoration-none me-3">
+                            <Link
+                              style={{
+                                color: "inherit",
+                                textDecoration: "none",
+                              }}
+                            >
+                              <i className="bi bi-pencil-fill edit-btn-color"></i>
+                            </Link>
+                          </span>
+                          <span>
+                            <i
+                              className="bi bi-trash3-fill delete-btn-color"
+                              onClick={() =>
+                                handleDelete(
+                                  item.packageServices[0].packageServiceID
+                                )
+                              }
+                              style={{ cursor: "pointer" }}
+                            ></i>
+                          </span>
                         </td>
                       </tr>
                       {item.packageServices &&
@@ -155,11 +186,7 @@ const ViewAllPackages = () => {
                                     {item.packageServices.map(
                                       (service, serviceIndex) => (
                                         <li key={serviceIndex}>
-                                          <strong>{service.serviceID}</strong> -{" "}
-                                          {service.frequency}{" "}
-                                          {service.frequencyUnit}, $
-                                          {service.priceUSD} USD, ₹
-                                          {service.priceINR} INR
+                                          <strong>{service.serviceName}</strong>
                                         </li>
                                       )
                                     )}

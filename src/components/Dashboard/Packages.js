@@ -40,6 +40,20 @@ const Packages = () => {
 
     fetchServices();
   }, []);
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!packageName) newErrors.packageName = "Package name is required.";
+    if (!packageDescription)
+      newErrors.packageDescription = "Package description is required.";
+    if (!selectedServices.length)
+      newErrors.selectedServices = "You must select at least one service.";
+    if (!packageStatus) newErrors.packageStatus = "Package status is required.";
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
 
   // Handle service selection and total price calculation
   const handleServiceSelection = (serviceID) => {
@@ -109,9 +123,9 @@ const Packages = () => {
     const packageData = {
       packageName,
       packageDescription,
-      priceINR: parseFloat(priceINR), // Use total price in INR
-      packagePriceINR: parseFloat(packagePriceINR), // Use final discounted price
-      status: parseInt(packageStatus),
+      priceINR: parseFloat(packagePriceINR), // Use total price in INR
+
+      status: 1,
       createdBy: parseInt(userId),
       packageServices,
     };
@@ -141,38 +155,52 @@ const Packages = () => {
       <Container className="justify-content-center align-items-center mt-5 px-5">
         <Card className="shadow-sm pb-3">
           <Card.Body>
-            <h4 className="heading-color text-center">Add New Package</h4>
+            <div className="d-flex justify-content-center ">
+              <div className="mt-2">
+                <h4 className="heading-color">Add New Package</h4>
+              </div>
+            </div>
             <hr />
             <Form onSubmit={handleSubmitPackage}>
-              {/* Package Name, Description, and other details */}
+              {/* Package Name */}
               <Row>
                 <Col className="p-3">
                   <Form.Group controlId="packageName">
-                    <Form.Label>Package Name</Form.Label>
+                    <Form.Label className="label-style">
+                      Package Name
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Enter Package Name"
                       value={packageName}
-                      onChange={(event) => setPackageName(event.target.value)}
-                      isInvalid={!!errors.packageName}
                       required
+                      onChange={(event) => setPackageName(event.target.value)}
+                      style={{ padding: "8px", fontSize: "12px" }}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.packageName}
+                    </Form.Control.Feedback>
                   </Form.Group>
                 </Col>
               </Row>
+
+              {/* Package Description */}
               <Row>
                 <Col className="p-3">
                   <Form.Group controlId="packageDescription">
-                    <Form.Label>Package Description</Form.Label>
+                    <Form.Label className="label-style">
+                      Package Description
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Enter Package Description"
                       value={packageDescription}
+                      required
+                      style={{ padding: "8px", fontSize: "12px" }}
                       onChange={(event) =>
                         setPackageDescription(event.target.value)
                       }
                       isInvalid={!!errors.packageDescription}
-                      required
                     />
                     <Form.Control.Feedback type="invalid">
                       {errors.packageDescription}
@@ -181,7 +209,7 @@ const Packages = () => {
                 </Col>
               </Row>
 
-              {/* Service selection */}
+              {/* Services Selection */}
               <div className="text-center mt-2">
                 <h4 style={{ fontSize: "18px", fontWeight: "bold" }}>
                   List of All Services
@@ -191,7 +219,6 @@ const Packages = () => {
               <div className="d-flex">
                 <Card className="shadow-sm w-100 pb-3">
                   <Card.Body>
-                    {/* Services Table */}
                     {services.length > 0 ? (
                       <Table
                         striped
@@ -203,7 +230,7 @@ const Packages = () => {
                       >
                         <thead>
                           <tr className="table-info">
-                            <th>Add a Service</th>
+                            <th>Select Services</th>
                             <th>Service Name</th>
                             <th>Price (INR)</th>
                             <th>Frequency of Service</th>
@@ -216,12 +243,11 @@ const Packages = () => {
                         <tbody>
                           {services.map((service) => (
                             <tr key={service.serviceID}>
-                              <td className="d-flex justify-content-center">
-                             
-                                {/* Centered checkbox */}
+                              <td className=" justify-content-center">
                                 <Form.Check
                                   type="checkbox"
                                   id={`service-${service.serviceID}`}
+                                  className="custom-checkbox"
                                   checked={selectedServices.includes(
                                     service.serviceID
                                   )}
@@ -290,13 +316,22 @@ const Packages = () => {
                   <Row>
                     <Col>
                       <Form.Group controlId="priceINR">
-                        <Form.Label>Package Price in INR</Form.Label>
-                        <Form.Control type="number" value={priceINR} readOnly />
+                        <Form.Label className="label-style">
+                          Package Price in INR
+                        </Form.Label>
+                        <Form.Control
+                          style={{ padding: "8px", fontSize: "12px" }}
+                          type="number"
+                          value={priceINR}
+                          readOnly
+                        />
                       </Form.Group>
                     </Col>
                     <Col>
                       <Form.Group controlId="discountPercentage">
-                        <Form.Label>Package Discount (%)</Form.Label>
+                        <Form.Label className="label-style">
+                          Package Discount (%)
+                        </Form.Label>
                         <Form.Control
                           type="number"
                           placeholder="Enter Discount Percentage"
@@ -304,16 +339,21 @@ const Packages = () => {
                           onChange={(event) =>
                             setDiscountPercentage(event.target.value)
                           }
+                          style={{ padding: "8px", fontSize: "12px" }}
                           required
                         />
                       </Form.Group>
                     </Col>
                     <Col>
                       <Form.Group controlId="packagePriceINR">
-                        <Form.Label>Final Package Price in INR</Form.Label>
+                        <Form.Label className="label-style">
+                          Final Package Price in INR
+                        </Form.Label>
                         <Form.Control
                           type="number"
                           value={packagePriceINR}
+                          required
+                          style={{ padding: "8px", fontSize: "12px" }}
                           readOnly
                         />
                       </Form.Group>
@@ -322,31 +362,54 @@ const Packages = () => {
                 </Col>
               </Row>
 
-              <Row>
+              {/* Package Status */}
+              {/* <Row>
                 <Col className="p-3">
                   <Form.Group controlId="packageStatus">
-                    <Form.Label>Package Status</Form.Label>
+                    <Form.Label className="label-style">
+                      Package Status
+                    </Form.Label>
                     <Form.Select
                       value={packageStatus}
                       onChange={(event) => setPackageStatus(event.target.value)}
+                      isInvalid={!!errors.packageStatus}
                       required
+                      style={{ padding: "8px", fontSize: "12px" }}
                     >
                       <option value="">Select Status</option>
                       <option value="1">Active</option>
                       <option value="0">Inactive</option>
                     </Form.Select>
+                    <Form.Control.Feedback type="invalid">
+                      {errors.packageStatus}
+                    </Form.Control.Feedback>
                   </Form.Group>
                 </Col>
-              </Row>
+              </Row> */}
 
               <div className="d-flex justify-content-between mt-3">
-                <Button variant="primary" type="submit">
+                <Button
+                  variant="primary"
+                  type="submit"
+                  style={{
+                    backgroundColor: "#009efb",
+                    borderColor: "#009efb",
+                    color: "white",
+                    margin: "4px",
+                    fontSize: "12px",
+                  }}
+                >
                   Save
                 </Button>
                 <Button
                   variant="secondary"
                   type="button"
                   onClick={handleCancel}
+                  style={{
+                    color: "white",
+                    margin: "4px",
+                    fontSize: "12px",
+                  }}
                 >
                   Cancel
                 </Button>
