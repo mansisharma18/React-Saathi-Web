@@ -34,7 +34,7 @@ const SaathiList = () => {
             <Card.Body>
               <div className="d-flex justify-content-center">
                 <div className="mt-2">
-                  <h4>Saathis- Subscribers Associated</h4>
+                  <h4>List of Saathis</h4>
                 </div>
               </div>
               <hr />
