@@ -127,7 +127,7 @@ const SubscribersList = () => {
                       </tr>
                     )) : (
                       <tr>
-                        <td colSpan="4">No data available</td>
+                        <td colSpan="8">No data available</td>
                       </tr>
                     )}
                   </tbody>

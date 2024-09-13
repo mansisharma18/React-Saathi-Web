@@ -135,6 +135,7 @@ body {
   color:#009efb; /* Maintain text color */
   text-decoration: none; /* Remove underline */
   border-left: 4px solid #009efb;
+  
 }
 
 /* Active link styling */
@@ -143,6 +144,7 @@ body {
 
   color: #ffffff; /* Active link text color */
   border-left: 4px solid #009efb;
+  
 }
 
 .leftNavbar.navbar-nav {

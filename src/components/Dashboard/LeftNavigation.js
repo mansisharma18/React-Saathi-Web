@@ -109,13 +109,13 @@ const LeftNavigation = () => {
                           href="/dashboard/createPackage"
                           className="nav-link"
                         >
-                          Add New Packages
+                          Add New Package
                         </Nav.Link>
                         <Nav.Link
                           href="/dashboard/createServices"
                           className="nav-link"
                         >
-                          Add New Services
+                          Add New Service
                         </Nav.Link>
 
                         <Nav.Link
@@ -192,7 +192,7 @@ const LeftNavigation = () => {
                           Patron Registration
                         </Nav.Link>
                         <Nav.Link href="/dashboard/list" className="nav-link">
-                          Manage Users
+                          Manage Subscribers
                         </Nav.Link>
                       </Accordion.Body>
                     </Accordion.Item>
@@ -227,7 +227,7 @@ const LeftNavigation = () => {
                     </Accordion.Item>
                   </Accordion>
 
-                  <Nav.Link href="/dashboard/services" className="nav-link">
+                  <Nav.Link href="/dashboard/serviceTaskList" className="nav-link">
                     <ManageAccountsIcon className="me-2" />
                     Services
                   </Nav.Link>

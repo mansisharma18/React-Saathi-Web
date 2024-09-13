@@ -115,7 +115,7 @@ const MyAccount = () => {
                     </tr>
                   )) : (
                     <tr>
-                      <td colSpan="6">No data available</td>
+                      <td colSpan="7">No data available</td>
                     </tr>
                   )}
                 </tbody>

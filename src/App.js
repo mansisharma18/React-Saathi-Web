@@ -30,6 +30,7 @@ import ViewAllPackages from "./components/Dashboard/ViewAllPackages";
 import CreatePackageService from "./components/Dashboard/CreatePackageService";
 import EditPackage from "./components/Dashboard/EditPackage";
 import EditService from "./components/Dashboard/EditService";
+import ServiceTaskList from "./components/Dashboard/ServiceTaskList";
 function App() {
   const location = useLocation();
   const isLoginPage = location.pathname === "/";
@@ -56,6 +57,8 @@ function App() {
           <Route path="saathis" element={<SaathiList />} />
           <Route path="UpdatePackage/:id" element={<EditPackage />} />
           <Route path="UpdateService/:id" element={<EditService />} />
+
+          <Route path="serviceTaskList" element={<ServiceTaskList />} />
           <Route path="createServices" element={<CreateService />} />
           <Route
             path="createPackageServices"
