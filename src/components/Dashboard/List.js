@@ -72,7 +72,7 @@ const List = () => {
 <Card.Body>
 <div className="d-flex justify-content-center">
   <div className="mt-2">
-      <h4>Subscriber's List</h4>
+      <h4>Subscribers List</h4>
       
   </div>
 

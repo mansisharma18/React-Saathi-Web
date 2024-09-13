@@ -179,7 +179,7 @@ const PatronDetails = () => {
       <Card.Body>
      <div className="d-flex justify-content-center">
         <div className="mt-2">
-            <h4> Patron Details</h4>
+            <h4>Add Patron Details</h4>
         </div>
      </div>
      <hr/>

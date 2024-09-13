@@ -28,6 +28,7 @@ import AllServices from "./components/Dashboard/AllServices";
 import Packages from "./components/Dashboard/Packages";
 import ViewAllPackages from "./components/Dashboard/ViewAllPackages";
 import CreatePackageService from "./components/Dashboard/CreatePackageService";
+import ServiceTaskList from "./components/Dashboard/ServiceTaskList";
 function App() {
   const location = useLocation();
   const isLoginPage = location.pathname === "/";
@@ -53,6 +54,7 @@ function App() {
           <Route path="subscribers" element={<SubscribersList />} />
           <Route path="saathis" element={<SaathiList />} />
 
+          <Route path="serviceTaskList" element={<ServiceTaskList />} />
           <Route path="createServices" element={<CreateService />} />
           <Route path="createPackageServices" element={<CreatePackageService />} />
           <Route path="servicesList" element={<AllServices />} />
