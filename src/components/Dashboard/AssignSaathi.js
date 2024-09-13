@@ -102,6 +102,7 @@ const AssignSaathi = () => {
                                 </div>
                             </div>
                             <hr/>
+                            <div style={{ position: 'relative' }}>
                             <Form onSubmit={handleSubmit}>
                                 <Row>
                                     <Col className="p-3">
@@ -171,12 +172,28 @@ const AssignSaathi = () => {
 </div>
 
 
-                                {alert && (
-                <Alert variant="success" className="h6 mx-3 mt-3 w-50">
-                  {alert}
-                </Alert>
-              )}
                             </Form>
+
+                            {alert && (
+    <div
+      style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        zIndex: 999, // Ensures it appears above the form
+        width: '100%', // Adjust width if needed
+        display: 'flex',
+        justifyContent: 'center', // Centers alert horizontally
+        alignItems: 'center', // Ensures proper alignment in flexbox
+      }}
+    >
+      <Alert variant="success" className="h6 w-50" >
+        {alert}
+      </Alert>
+    </div>
+  )}
+                            </div>
                         </Card.Body>
                     </Card>
                 </Container>

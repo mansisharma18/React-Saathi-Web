@@ -20,7 +20,7 @@ const SaathiList = () => {
         const fetchData = async () => {
        
 
-        axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/saathi`)
+        axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/saathi/subscribers`)
         .then(res => {
             console.log(res.data[0].firstName)
             // console.log(res.data[0].picture.split('webapps/')[1])
@@ -71,7 +71,7 @@ const SaathiList = () => {
   <tbody>
   {list.length > 0 ? list.map((item, index) => {
     // Extract the image path or provide a fallback if the picture is null
-    const picturePath = item.picture ? `${imagePath}${item.picture.split('webapps/')[1]}` : null;
+    const picturePath = item.picturePath ? `${imagePath}${item.picturePath.split('webapps/')[1]}` : null;
 
     return (
       <tr key={index}>
@@ -89,19 +89,24 @@ const SaathiList = () => {
           </div>
         </td>
         <td>
-        <ol>
-              <li>Mansi</li>
-              <li>Hamza</li>
-              <li>Arnav</li>
-              <li>Diksha</li>
-            </ol>
-        </td>
+  {item.subscribers && item.subscribers.length > 0 ? (
+    <ol>
+      {item.subscribers.map((subscriber, subIndex) => (
+        <li key={subIndex}>
+          {subscriber.firstName} {subscriber.lastName}
+        </li>
+      ))}
+    </ol>
+  ) : (
+    <span></span>
+  )}
+</td>
        
       </tr>
     );
   }) : (
     <tr>
-      <td colSpan="4">No data available</td>
+      <td colSpan="3">No data available</td>
     </tr>
   )}
 </tbody>

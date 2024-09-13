@@ -100,7 +100,19 @@ const List = () => {
                       <tr key={index}>
                         <th scope="row">{index + 1}</th>
                         <td>{item.firstName} {item.lastName}</td>
-                        <td>..</td>
+                        <td>
+  {item.patrons && item.patrons.length > 0 ? (
+    <ol>
+      {item.patrons.map((patron, patronIndex) => (
+        <li key={patronIndex}>
+          {patron.firstName} {patron.lastName}
+        </li>
+      ))}
+    </ol>
+  ) : (
+    <span></span>
+  )}
+</td>
                         <td>{item.contactNo}</td>
                         <td>{item.email}</td>
                         <td>{item.packageName}</td>
@@ -123,7 +135,7 @@ const List = () => {
                       </tr>
                     )) : (
                       <tr>
-                        <td colSpan="4">No data available</td>
+                        <td colSpan="7">No Subscriber</td>
                       </tr>
                     )}
                   </tbody>

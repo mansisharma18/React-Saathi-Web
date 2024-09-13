@@ -198,7 +198,7 @@ const LeftNavigation = () => {
                           Patron Registration
                         </Nav.Link>
                         <Nav.Link href="/dashboard/list" className="nav-link">
-                          Manage Users
+                          Manage Subscribers
                         </Nav.Link>
                       </Accordion.Body>
                     </Accordion.Item>
