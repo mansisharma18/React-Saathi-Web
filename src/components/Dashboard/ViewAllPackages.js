@@ -47,15 +47,19 @@ const ViewAllPackages = () => {
     setCurrentPackage({ ...currentPackage, [e.target.name]: e.target.value });
   };
   const handleDelete = async (packageID) => {
-    console.log("package ID", packageID);
-
-    const updatedPackage = {
-      status: 0,
-    };
-    const response = await axios.put(
-      `https://saathi.etheriumtech.com:444/Saathi/api/packageServices/${packageID}`,
-      updatedPackage
+    const confirmation = window.confirm(
+      "Are you sure you want to delete this user? This action cannot be undone."
     );
+    console.log("package ID", packageID);
+    if (confirmation) {
+      const updatedPackage = {
+        status: 0,
+      };
+      const response = await axios.put(
+        `https://saathi.etheriumtech.com:444/Saathi/api/packageServices/${packageID}`,
+        updatedPackage
+      );
+    }
   };
   const handleServiceStatusChange = (index, value) => {
     const updatedServices = [...currentPackage.packageServices];
@@ -111,12 +115,12 @@ const ViewAllPackages = () => {
             <Table striped bordered hover responsive className="mt-4">
               <thead className="table-info">
                 <tr>
-                  <th>S.No</th>
-                  <th>Package Name</th>
-                  <th>Description</th>
-                  <th>Price (USD/INR)</th>
-                  <th>Services</th>
-                  <th>Edit/Delete</th>
+                  <th className="text-center align-middle">S.No</th>
+                  <th className="text-center align-middle">Package Name</th>
+                  <th className="text-center align-middle">Description</th>
+                  <th className="text-center align-middle">Price (USD/INR)</th>
+                  <th className="text-center align-middle">Services</th>
+                  <th className="text-center align-middle">Edit/Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -151,6 +155,7 @@ const ViewAllPackages = () => {
                         <td>
                           <span className="text-decoration-none me-3">
                             <Link
+                              to={`/dashboard/UpdatePackage/${item.packageID}`}
                               style={{
                                 color: "inherit",
                                 textDecoration: "none",

@@ -31,8 +31,9 @@ const Packages = () => {
         const response = await axios.get(
           `https://saathi.etheriumtech.com:444/Saathi/alacarteservices`
         );
-        const res = response.data;
-        setServices(res);
+        const data = response.data;
+        const filteredData = data.filter((item) => item.status === 1);
+        setServices(filteredData);
       } catch (error) {
         console.error("Error fetching services:", error);
       }
@@ -226,7 +227,7 @@ const Packages = () => {
                         hover
                         responsive
                         className="table-font-size"
-                        style={{ height: "300px", overflowY: "scroll" }}
+                        style={{ height: "auto", overflowY: "scroll" }}
                       >
                         <thead>
                           <tr className="table-info">
@@ -417,9 +418,23 @@ const Packages = () => {
             </Form>
 
             {alert && (
-              <Alert variant="success" className="h6 mx-3 mt-3 w-50">
-                {alert}
-              </Alert>
+              <div
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  zIndex: 999, // Ensures it appears above the form
+                  width: "100%", // Adjust width if needed
+                  display: "flex",
+                  justifyContent: "center", // Centers alert horizontally
+                  alignItems: "center", // Ensures proper alignment in flexbox
+                }}
+              >
+                <Alert variant="success" className="h6 w-50">
+                  {alert}
+                </Alert>
+              </div>
             )}
           </Card.Body>
         </Card>
