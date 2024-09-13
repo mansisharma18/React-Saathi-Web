@@ -109,32 +109,26 @@ const LeftNavigation = () => {
                           href="/dashboard/createPackage"
                           className="nav-link"
                         >
-                          Packages
+                          Add New Packages
                         </Nav.Link>
                         <Nav.Link
                           href="/dashboard/createServices"
                           className="nav-link"
                         >
-                          Services
+                          Add New Services
                         </Nav.Link>
 
-                        <Nav.Link
-                          href="/dashboard/createPackageServices"
-                          className="nav-link"
-                        >
-                          Package Services
-                        </Nav.Link>
                         <Nav.Link
                           href="/dashboard/servicesList"
                           className="nav-link"
                         >
-                          All Services
+                          List of Services
                         </Nav.Link>
                         <Nav.Link
                           href="/dashboard/packages"
                           className="nav-link"
                         >
-                          All Package
+                          List of Packages
                         </Nav.Link>
                       </Accordion.Body>
                     </Accordion.Item>

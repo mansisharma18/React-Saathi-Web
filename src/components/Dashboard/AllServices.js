@@ -76,8 +76,10 @@ function AllServices() {
       <Container className="d-flex justify-content-center align-items-center mt-5 px-5">
         <Card className="shadow-sm w-100 pb-3">
           <Card.Body>
-            <div className="text-center mt-2">
-              <h4>All Services</h4>
+            <div className="d-flex justify-content-center">
+              <div className="mt-2">
+                <h4 className="heading-color">List of Services</h4>
+              </div>
             </div>
             <hr />
 

@@ -1,71 +1,68 @@
-import React,{useState,useEffect} from 'react'
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
+import React, { useState, useEffect } from "react";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
 import axios from "axios";
-import { Link } from 'react-router-dom';
-
-
+import { Link } from "react-router-dom";
 
 const List = () => {
-
-  const userId =localStorage.getItem("userId");
+  const userId = localStorage.getItem("userId");
 
   const [list, setList] = useState("");
 
-    
   useEffect(() => {
+    console.log("hello");
+    const fetchData = async () => {
+      axios
+        .get(
+          `https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers`
+        )
+        .then((res) => {
+          // Filter the data where status is 1
+          const filteredData = res.data.filter(
+            (subscriber) => subscriber.status === 1
+          );
 
-      console.log("hello")
-      const fetchData = async () => {
-     
+          console.log(filteredData[0]?.firstName);
+          setList(filteredData);
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchData();
+  }, []);
 
-      axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers`)
-      .then(res => {
-        // Filter the data where status is 1
-        const filteredData = res.data.filter(subscriber => subscriber.status === 1);
-        
-        console.log(filteredData[0]?.firstName); 
-        setList(filteredData); 
-    })
-      .catch(err => 
-          console.log(err)
-      )
-      };
-      fetchData();
-    }, []);
+  const handleDelete = async (id) => {
+    const confirmation = window.confirm(
+      "Are you sure you want to delete this user? This action cannot be undone."
+    );
 
-    const handleDelete = async (id) => {
-
-      const confirmation = window.confirm('Are you sure you want to delete this user? This action cannot be undone.');
-  
-      if (confirmation) {
-     
-  
+    if (confirmation) {
       try {
-        const response = await axios.put(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${id}`,{
+        const response = await axios.put(
+          `https://saathi.etheriumtech.com:444/Saathi/subscribers/${id}`,
+          {
+            status: 0,
+          }
+        );
 
-          "status":0
-          
-         })
-  
         if (response.data) {
           // Filter the list locally after deleting
-          const updatedList = list.filter(user => user.subscriberID !== id);
+          const updatedList = list.filter((user) => user.subscriberID !== id);
           setList(updatedList);
         } else {
-          console.error('An error occurred. Please contact the development team.');
+          console.error(
+            "An error occurred. Please contact the development team."
+          );
         }
       } catch (error) {
-        console.error('Error deleting user:', error);
+        console.error("Error deleting user:", error);
       }
     }
-    };
+  };
 
-    
   return (
     <div>
        <div className="d-flex">
@@ -139,16 +136,14 @@ const List = () => {
                       </tr>
                     )}
                   </tbody>
-</table>
-  </div>
-
-</Card.Body>
-</Card>
-</Container>
-</div>
-
+                </table>
+              </div>
+            </Card.Body>
+          </Card>
+        </Container>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default List
+export default List;

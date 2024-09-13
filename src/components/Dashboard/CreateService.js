@@ -323,12 +323,10 @@ function CreateService() {
                 </Col>
                 <Col className="p-3">
                   <Form.Group>
-                    <Form.Label className="label-style">
-                      Extra Charge Price
-                    </Form.Label>
+                    <Form.Label className="label-style">Extra Charge Price</Form.Label>
                     <Form.Control
                       type="number"
-                      placeholder="Enter Extra Charge Price"
+                      placeholder="Enter Extra Charge"
                       style={{ padding: "8px", fontSize: "12px" }}
                       value={priceUSD}
                       onChange={(event) => setPriceUSD(event.target.value)}
