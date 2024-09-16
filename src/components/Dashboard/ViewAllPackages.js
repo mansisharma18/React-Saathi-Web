@@ -118,7 +118,7 @@ const ViewAllPackages = () => {
                   <th className="text-center align-middle">S.No</th>
                   <th className="text-center align-middle">Package Name</th>
                   <th className="text-center align-middle">Description</th>
-                  <th className="text-center align-middle">Price (USD/INR)</th>
+                  <th className="text-center align-middle">Price (INR)</th>
                   <th className="text-center align-middle">Services</th>
                   <th className="text-center align-middle">Edit/Delete</th>
                 </tr>
@@ -131,9 +131,7 @@ const ViewAllPackages = () => {
                         <td>{index + 1}</td>
                         <td>{item.packageName}</td>
                         <td>{item.packageDescription}</td>
-                        <td>
-                          ${item.priceUSD} USD / ₹{item.priceINR} INR
-                        </td>
+                        <td>₹{item.priceINR}</td>
                         <td>
                           {item.packageServices &&
                           item.packageServices.length > 0 ? (

@@ -27,7 +27,7 @@ function CreateService() {
   const [alert, setAlert] = useState(null); // For success/error messages
   const [errors, setErrors] = useState({});
 
-  const [extraPrice, setExtraPrice] = useState("");
+  const [extra, setExtra] = useState(null);
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
 
@@ -37,34 +37,6 @@ function CreateService() {
   };
 
   // Validation of input fields
-  const validateServiceFields = () => {
-    const validationErrors = {};
-
-    if (!serviceName)
-      validationErrors.serviceName = "Service name is required.";
-    if (!serviceDescription)
-      validationErrors.serviceDescription = "Service description is required.";
-    if (!frequencyUnit)
-      validationErrors.frequencyUnit = "Frequency unit is required.";
-    if (!frequency || frequency <= 0)
-      validationErrors.frequency = "Frequency must be a positive number.";
-    if (!priceINR || priceINR <= 0)
-      validationErrors.priceINR = "Price in INR must be a positive number.";
-    if (!priceUSD || priceUSD <= 0)
-      validationErrors.priceUSD = "Price in USD must be a positive number.";
-    if (!durationInHours || durationInHours <= 0)
-      validationErrors.durationInHours = "Duration must be a positive number.";
-    if (!businessHoursStart)
-      validationErrors.businessHoursStart =
-        "Business hours start time is required.";
-    if (!businessHoursEnd)
-      validationErrors.businessHoursEnd =
-        "Business hours end time is required.";
-    if (!serviceStatus)
-      validationErrors.serviceStatus = "Service status is required.";
-
-    return validationErrors;
-  };
 
   // Submit Service Data
   const handleSubmitService = async (event) => {
@@ -88,7 +60,7 @@ function CreateService() {
       priceINR: parseFloat(priceINR),
       priceUSD: parseFloat(priceUSD),
       surgePrice: parseFloat(surgePrice),
-      // extra: extraPrice,
+      extra: extra,
       durationInHours: parseInt(durationInHours),
       businessHoursStart: formattedBusinessHoursStart,
       businessHoursEnd: formattedBusinessHoursEnd,
@@ -121,10 +93,11 @@ function CreateService() {
       setBusinessHoursStart("");
       setBusinessHoursEnd("");
       setServiceStatus("");
-      setExtraPrice("");
+      setExtra("");
       setTimeout(() => {
         setAlert("");
-      }, 5000);
+        navigate("/dashboard");
+      }, 2000);
     } catch (error) {
       console.error("Error creating service:", error);
       setAlert(
@@ -217,11 +190,11 @@ function CreateService() {
                         required
                       >
                         <option value="">Select Frequency</option>
-                        <option value="once">Once</option>
-                        <option value="daily">Daily</option>
-                        <option value="weekly">Weekly</option>
-                        <option value="biweekly">BiWeekly</option>
-                        <option value="monthly">Monthly</option>
+                        <option value="Once">Once</option>
+                        <option value="Daily">Daily</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Biweekly">BiWeekly</option>
+                        <option value="Monthly">Monthly</option>
                       </Form.Select>
                     </Form.Group>
                   </Col>
@@ -325,16 +298,12 @@ function CreateService() {
                   </Col>
                   <Col className="p-3">
                     <Form.Group>
-                      <Form.Label className="label-style">
-                        Extras
-                      </Form.Label>
+                      <Form.Label className="label-style">Extras</Form.Label>
                       <Form.Control
-                    
                         placeholder="Enter Extra"
                         style={{ padding: "8px", fontSize: "12px" }}
-                        value={extraPrice}
-                        onChange={(event) => setExtraPrice(event.target.value)}
-                       
+                        value={extra}
+                        onChange={(event) => setExtra(event.target.value)}
                       />
                     </Form.Group>
                   </Col>
