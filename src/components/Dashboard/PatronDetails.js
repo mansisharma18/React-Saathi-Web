@@ -205,7 +205,7 @@ const PatronDetails = () => {
                                         </Form.Select>
                                     </Col>
                                     </Row>
-<Card>
+<Card className="shadow-sm pb-3">
 <Card.Body>
                                     <div className="d-flex justify-content-center">
         <div className="mt-2">
@@ -378,7 +378,10 @@ const PatronDetails = () => {
       {newPatron && (
         <>
 
+<Card className="shadow-sm pb-5 mt-5">
+  <Card.Body>
 
+ 
 <div className="d-flex justify-content-center">
         <div className="mt-2">
             <h4> Add Another Patron</h4>
@@ -544,11 +547,14 @@ const PatronDetails = () => {
           />
         </Col>
         </Row>
+
+        </Card.Body>
+        </Card>
    
         </>
       )}
 
-<div className="d-flex">
+<div className="d-flex mt-3">
 
   {displayAddButton && (
     
