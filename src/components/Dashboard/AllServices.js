@@ -7,8 +7,10 @@ import {
   Modal,
   Form,
   Spinner,
+  Alert,
 } from "react-bootstrap";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function AllServices() {
   const [services, setServices] = useState([]);
@@ -16,12 +18,13 @@ function AllServices() {
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [currentService, setCurrentService] = useState(null);
+  const [showAlert, setShowAlert] = useState({ message: "", variant: "" });
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
         const response = await axios.get(
-          `https://saathi.etheriumtech.com:444/Saathi/alacarteservices`
+          `https://saathi.etheriumtech.com:444/Saathi/alacarteservices/active`
         );
         setServices(response.data);
       } catch (err) {
@@ -42,6 +45,43 @@ function AllServices() {
   const handleClose = () => {
     setShowModal(false);
     setCurrentService(null);
+  };
+
+  const handleDelete = async (serviceID) => {
+    const confirmation = window.confirm(
+      "Are you sure you want to delete this user? This action cannot be undone."
+    );
+    if (confirmation) {
+      try {
+        const updatedService = { status: 0 };
+        await axios.put(
+          `https://saathi.etheriumtech.com:444/Saathi/alacarteservices/${serviceID}`,
+          updatedService
+        );
+
+        // Show alert for successful deletion
+        setShowAlert({
+          message: "Service deleted successfully",
+          variant: "success",
+        });
+
+        // Update the services state by filtering out the deleted service
+        setServices(
+          services.filter((service) => service.serviceID !== serviceID)
+        );
+
+        // Hide the alert after 5 seconds
+        setTimeout(() => {
+          setShowAlert({ message: "", variant: "" });
+        }, 5000);
+      } catch (error) {
+        console.error("Failed to delete service:", error);
+        setShowAlert({
+          message: "Failed to delete service",
+          variant: "danger",
+        });
+      }
+    }
   };
 
   const handleInputChange = (e) => {
@@ -83,6 +123,13 @@ function AllServices() {
             </div>
             <hr />
 
+            {/* Alert Section */}
+            {showAlert.message && (
+              <Alert variant={showAlert.variant} className="text-center">
+                {showAlert.message}
+              </Alert>
+            )}
+
             {/* Loading Spinner */}
             {loading ? (
               <div className="d-flex justify-content-center my-4">
@@ -104,16 +151,18 @@ function AllServices() {
               >
                 <thead>
                   <tr className="table-info">
-                    <th>S.No</th>
-                    <th>Service Name</th>
-                    <th>Description</th>
-                    <th>Price INR</th>
-                    <th>Price USD</th>
-                    <th>Frequency </th>
-                    <th>Duration (Hours)</th>
-                    <th>Business Hours</th>
-                    <th>Status</th>
-                    <th>Update</th>
+                    <th className="text-center align-middle">S.No</th>
+                    <th className="text-center align-middle">Service Name</th>
+                    <th className="text-center align-middle">Description</th>
+                    <th className="text-center align-middle">Price INR</th>
+                    <th className="text-center align-middle">Price USD</th>
+                    <th className="text-center align-middle">Frequency</th>
+                    <th className="text-center align-middle">
+                      Duration (Hours)
+                    </th>
+                    <th className="text-center align-middle">Business Hours</th>
+                    <th className="text-center align-middle">Status</th>
+                    <th className="text-center align-middle">Edit/Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -123,21 +172,19 @@ function AllServices() {
                       <td>{service.serviceName}</td>
                       <td>{service.serviceDescription}</td>
                       <td>
-                        {/* Check if priceINR exists before applying toFixed() */}
                         {service.priceINR !== null &&
                         service.priceINR !== undefined
-                          ? service.priceINR.toFixed(2)
+                          ? service.priceINR
                           : "N/A"}
                       </td>
                       <td>
-                        {/* Check if priceUSD exists before applying toFixed() */}
                         {service.priceUSD !== null &&
                         service.priceUSD !== undefined
-                          ? service.priceUSD.toFixed(2)
+                          ? service.priceUSD
                           : "N/A"}
                       </td>
                       <td>
-                        {service.frequency} ({service.frequencyUnit})
+                        {service.frequency} {service.frequencyUnit}
                       </td>
                       <td>{service.durationInHours}</td>
                       <td>
@@ -146,10 +193,25 @@ function AllServices() {
                       </td>
                       <td>{service.status === 1 ? "Active" : "Inactive"}</td>
                       <td>
-                        <i
-                          className="bi bi-pencil-fill edit-btn-color"
-                          onClick={() => handleEditClick(service)}
-                        ></i>
+                        <span className="text-decoration-none me-3">
+                          <Link
+                            to={`/dashboard/UpdateService/${service.serviceID}`}
+                            style={{ color: "inherit", textDecoration: "none" }}
+                          >
+                            <i
+                              className="bi bi-pencil-fill edit-btn-color"
+                              onClick={() => handleEditClick(service)}
+                            ></i>
+                          </Link>
+                        </span>
+
+                        <span>
+                          <i
+                            className="bi bi-trash3-fill delete-btn-color"
+                            onClick={() => handleDelete(service.serviceID)}
+                            style={{ cursor: "pointer" }}
+                          ></i>
+                        </span>
                       </td>
                     </tr>
                   ))}

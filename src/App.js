@@ -28,6 +28,8 @@ import AllServices from "./components/Dashboard/AllServices";
 import Packages from "./components/Dashboard/Packages";
 import ViewAllPackages from "./components/Dashboard/ViewAllPackages";
 import CreatePackageService from "./components/Dashboard/CreatePackageService";
+import EditPackage from "./components/Dashboard/EditPackage";
+import EditService from "./components/Dashboard/EditService";
 import ServiceTaskList from "./components/Dashboard/ServiceTaskList";
 function App() {
   const location = useLocation();
@@ -53,10 +55,15 @@ function App() {
           <Route path="assignSaathi" element={<AssignSaathi />} />
           <Route path="subscribers" element={<SubscribersList />} />
           <Route path="saathis" element={<SaathiList />} />
+          <Route path="UpdatePackage/:id" element={<EditPackage />} />
+          <Route path="UpdateService/:id" element={<EditService />} />
 
           <Route path="serviceTaskList" element={<ServiceTaskList />} />
           <Route path="createServices" element={<CreateService />} />
-          <Route path="createPackageServices" element={<CreatePackageService />} />
+          <Route
+            path="createPackageServices"
+            element={<CreatePackageService />}
+          />
           <Route path="servicesList" element={<AllServices />} />
           <Route path="packages" element={<ViewAllPackages />} />
           <Route path="createPackage" element={<Packages />} />
