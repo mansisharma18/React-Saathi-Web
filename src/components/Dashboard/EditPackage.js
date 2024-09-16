@@ -37,6 +37,7 @@ const EditPackage = () => {
         const data = servicesResponse.data;
         const filteredData = data.filter((item) => item.status === 1);
         setServices(filteredData);
+        console.log("package ID", id);
 
         // Fetch package details by packageID
         const packageResponse = await axios.get(
