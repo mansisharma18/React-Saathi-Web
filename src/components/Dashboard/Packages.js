@@ -115,8 +115,8 @@ const Packages = () => {
         serviceID: service.serviceID,
         frequency: selectedFrequency,
         frequencyUnit: service.frequencyUnit,
-        priceUSD: service.priceUSD,
-        priceINR: service.priceINR,
+        // priceUSD: service.priceUSD,
+        // priceINR: service.priceINR,
         status: service.status,
       };
     });
@@ -140,7 +140,7 @@ const Packages = () => {
       setTimeout(() => {
         setAlert("");
         navigate("/dashboard");
-      }, 5000);
+      }, 2000);
     } catch (error) {
       console.error("Error creating package:", error);
       setAlert("An error occurred while creating the package.");

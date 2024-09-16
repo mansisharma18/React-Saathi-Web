@@ -18,17 +18,18 @@ const ViewAllPackages = () => {
   const [showModal, setShowModal] = useState(false); // For opening/closing modal
   const [currentPackage, setCurrentPackage] = useState(null); // For storing the package being edited
 
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(
+        `https://saathi.etheriumtech.com:444/Saathi/subscription-package/active`
+      );
+      setList(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(
-          `https://saathi.etheriumtech.com:444/Saathi/subscription-package/active`
-        );
-        setList(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchData();
   }, []);
 
@@ -46,26 +47,33 @@ const ViewAllPackages = () => {
   const handlePackageChange = (e) => {
     setCurrentPackage({ ...currentPackage, [e.target.name]: e.target.value });
   };
+
   const handleDelete = async (packageID) => {
     const confirmation = window.confirm(
       "Are you sure you want to delete this user? This action cannot be undone."
     );
-    console.log("package ID", packageID);
     if (confirmation) {
-      const updatedPackage = {
-        status: 0,
-      };
-      const response = await axios.put(
-        `https://saathi.etheriumtech.com:444/Saathi/api/packageServices/${packageID}`,
-        updatedPackage
-      );
+      try {
+        const updatedPackage = {
+          status: 0,
+        };
+        await axios.put(
+          `https://saathi.etheriumtech.com:444/Saathi/subscription-package/${packageID}`,
+          updatedPackage
+        );
+        fetchData(); // Refresh the list after deletion
+      } catch (error) {
+        console.error("Failed to delete package:", error);
+      }
     }
   };
+
   const handleServiceStatusChange = (index, value) => {
     const updatedServices = [...currentPackage.packageServices];
     updatedServices[index].status = value;
     setCurrentPackage({ ...currentPackage, packageServices: updatedServices });
   };
+
   const handleSave = async () => {
     const url = `https://saathi.etheriumtech.com:444/Saathi/subscription-package/${currentPackage.packageID}`;
     const updatedPackage = {
@@ -112,13 +120,19 @@ const ViewAllPackages = () => {
               </div>
             </div>
             <hr />
-            <Table striped bordered hover responsive className="mt-4">
+            <Table
+              striped
+              bordered
+              hover
+              responsive
+              className=" table-font-size"
+            >
               <thead className="table-info">
                 <tr>
                   <th className="text-center align-middle">S.No</th>
                   <th className="text-center align-middle">Package Name</th>
                   <th className="text-center align-middle">Description</th>
-                  <th className="text-center align-middle">Price (USD/INR)</th>
+                  <th className="text-center align-middle">Price (INR)</th>
                   <th className="text-center align-middle">Services</th>
                   <th className="text-center align-middle">Edit/Delete</th>
                 </tr>
@@ -131,9 +145,7 @@ const ViewAllPackages = () => {
                         <td>{index + 1}</td>
                         <td>{item.packageName}</td>
                         <td>{item.packageDescription}</td>
-                        <td>
-                          ${item.priceUSD} USD / ₹{item.priceINR} INR
-                        </td>
+                        <td>₹{item.priceINR}</td>
                         <td>
                           {item.packageServices &&
                           item.packageServices.length > 0 ? (
@@ -167,11 +179,7 @@ const ViewAllPackages = () => {
                           <span>
                             <i
                               className="bi bi-trash3-fill delete-btn-color"
-                              onClick={() =>
-                                handleDelete(
-                                  item.packageServices[0].packageServiceID
-                                )
-                              }
+                              onClick={() => handleDelete(item.packageID)}
                               style={{ cursor: "pointer" }}
                             ></i>
                           </span>

@@ -155,7 +155,7 @@ function AllServices() {
                     <th className="text-center align-middle">Service Name</th>
                     <th className="text-center align-middle">Description</th>
                     <th className="text-center align-middle">Price INR</th>
-                    <th className="text-center align-middle">Price USD</th>
+
                     <th className="text-center align-middle">Frequency</th>
                     <th className="text-center align-middle">
                       Duration (Hours)
@@ -177,12 +177,7 @@ function AllServices() {
                           ? service.priceINR
                           : "N/A"}
                       </td>
-                      <td>
-                        {service.priceUSD !== null &&
-                        service.priceUSD !== undefined
-                          ? service.priceUSD
-                          : "N/A"}
-                      </td>
+
                       <td>
                         {service.frequency} {service.frequencyUnit}
                       </td>

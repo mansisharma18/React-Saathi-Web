@@ -24,7 +24,7 @@ function EditService() {
   const [businessHoursEnd, setBusinessHoursEnd] = useState("");
   const [serviceStatus, setServiceStatus] = useState("");
   const [loading, setLoading] = useState(false); // Loading state
-  const [alert, setAlert] = useState({ message: "", variant: "" }); // For success/error messages
+  const [alert, setAlert] = useState(""); // For success/error messages
   const [errors, setErrors] = useState({});
   const [extraPrice, setExtraPrice] = useState("");
 
@@ -57,10 +57,10 @@ function EditService() {
         setExtraPrice(serviceData.extraPrice); // If there is an extra charge field
       } catch (error) {
         console.error("Error fetching service data:", error);
-        setAlert({
-          message: "Error fetching service data.",
-          variant: "danger",
-        });
+        setAlert(
+           "Error fetching service data."
+        
+        );
       } finally {
         setLoading(false);
       }
@@ -115,22 +115,20 @@ function EditService() {
 
       console.log("Response:", response.data);
 
-      setAlert({
-        message: "Service updated successfully!",
-        variant: "success",
-      });
+      setAlert(
+        "Service updated successfully!"
+      );
 
       setTimeout(() => {
-        setAlert({ message: "", variant: "" });
+        setAlert("");
         navigate("/dashboard");
       }, 5000);
     } catch (error) {
       console.error("Error updating service:", error);
-      setAlert({
-        message:
-          "An error occurred while updating the service. Please try again.",
-        variant: "danger",
-      });
+      setAlert(
+          "An error occurred while updating the service. Please try again."
+    
+      );
     } finally {
       setLoading(false);
     }
@@ -147,178 +145,179 @@ function EditService() {
               </div>
             </div>
             <hr />
+            <div style={{ position: "relative" }}>
+              <Form onSubmit={handleSubmitService}>
+                <Row>
+                  <Col className="p-3">
+                    <Form.Group>
+                      <Form.Label className="label-style">
+                        Service Name
+                      </Form.Label>
+                      <Form.Control
+                        placeholder="Add Service Name"
+                        value={serviceName}
+                        required
+                        style={{ padding: "8px", fontSize: "12px" }}
+                        onChange={(event) => setServiceName(event.target.value)}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
 
-            <Form onSubmit={handleSubmitService}>
-              <Row>
-                <Col className="p-3">
-                  <Form.Group>
-                    <Form.Label className="label-style">
-                      Service Name
-                    </Form.Label>
-                    <Form.Control
-                      placeholder="Add Service Name"
-                      value={serviceName}
-                      required
-                      style={{ padding: "8px", fontSize: "12px" }}
-                      onChange={(event) => setServiceName(event.target.value)}
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
+                <Row>
+                  <Col className="p-3">
+                    <Form.Group>
+                      <Form.Label className="label-style">
+                        Service Description
+                      </Form.Label>
+                      <Form.Control
+                        placeholder="Add Service Description"
+                        value={serviceDescription}
+                        style={{ padding: "8px", fontSize: "12px" }}
+                        onChange={(event) =>
+                          setServiceDescription(event.target.value)
+                        }
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
 
-              <Row>
-                <Col className="p-3">
-                  <Form.Group>
-                    <Form.Label className="label-style">
-                      Service Description
-                    </Form.Label>
-                    <Form.Control
-                      placeholder="Add Service Description"
-                      value={serviceDescription}
-                      style={{ padding: "8px", fontSize: "12px" }}
-                      onChange={(event) =>
-                        setServiceDescription(event.target.value)
-                      }
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
+                {/* Dropdown for selecting frequency */}
+                <Row>
+                  <Col className="p-3">
+                    <Form.Group>
+                      <Form.Label className="label-style">
+                        Frequency of Service
+                      </Form.Label>
+                      <Form.Select
+                        value={frequencyUnit}
+                        style={{ padding: "8px", fontSize: "12px" }}
+                        onChange={(event) =>
+                          setFrequencyUnit(event.target.value)
+                        }
+                        required
+                      >
+                        <option value="">Select Frequency</option>
+                        <option value="once">Once</option>
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="biweekly">BiWeekly</option>
+                        <option value="monthly">Monthly</option>
+                      </Form.Select>
+                    </Form.Group>
+                  </Col>
+                  <Col className="p-3">
+                    <Form.Group>
+                      <Form.Label className="label-style">
+                        Duration (Hours)
+                      </Form.Label>
+                      <Form.Control
+                        type="number"
+                        placeholder="Enter Duration"
+                        style={{ padding: "8px", fontSize: "12px" }}
+                        value={durationInHours}
+                        onChange={(event) =>
+                          setDurationInHours(event.target.value)
+                        }
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col className="p-3">
+                    <Form.Group>
+                      <Form.Label className="label-style">
+                        Price in INR
+                      </Form.Label>
+                      <Form.Control
+                        type="number"
+                        placeholder="Enter Price in INR"
+                        style={{ padding: "8px", fontSize: "12px" }}
+                        value={priceINR}
+                        onChange={(event) => setPriceINR(event.target.value)}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col className="p-3">
+                    <Form.Group>
+                      <Form.Label className="label-style">
+                        Price in USD
+                      </Form.Label>
+                      <Form.Control
+                        type="number"
+                        placeholder="Enter Price in USD"
+                        style={{ padding: "8px", fontSize: "12px" }}
+                        value={priceUSD}
+                        onChange={(event) => setPriceUSD(event.target.value)}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
 
-              {/* Dropdown for selecting frequency */}
-              <Row>
-                <Col className="p-3">
-                  <Form.Group>
-                    <Form.Label className="label-style">
-                      Frequency of Service
-                    </Form.Label>
-                    <Form.Select
-                      value={frequencyUnit}
-                      style={{ padding: "8px", fontSize: "12px" }}
-                      onChange={(event) => setFrequencyUnit(event.target.value)}
-                      required
-                    >
-                      <option value="">Select Frequency</option>
-                      <option value="once">Once</option>
-                      <option value="daily">Daily</option>
-                      <option value="weekly">Weekly</option>
-                      <option value="biweekly">BiWeekly</option>
-                      <option value="monthly">Monthly</option>
-                    </Form.Select>
-                  </Form.Group>
-                </Col>
-                <Col className="p-3">
-                  <Form.Group>
-                    <Form.Label className="label-style">
-                      Duration (Hours)
-                    </Form.Label>
-                    <Form.Control
-                      type="number"
-                      placeholder="Enter Duration"
-                      style={{ padding: "8px", fontSize: "12px" }}
-                      value={durationInHours}
-                      onChange={(event) =>
-                        setDurationInHours(event.target.value)
-                      }
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-                <Col className="p-3">
-                  <Form.Group>
-                    <Form.Label className="label-style">
-                      Price in INR
-                    </Form.Label>
-                    <Form.Control
-                      type="number"
-                      placeholder="Enter Price in INR"
-                      style={{ padding: "8px", fontSize: "12px" }}
-                      value={priceINR}
-                      onChange={(event) => setPriceINR(event.target.value)}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-                <Col className="p-3">
-                  <Form.Group>
-                    <Form.Label className="label-style">
-                      Price in USD
-                    </Form.Label>
-                    <Form.Control
-                      type="number"
-                      placeholder="Enter Price in USD"
-                      style={{ padding: "8px", fontSize: "12px" }}
-                      value={priceUSD}
-                      onChange={(event) => setPriceUSD(event.target.value)}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
+                <Row>
+                  <Col className="p-3">
+                    <Form.Group>
+                      <Form.Label className="label-style">
+                        Service Start Time
+                      </Form.Label>
+                      <Form.Control
+                        type="time"
+                        style={{ padding: "8px", fontSize: "12px" }}
+                        value={businessHoursStart}
+                        onChange={(event) =>
+                          setBusinessHoursStart(event.target.value)
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
 
-              <Row>
-                <Col className="p-3">
-                  <Form.Group>
-                    <Form.Label className="label-style">
-                      Service Start Time
-                    </Form.Label>
-                    <Form.Control
-                      type="time"
-                      style={{ padding: "8px", fontSize: "12px" }}
-                      value={businessHoursStart}
-                      onChange={(event) =>
-                        setBusinessHoursStart(event.target.value)
-                      }
-                    />
-                  </Form.Group>
-                </Col>
+                  <Col className="p-3">
+                    <Form.Group>
+                      <Form.Label className="label-style">
+                        Service End Time
+                      </Form.Label>
+                      <Form.Control
+                        type="time"
+                        style={{ padding: "8px", fontSize: "12px" }}
+                        value={businessHoursEnd}
+                        onChange={(event) =>
+                          setBusinessHoursEnd(event.target.value)
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col className="p-3">
+                    <Form.Group>
+                      <Form.Label className="label-style">
+                        Surge Price
+                      </Form.Label>
+                      <Form.Control
+                        type="number"
+                        placeholder="Enter Surge Price"
+                        style={{ padding: "8px", fontSize: "12px" }}
+                        value={surgePrice}
+                        onChange={(event) => setSurgePrice(event.target.value)}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col className="p-3">
+                    <Form.Group>
+                      <Form.Label className="label-style">Extras</Form.Label>
+                      <Form.Control
+                        type="number"
+                        placeholder="Extras"
+                        style={{ padding: "8px", fontSize: "12px" }}
+                        value={extraPrice}
+                        onChange={(event) => setExtraPrice(event.target.value)}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
 
-                <Col className="p-3">
-                  <Form.Group>
-                    <Form.Label className="label-style">
-                      Service End Time
-                    </Form.Label>
-                    <Form.Control
-                      type="time"
-                      style={{ padding: "8px", fontSize: "12px" }}
-                      value={businessHoursEnd}
-                      onChange={(event) =>
-                        setBusinessHoursEnd(event.target.value)
-                      }
-                    />
-                  </Form.Group>
-                </Col>
-                <Col className="p-3">
-                  <Form.Group>
-                    <Form.Label className="label-style">Surge Price</Form.Label>
-                    <Form.Control
-                      type="number"
-                      placeholder="Enter Surge Price"
-                      style={{ padding: "8px", fontSize: "12px" }}
-                      value={surgePrice}
-                      onChange={(event) => setSurgePrice(event.target.value)}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-                <Col className="p-3">
-                  <Form.Group>
-                    <Form.Label className="label-style">
-                      Extras
-                    </Form.Label>
-                    <Form.Control
-                      type="number"
-                      placeholder="Extras"
-                      style={{ padding: "8px", fontSize: "12px" }}
-                      value={extraPrice}
-                      onChange={(event) => setExtraPrice(event.target.value)}
-                     
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-
-              {/* <Row>
+                {/* <Row>
                 <Col className="p-3">
                   <Form.Group>
                     <Form.Label className="label-style">
@@ -338,45 +337,59 @@ function EditService() {
                 </Col>
               </Row> */}
 
-              <div className="d-flex justify-content-between mt-3">
-                <Button
-                  variant="primary"
-                  type="submit"
-                  style={{
-                    backgroundColor: "#009efb",
-                    borderColor: "#009efb",
-                    color: "white",
-                    margin: "4px",
-                    fontSize: "12px",
-                  }}
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <Spinner as="span" animation="border" size="sm" />
-                  ) : (
-                    "Save"
-                  )}
-                </Button>
-                <Button
-                  variant="secondary"
-                  type="button"
-                  onClick={handleCancel}
-                  style={{
-                    color: "white",
-                    margin: "4px",
-                    fontSize: "12px",
-                  }}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </Form>
-
+                <div className="d-flex justify-content-between mt-3">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    style={{
+                      backgroundColor: "#009efb",
+                      borderColor: "#009efb",
+                      color: "white",
+                      margin: "4px",
+                      fontSize: "12px",
+                    }}
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <Spinner as="span" animation="border" size="sm" />
+                    ) : (
+                      "Save"
+                    )}
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    type="button"
+                    onClick={handleCancel}
+                    style={{
+                      color: "white",
+                      margin: "4px",
+                      fontSize: "12px",
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </Form>
+            </div>
             {/* Alert Section */}
-            {alert.message && (
-              <Alert variant={alert.variant} className="h6 mx-3 mt-3 w-50">
-                {alert.message}
-              </Alert>
+            {alert && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  zIndex: 999, // Ensures it appears above the form
+                  width: "100%", // Adjust width if needed
+                  display: "flex",
+                  justifyContent: "center", // Centers alert horizontally
+                  alignItems: "center", // Ensures proper alignment in flexbox
+                }}
+              >
+                <Alert variant="success" className="h6 w-50">
+                  {alert}
+                </Alert>
+              </div>
             )}
           </Card.Body>
         </Card>
