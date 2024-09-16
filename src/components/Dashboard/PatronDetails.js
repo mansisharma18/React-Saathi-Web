@@ -205,6 +205,15 @@ const PatronDetails = () => {
                                         </Form.Select>
                                     </Col>
                                     </Row>
+<Card className="shadow-sm pb-3">
+<Card.Body>
+                                    <div className="d-flex justify-content-center">
+        <div className="mt-2">
+            <h4>Add Patron 1</h4>
+        </div>
+     </div>
+     <hr/>
+
       <Row>
         <Col className="p-3">
         <Form.Label className="label-style">First Name</Form.Label>
@@ -363,11 +372,16 @@ const PatronDetails = () => {
           />
         </Col>
         </Row>
+</Card.Body>
+        </Card>
    
       {newPatron && (
         <>
 
+<Card className="shadow-sm pb-5 mt-5">
+  <Card.Body>
 
+ 
 <div className="d-flex justify-content-center">
         <div className="mt-2">
             <h4> Add Another Patron</h4>
@@ -450,7 +464,7 @@ const PatronDetails = () => {
   </Row>
         </Col>
         <Col className="p-3">
-        <Form.Label className="label-style">Relation with Subscriber</Form.Label>
+        <Form.Label className="label-style">Relation with the Subscriber</Form.Label>
         <Form.Control placeholder="Patron's Relation with Subscriber"
           style={{ padding: '8px',fontSize:"12px" }}
           value={relation1} 
@@ -533,11 +547,14 @@ const PatronDetails = () => {
           />
         </Col>
         </Row>
+
+        </Card.Body>
+        </Card>
    
         </>
       )}
 
-<div className="d-flex">
+<div className="d-flex mt-3">
 
   {displayAddButton && (
     
