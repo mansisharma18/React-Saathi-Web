@@ -384,7 +384,7 @@ const PatronDetails = () => {
  
 <div className="d-flex justify-content-center">
         <div className="mt-2">
-            <h4> Add Another Patron</h4>
+            <h4> Add Patron 2</h4>
         </div>
      </div>
 <hr/>

@@ -63,7 +63,7 @@ const UpdateSubscriber = () => {
               setStatus(res.data.status)
               setPackages(res.data.packageName)
               setComments(res.data.comments)
-              setSelectedPackage(res.data.packageServiceID || "")
+              setSelectedPackage(res.data.packageID || "")
               setAmount(res.data.priceUSD && res.data.priceINR 
                   ? `USD ${res.data.priceUSD} / INR ${res.data.priceINR}` 
                   : "");
@@ -82,7 +82,7 @@ const UpdateSubscriber = () => {
               )
               .then((res) => {
                 console.log("packagess", res.data);
-                console.log("packaged",res.data[0].packageServices[0].packageServiceID)
+                console.log("packaged",res.data[0].packageID)
                 setPackageList(res.data);
               })
               .catch((err) => console.log(err));
@@ -111,7 +111,7 @@ const UpdateSubscriber = () => {
         "status":status,
         "updatedBy": parseInt(userId),
         "comments":comments,
-        packageServiceID:parseInt(selectedPackage),
+        packageID:parseInt(selectedPackage),
         creditCard: {
             nameOnCard: cardName,
             creditCardNumber: cardNo,
@@ -257,7 +257,7 @@ const UpdateSubscriber = () => {
                             
                                 // Find the selected package based on packageID
                                 const selectedPkg = packageList.find(
-                                  (pkg) => pkg.packageServices[0].packageServiceID == selectedPackageId
+                                  (pkg) => pkg.packageID == selectedPackageId
                                 );
                                 console.log("Selected package:", selectedPkg)
                                 // Set the amount to the package's price if the package is found
@@ -275,10 +275,11 @@ const UpdateSubscriber = () => {
                             {packageList &&
                               packageList.map((pkg) => (
                                 <option
-                                  key={pkg.packageServices[0].packageServiceID}
-                                  value={pkg.packageServices[0].packageServiceID}
+                                  key={pkg.packageID}
+                                  value={pkg.packageID}
                                 >
                                   {pkg.packageName}
+                                  
                                 </option>
                               ))}
                           </Form.Select>
