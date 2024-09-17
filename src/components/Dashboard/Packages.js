@@ -107,6 +107,14 @@ const Packages = () => {
 
   const handleSubmitPackage = async (event) => {
     event.preventDefault();
+    console.log("selectred", selectedServices);
+
+    if (selectedServices.length === 0) {
+      const confirmation = window.confirm(
+        "Select atleast one service to continue"
+      );
+      return; // Stop form submission if no services are selected
+    }
 
     const packageServices = selectedServices.map((serviceID) => {
       const service = services.find((s) => s.serviceID === serviceID);
@@ -360,7 +368,6 @@ const Packages = () => {
                           value={packagePriceINR}
                           required
                           style={{ padding: "8px", fontSize: "12px" }}
-                          
                         />
                       </Form.Group>
                     </Col>
