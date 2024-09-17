@@ -120,13 +120,13 @@ const List = () => {
                             <i className="bi bi-pencil-fill edit-btn-color"></i>
                           </Link>
                         </span>
-                        <span>
+                        {/* <span>
                           <i
                             className="bi bi-trash3-fill delete-btn-color"
                             onClick={() => handleDelete(item.subscriberID)}
                             style={{ cursor: 'pointer' }}
                           ></i>
-                        </span>
+                        </span> */}
                         
                         </td>
                       </tr>
