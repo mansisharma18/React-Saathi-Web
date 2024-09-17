@@ -47,7 +47,12 @@ const SubscriberRegisteration = () => {
         )
         .then((res) => {
           console.log(res.data[0].firstName);
-          setList(res.data);
+          const filteredSub = res.data.filter(p=> p.status === 0);
+          console.log("inactive:", filteredSub);
+  
+          setList(filteredSub);
+
+          // setList(res.data);
         })
         .catch((err) => console.log(err));
     };
@@ -74,9 +79,10 @@ const SubscriberRegisteration = () => {
             setStatus(res.data.status);
             setComments(res.data.comments)
             setSelectedPackage(res.data.packageID || "")
-            setAmount(res.data.priceUSD && res.data.priceINR 
-                ? `USD ${res.data.priceUSD} / INR ${res.data.priceINR}` 
-                : "");
+            // setAmount(res.data.priceUSD && res.data.priceINR 
+            //     ? `USD ${res.data.priceUSD} / INR ${res.data.priceINR}` 
+            //     : "");
+            setAmount(`INR ${res.data.priceINR}/ USD ${res.data.priceUSD}`|| '')
           });
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -94,7 +100,12 @@ const SubscriberRegisteration = () => {
         .then((res) => {
           console.log("packagess", res.data);
           console.log("packaged",res.data[0].packageID)
-          setPackageList(res.data);
+          // setPackageList(res.data);
+          const filteredPackages = res.data.filter(p=> p.status === 1);
+          console.log("Filtered packages:", filteredPackages);
+  
+          setPackageList(filteredPackages);
+
         })
         .catch((err) => console.log(err));
     };
@@ -131,7 +142,7 @@ const SubscriberRegisteration = () => {
       .then((response) => {
         console.log("Response:", response.data);
         if (response.data) {
-          setAlert("Subscriber registered successfully!!");
+          setAlert("Subscriber activated successfully!!");
         }
         
         else {
@@ -357,6 +368,7 @@ const SubscriberRegisteration = () => {
                             Credit Card Number
                           </Form.Label>
                           <Form.Control
+                          type="number"
                             placeholder="Credit card Number"
                             style={{ padding: "8px", fontSize: "12px" }}
                             value={cardNo}
@@ -380,6 +392,7 @@ const SubscriberRegisteration = () => {
                         <Col className="p-3">
                           <Form.Label className="label-style">CVV</Form.Label>
                           <Form.Control
+                          type="number"
                             placeholder="CVV"
                             style={{ padding: "8px", fontSize: "12px" }}
                             value={cardCvv}
@@ -389,6 +402,7 @@ const SubscriberRegisteration = () => {
                         <Col className="p-3">
                           <Form.Label className="label-style">Amount</Form.Label>
                           <Form.Control
+                          type="number"
                             placeholder="Amount"
                             style={{ padding: "8px", fontSize: "12px" }}
                             value={""}

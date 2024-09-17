@@ -147,6 +147,13 @@ body {
   
 }
 
+.active-nav-link {
+  background-color: #f0f0fe;
+  color: #009efb !important;
+  /* border-left: 4px solid #009efb !important */
+}
+
+
 .leftNavbar.navbar-nav {
   padding-left: 0; /* Remove padding */
 }

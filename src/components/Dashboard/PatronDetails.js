@@ -62,7 +62,13 @@ const PatronDetails = () => {
       axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers`)
       .then(res => {
           console.log(res.data[0].firstName)
-          setList(res.data)
+          // setList(res.data)
+          const filteredList = res.data.filter(item => 
+            (!item.patrons || item.patrons.length === 0) && item.status === 1
+          );
+
+        console.log("Filtered data:", filteredList);
+        setList(filteredList);
       })
       .catch(err => 
           console.log(err)
@@ -109,12 +115,8 @@ const PatronDetails = () => {
         country: country,
         relation: relation,
         subscriberID: parseInt(subId),
-      }
-    ];
-
-    // Only add the second patron's data if the fields are filled out
-    if (first1 && last1 && email1 && mob1 && countryCode1) {
-      payload.push({
+      },
+      {
         firstName: first1,
         lastName: last1,
         email: email1,
@@ -130,8 +132,29 @@ const PatronDetails = () => {
         country: country1,
         relation: relation1,
         subscriberID: parseInt(subId),
-      });
-    }
+      }
+    ];
+
+    // Only add the second patron's data if the fields are filled out
+    // if (first1 && last1 && email1 && mob1 && countryCode1) {
+    //   payload.push({
+    //     firstName: first1,
+    //     lastName: last1,
+    //     email: email1,
+    //     dob: dob1,
+    //     contactNo: mob1,
+    //     countryCode: countryCode1,
+    //     createdBy: parseInt(userId),
+    //     updatedBy: null,
+    //     address1: add1Second,
+    //     address2: add2Second,
+    //     city: city1,
+    //     state: state1,
+    //     country: country1,
+    //     relation: relation1,
+    //     subscriberID: parseInt(subId),
+    //   });
+    // }
     axios
       .post(`https://saathi.etheriumtech.com:444/Saathi/patrons`,payload
       )
@@ -140,9 +163,6 @@ const PatronDetails = () => {
         if (response.data) {
           setAlert('Patron created successfully!!');
         } 
-      //   else if (response.data === 0) {
-      //     setAlert('Company not created. Please check all fields and try again.');
-      //   }
          else {
           setAlert('An error occurred. Please contact the development team.');
         }
@@ -375,7 +395,7 @@ const PatronDetails = () => {
 </Card.Body>
         </Card>
    
-      {newPatron && (
+      
         <>
 
 <Card className="shadow-sm pb-5 mt-5">
@@ -552,9 +572,9 @@ const PatronDetails = () => {
         </Card>
    
         </>
-      )}
+      
 
-<div className="d-flex mt-3">
+{/* <div className="d-flex mt-3">
 
   {displayAddButton && (
     
@@ -592,8 +612,9 @@ const PatronDetails = () => {
   )}
 
  
-  </div>
-           
+  </div>       */}
+
+
       <div className="d-flex justify-content-between mt-3">
   <Button
     variant="primary"
@@ -622,7 +643,7 @@ const PatronDetails = () => {
   >
     Cancel
   </Button>
-</div>
+</div> 
 
 
 

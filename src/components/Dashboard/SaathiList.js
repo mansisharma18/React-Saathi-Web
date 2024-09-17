@@ -87,7 +87,7 @@ const SaathiList = () => {
                                   ))}
                                 </ol>
                               ) : (
-                                <span>No subscribers</span>
+                                <span></span>
                               )}
                             </td>
                           </tr>

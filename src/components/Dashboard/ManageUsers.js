@@ -28,6 +28,7 @@ const ManageUsers = () => {
   const [alert, setAlert] = useState();
   const [passwordIcon, setPasswordIcon] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const userId = localStorage.getItem("userId");
 
@@ -47,6 +48,8 @@ const ManageUsers = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    setLoading(true)
 
     const AdMap = {
       firstName: first,
@@ -94,12 +97,14 @@ const ManageUsers = () => {
         console.log("Response:", response.data);
         if (response.data) {
           setAlert("User created successfully!!");
+          setLoading(false)
         }
         //   else if (response.data === 0) {
         //     setAlert('Company not created. Please check all fields and try again.');
         //   }
         else {
           setAlert("An error occurred. Please contact the development team.");
+          setLoading(false)
         }
 
         setTimeout(() => {
@@ -119,6 +124,7 @@ const ManageUsers = () => {
         setTimeout(() => {
           setAlert("");
         }, 5000); // Hide alert after 3 seconds
+        setLoading(false)
       });
   };
 
@@ -309,6 +315,7 @@ const ManageUsers = () => {
                       <Button
                         variant="primary"
                         type="submit"
+                        disabled={loading}
                         style={{
                           backgroundColor: "#009efb",
                           borderColor: "#009efb",
