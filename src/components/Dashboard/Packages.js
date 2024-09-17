@@ -368,6 +368,9 @@ const Packages = () => {
                           value={packagePriceINR}
                           required
                           style={{ padding: "8px", fontSize: "12px" }}
+                          onChange={(event) => {
+                            setPriceINR(event.target.value);
+                          }}
                         />
                       </Form.Group>
                     </Col>
