@@ -360,7 +360,7 @@ const Packages = () => {
                           value={packagePriceINR}
                           required
                           style={{ padding: "8px", fontSize: "12px" }}
-                          readOnly
+                          
                         />
                       </Form.Group>
                     </Col>
