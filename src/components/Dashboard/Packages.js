@@ -15,6 +15,8 @@ const Packages = () => {
   const [packageDescription, setPackageDescription] = useState("");
   const [priceINR, setPriceINR] = useState(0); // Store the total price in INR
   const [packagePriceINR, setPackagePriceINR] = useState(0); // Store final discounted price
+
+  const [priceUSD, setPriceUSD] = useState("");
   const [packageStatus, setPackageStatus] = useState("");
   const [services, setServices] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
@@ -125,9 +127,10 @@ const Packages = () => {
       packageName,
       packageDescription,
       priceINR: parseFloat(packagePriceINR), // Use total price in INR
-
+      priceUSD: parseFloat(priceUSD),
       status: 1,
       createdBy: parseInt(userId),
+      packageDiscount: discountPercentage / 100,
       packageServices,
     };
 
@@ -150,7 +153,9 @@ const Packages = () => {
   const handleCancel = () => {
     navigate("/dashboard");
   };
-
+  useEffect(() => {
+    setPriceUSD(packagePriceINR * 0.012);
+  }, [packagePriceINR]);
   return (
     <div className="d-flex">
       <Container className="justify-content-center align-items-center mt-5 px-5">
@@ -356,6 +361,22 @@ const Packages = () => {
                           required
                           style={{ padding: "8px", fontSize: "12px" }}
                           readOnly
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group controlId="packagePriceINR">
+                        <Form.Label className="label-style">
+                          Final Package Price in USD
+                        </Form.Label>
+                        <Form.Control
+                          type="number"
+                          value={priceUSD}
+                          required
+                          style={{ padding: "8px", fontSize: "12px" }}
+                          onChange={(event) => {
+                            setPriceUSD(event.target.value);
+                          }}
                         />
                       </Form.Group>
                     </Col>

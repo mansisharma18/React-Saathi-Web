@@ -17,6 +17,7 @@ const EditPackage = () => {
   const [packagePriceINR, setPackagePriceINR] = useState(0); // Store final discounted price
   const [packageStatus, setPackageStatus] = useState("");
   const [services, setServices] = useState([]);
+  const [priceUSD, setPriceUSD] = useState("");
   const [selectedServices, setSelectedServices] = useState([]);
   const [serviceFrequencies, setServiceFrequencies] = useState({});
   const [discountPercentage, setDiscountPercentage] = useState(0); // Discount percentage
@@ -44,6 +45,7 @@ const EditPackage = () => {
           `https://saathi.etheriumtech.com:444/Saathi/subscription-package/${id}`
         );
         const packageData = packageResponse.data;
+        console.log(packageData);
 
         // Set form fields with package data
         setPackageName(packageData.packageName);
@@ -51,7 +53,8 @@ const EditPackage = () => {
         setPriceINR(packageData.priceINR);
         setPackagePriceINR(packageData.priceINR); // Initial price without discount
         setPackageStatus(packageData.status);
-
+        setDiscountPercentage(packageData.packageDiscount * 100);
+        setPriceUSD(packageData.priceUSD);
         // Preselect services and frequencies from packageServices
         const selected = packageData.packageServices.map(
           (service) => service.serviceID
@@ -71,21 +74,26 @@ const EditPackage = () => {
     fetchData();
   }, [id]);
 
-  // Handle service selection and total price calculation
+  // Handle service selection and removal, and update frequencies
   const handleServiceSelection = (serviceID) => {
     if (selectedServices.includes(serviceID)) {
+      console.log(`Removing service: ${serviceID}`);
       setSelectedServices(selectedServices.filter((id) => id !== serviceID));
-      const newFrequencies = { ...serviceFrequencies };
-      delete newFrequencies[serviceID];
-      setServiceFrequencies(newFrequencies);
+  
+      // Remove the service from frequencies
+      const updatedFrequencies = { ...serviceFrequencies };
+      delete updatedFrequencies[serviceID]; // Clean up the frequency
+      setServiceFrequencies(updatedFrequencies);
     } else {
+      console.log(`Adding service: ${serviceID}`);
       setSelectedServices([...selectedServices, serviceID]);
       setServiceFrequencies({
         ...serviceFrequencies,
-        [serviceID]: 1, // Default frequency to 1 when the service is selected
+        [serviceID]: 1, // Default frequency to 1
       });
     }
   };
+  
 
   const handleFrequencyChange = (serviceID, value) => {
     setServiceFrequencies({
@@ -95,12 +103,12 @@ const EditPackage = () => {
   };
 
   useEffect(() => {
-    // Calculate total price in INR when services are selected/deselected or frequency is updated
+    // Recalculate total price in INR when services or frequency changes
     const calculateTotalPrice = () => {
       const total = selectedServices.reduce((acc, serviceID) => {
         const service = services.find((s) => s.serviceID === serviceID);
-        const frequency = serviceFrequencies[serviceID] || 1; // Get the selected frequency or default to 1
-        return acc + (service?.priceINR || 0) * frequency; // Multiply price by frequency
+        const frequency = serviceFrequencies[serviceID] || 1;
+        return acc + (service?.priceINR || 0) * frequency;
       }, 0);
       setPriceINR(total);
     };
@@ -121,6 +129,10 @@ const EditPackage = () => {
   const handleSubmitPackage = async (event) => {
     event.preventDefault();
 
+    // Check if the selectedServices state is correct
+    console.log("Selected Services:", selectedServices);
+
+    // Construct the packageServices array based on selected services and their frequencies
     const packageServices = selectedServices.map((serviceID) => {
       const service = services.find((s) => s.serviceID === serviceID);
       const selectedFrequency =
@@ -130,19 +142,19 @@ const EditPackage = () => {
         serviceID: service.serviceID,
         frequency: selectedFrequency,
         frequencyUnit: service.frequencyUnit,
-        // priceUSD: service.priceUSD,
-        // priceINR: service.priceINR,
         status: service.status,
       };
     });
 
+    console.log("Sending Services to Backend:", packageServices);
+
     const packageData = {
       packageName,
       packageDescription,
-      priceINR: parseFloat(packagePriceINR), // Use total price in INR
-      status: 1,
+      priceINR: parseFloat(packagePriceINR),
+      status: 1, // Assuming 1 means active status
       createdBy: parseInt(userId),
-      packageServices,
+      packageServices, // Send only selected services
     };
 
     try {
@@ -153,14 +165,17 @@ const EditPackage = () => {
       setAlert("Package updated successfully!");
       setTimeout(() => {
         setAlert("");
-        navigate("/dashboard");
+        navigate("/dashboard/packages");
       }, 5000);
     } catch (error) {
       console.error("Error updating package:", error);
       setAlert("An error occurred while updating the package.");
     }
   };
-
+  
+  useEffect(() => {
+    setPriceUSD(packagePriceINR * 0.012);
+  }, [packagePriceINR]);
   const handleCancel = () => {
     navigate("/dashboard");
   };
@@ -373,6 +388,22 @@ const EditPackage = () => {
                             required
                             style={{ padding: "8px", fontSize: "12px" }}
                             readOnly
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col>
+                        <Form.Group controlId="packagePriceINR">
+                          <Form.Label className="label-style">
+                            Final Package Price in USD
+                          </Form.Label>
+                          <Form.Control
+                            type="number"
+                            value={priceUSD}
+                            required
+                            style={{ padding: "8px", fontSize: "12px" }}
+                            onChange={(event) => {
+                              setPriceUSD(event.target.value);
+                            }}
                           />
                         </Form.Group>
                       </Col>
