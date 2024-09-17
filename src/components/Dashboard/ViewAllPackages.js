@@ -155,6 +155,13 @@ const ViewAllPackages = () => {
                               onClick={() => toggleServices(index)}
                               aria-controls={`services-collapse-${index}`}
                               aria-expanded={openServiceIndex === index}
+                              style={{
+                                backgroundColor: "#009efb",
+                                borderColor: "#009efb",
+                                color: "white",
+                                margin: "4px",
+                                fontSize: "12px",
+                              }}
                             >
                               {openServiceIndex === index
                                 ? "Hide Services"
@@ -224,93 +231,7 @@ const ViewAllPackages = () => {
         </Card>
 
         {/* Edit Modal */}
-        <Modal show={showModal} onHide={handleClose} size="lg">
-          <Modal.Header closeButton>
-            <Modal.Title>Edit Package</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {currentPackage && (
-              <Form>
-                <Form.Group controlId="packageName">
-                  <Form.Label>Package Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="packageName"
-                    value={currentPackage.packageName}
-                    onChange={handlePackageChange}
-                  />
-                </Form.Group>
 
-                <Form.Group controlId="packageDescription" className="mt-3">
-                  <Form.Label>Package Description</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    name="packageDescription"
-                    value={currentPackage.packageDescription}
-                    onChange={handlePackageChange}
-                  />
-                </Form.Group>
-
-                <Form.Group controlId="priceUSD" className="mt-3">
-                  <Form.Label>Price (USD)</Form.Label>
-                  <Form.Control
-                    type="number"
-                    name="priceUSD"
-                    value={currentPackage.priceUSD}
-                    onChange={handlePackageChange}
-                  />
-                </Form.Group>
-
-                <Form.Group controlId="priceINR" className="mt-3">
-                  <Form.Label>Price (INR)</Form.Label>
-                  <Form.Control
-                    type="number"
-                    name="priceINR"
-                    value={currentPackage.priceINR}
-                    onChange={handlePackageChange}
-                  />
-                </Form.Group>
-
-                <hr />
-
-                <h5>Services</h5>
-                {currentPackage.packageServices.map((service, index) => (
-                  <Form.Group
-                    key={index}
-                    controlId={`service-status-${service.serviceID}`}
-                    className="mb-3"
-                  >
-                    <Form.Label>
-                      {service.serviceID} - {service.frequency}{" "}
-                      {service.frequencyUnit}, ${service.priceUSD} USD, ₹
-                      {service.priceINR} INR
-                    </Form.Label>
-                    <Form.Check
-                      type="switch"
-                      id={`service-status-switch-${service.serviceID}`}
-                      label="Active"
-                      checked={service.status === 1}
-                      onChange={(e) =>
-                        handleServiceStatusChange(
-                          index,
-                          e.target.checked ? 1 : 0
-                        )
-                      }
-                    />
-                  </Form.Group>
-                ))}
-              </Form>
-            )}
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="primary" onClick={handleSave}>
-              Update Changes
-            </Button>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
       </Container>
     </div>
   );
