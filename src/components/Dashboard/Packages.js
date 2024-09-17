@@ -256,7 +256,7 @@ const Packages = () => {
                         </thead>
                         <tbody>
                           {services.map((service) => (
-                            <tr key={service.serviceID}>
+                            <tr key={service.serviceID} style={{height:"50px"}}>
                               <td className=" justify-content-center">
                                 <Form.Check
                                   type="checkbox"

@@ -79,7 +79,7 @@ const EditPackage = () => {
     if (selectedServices.includes(serviceID)) {
       console.log(`Removing service: ${serviceID}`);
       setSelectedServices(selectedServices.filter((id) => id !== serviceID));
-  
+
       // Remove the service from frequencies
       const updatedFrequencies = { ...serviceFrequencies };
       delete updatedFrequencies[serviceID]; // Clean up the frequency
@@ -93,7 +93,6 @@ const EditPackage = () => {
       });
     }
   };
-  
 
   const handleFrequencyChange = (serviceID, value) => {
     setServiceFrequencies({
@@ -152,6 +151,8 @@ const EditPackage = () => {
       packageName,
       packageDescription,
       priceINR: parseFloat(packagePriceINR),
+      priceUSD: parseFloat(priceUSD),
+      packageDiscount: discountPercentage / 100,
       status: 1, // Assuming 1 means active status
       createdBy: parseInt(userId),
       packageServices, // Send only selected services
@@ -172,10 +173,10 @@ const EditPackage = () => {
       setAlert("An error occurred while updating the package.");
     }
   };
-  
+
   useEffect(() => {
     setPriceUSD(packagePriceINR * 0.012);
-  }, [packagePriceINR]);
+  }, [selectedServices]);
   const handleCancel = () => {
     navigate("/dashboard");
   };
