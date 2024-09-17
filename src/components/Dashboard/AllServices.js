@@ -161,7 +161,7 @@ function AllServices() {
                       Duration (Hours)
                     </th>
                     <th className="text-center align-middle">Business Hours</th>
-                    <th className="text-center align-middle">Status</th>
+   
                     <th className="text-center align-middle">Edit/Delete</th>
                   </tr>
                 </thead>
@@ -186,7 +186,7 @@ function AllServices() {
                         {service.businessHoursStart} -{" "}
                         {service.businessHoursEnd}
                       </td>
-                      <td>{service.status === 1 ? "Active" : "Inactive"}</td>
+              
                       <td>
                         <span className="text-decoration-none me-3">
                           <Link

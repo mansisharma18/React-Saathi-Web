@@ -253,7 +253,7 @@ function CreateService() {
                   <Col className="p-3">
                     <Form.Group>
                       <Form.Label className="label-style">
-                        Service Start Time
+                        Service Start Time (HH:MM)
                       </Form.Label>
                       <Form.Control
                         type="time"
@@ -263,13 +263,16 @@ function CreateService() {
                           setBusinessHoursStart(event.target.value)
                         }
                       />
+                      <Form.Text className="text-muted">
+                        Enter time in 24-hour format
+                      </Form.Text>
                     </Form.Group>
                   </Col>
 
                   <Col className="p-3">
                     <Form.Group>
                       <Form.Label className="label-style">
-                        Service End Time
+                        Service End Time (HH:MM)
                       </Form.Label>
                       <Form.Control
                         type="time"
@@ -279,6 +282,9 @@ function CreateService() {
                           setBusinessHoursEnd(event.target.value)
                         }
                       />
+                      <Form.Text className="text-muted">
+                        Enter time in 24-hour format
+                      </Form.Text>
                     </Form.Group>
                   </Col>
                   <Col className="p-3">
