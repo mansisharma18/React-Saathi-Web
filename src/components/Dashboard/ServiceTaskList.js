@@ -61,6 +61,8 @@ function ServiceTaskList() {
           `https://saathi.etheriumtech.com:444/Saathi/subscribers/${subId}/services`
         );
         const json = await response.json();
+        console.log("request", json);
+        const completedRequest = json.filter((item) => item.pending === 0);
         setRequests(json);
       };
       fetchData();
@@ -88,7 +90,7 @@ function ServiceTaskList() {
       [name]: files ? files[0] : value,
     });
   };
-
+  //isAlaCarte
   const handleSubmit = async () => {
     if (!selectedRequest) return;
 
@@ -97,6 +99,7 @@ function ServiceTaskList() {
     if (completionData.screenshot) {
       formData.append("image", completionData.screenshot);
     }
+    formData.append("isAlaCarte", false);
 
     try {
       const response = await fetch(
@@ -106,6 +109,7 @@ function ServiceTaskList() {
           body: formData,
         }
       );
+      console.log("respomse", response);
 
       if (response.ok) {
         setAlert(`Task completed for ${selectedRequest.task}`);
@@ -133,237 +137,241 @@ function ServiceTaskList() {
   return (
     <div className="d-flex">
       <Container className="justify-content-center align-items-center mt-5 px-5">
-        <div className="d-flex justify-content-center">
-          <div className="mt-2">
-            <h4 className="heading-color">To Do List</h4>
+        <Card>
+          <Card.Body>
+          <div className="d-flex justify-content-center">
+            <div className="mt-2">
+              <h4 className="heading-color">To Do List</h4>
+            </div>
           </div>
-        </div>
-        <hr />
-        <Row>
-          <Col md={4}>
-            <Form.Label>Select a Subscriber</Form.Label>
-            <Form.Select
-              aria-label="Select Subscriber"
-              value={subId}
-              onChange={(event) => setSubId(event.target.value)}
-            >
-              <option value="">Select Subscriber</option>
-              {subscriber?.map((sub) => (
-                <option key={sub.subscriberID} value={sub.subscriberID}>
-                  {sub.firstName} {sub.lastName}
-                </option>
-              ))}
-            </Form.Select>
-          </Col>
-        </Row>
+          <hr />
+          <Row>
+            <Col md={4}>
+              <Form.Label>Select a Subscriber</Form.Label>
+              <Form.Select
+                aria-label="Select Subscriber"
+                value={subId}
+                onChange={(event) => setSubId(event.target.value)}
+              >
+                <option value="">Select Subscriber</option>
+                {subscriber?.map((sub) => (
+                  <option key={sub.subscriberID} value={sub.subscriberID}>
+                    {sub.firstName} {sub.lastName}
+                  </option>
+                ))}
+              </Form.Select>
+            </Col>
+          </Row>
 
-        {subId !== 0 && patron && (
-          <>
-            <Row className="mt-3">
-              {/* Associated Patrons */}
-              <Col md={4} className="d-flex">
-                <Card className="shadow-sm flex-fill">
-                  <Card.Body>
-                    <Card.Title
-                      style={{ fontSize: "16px", fontWeight: "bold" }}
-                    >
-                      Associated Patrons
-                    </Card.Title>
-                    <hr />
-                    <Card.Text style={{ fontSize: "14px" }}>
-                      {patron[0] && (
-                        <>
-                          <strong>Patron 1:</strong> {patron[0].firstName}{" "}
-                          {patron[0].lastName} <br />
-                          <strong>Contact No:</strong> {patron[0].contactNo}{" "}
-                          <br />
-                          <br />
-                        </>
-                      )}
-                      {patron[1] && (
-                        <>
-                          <strong>Patron 2:</strong> {patron[1].firstName}{" "}
-                          {patron[1].lastName} <br />
-                          <strong>Contact No:</strong> {patron[1].contactNo}
-                        </>
-                      )}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-
-              {/* Package Details */}
-              <Col md={4} className="d-flex">
-                <Card className="shadow-sm flex-fill">
-                  <Card.Body>
-                    <Card.Title
-                      style={{ fontSize: "16px", fontWeight: "bold" }}
-                    >
-                      Package Name: {packageDetails?.packageName}
-                    </Card.Title>
-                    <hr />
-                    <Card.Text style={{ fontSize: "14px" }}>
-                      <h5 style={{ fontSize: "16px" }}>Services Included:</h5>
-                      <ul style={{ paddingLeft: "20px", fontSize: "14px" }}>
-                        {packageDetails?.packageServices?.map(
-                          (service, index) => (
-                            <li key={index} style={{ marginBottom: "10px" }}>
-                              <strong>{service.serviceName}</strong>
-                              {service.description}
-                            </li>
-                          )
+          {subId !== 0 && patron && (
+            <>
+              <Row className="mt-3">
+                {/* Associated Patrons */}
+                <Col md={4} className="d-flex">
+                  <Card className="shadow-sm flex-fill">
+                    <Card.Body>
+                      <Card.Title
+                        style={{ fontSize: "16px", fontWeight: "bold" }}
+                      >
+                        Associated Patrons
+                      </Card.Title>
+                      <hr />
+                      <Card.Text style={{ fontSize: "14px" }}>
+                        {patron[0] && (
+                          <>
+                            <strong>Patron 1:</strong> {patron[0].firstName}{" "}
+                            {patron[0].lastName} <br />
+                            <strong>Contact No:</strong> {patron[0].contactNo}{" "}
+                            <br />
+                            <br />
+                          </>
                         )}
-                      </ul>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
+                        {patron[1] && (
+                          <>
+                            <strong>Patron 2:</strong> {patron[1].firstName}{" "}
+                            {patron[1].lastName} <br />
+                            <strong>Contact No:</strong> {patron[1].contactNo}
+                          </>
+                        )}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
 
-              {/* Empty Column with Same Height */}
-              <Col md={4} className="d-flex">
-                <Card className="shadow-sm flex-fill">
-                  <Card.Body></Card.Body>
-                </Card>
-              </Col>
-            </Row>
+                {/* Package Details */}
+                <Col md={4} className="d-flex">
+                  <Card className="shadow-sm flex-fill">
+                    <Card.Body>
+                      <Card.Title
+                        style={{ fontSize: "16px", fontWeight: "bold" }}
+                      >
+                        Package Name: {packageDetails?.packageName}
+                      </Card.Title>
+                      <hr />
+                      <Card.Text style={{ fontSize: "14px" }}>
+                        <h5 style={{ fontSize: "16px" }}>Services Included:</h5>
+                        <ul style={{ paddingLeft: "20px", fontSize: "14px" }}>
+                          {packageDetails?.packageServices?.map(
+                            (service, index) => (
+                              <li key={index} style={{ marginBottom: "10px" }}>
+                                <strong>{service.serviceName}</strong>
+                                {service.description}
+                              </li>
+                            )
+                          )}
+                        </ul>
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
 
-            {/* Task Tables */}
-            <Row>
-              <Col>
-                <h5 className="mb-3 mt-2" style={{ fontSize: "14px" }}>
-                  Package Services
-                </h5>
-                <Table striped bordered hover responsive>
-                  <thead>
-                    <tr className="table-info">
-                      <th>Service Name</th>
-                      <th>Pending</th>
-                      <th>Completed</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {requests?.map((task) => (
-                      <tr key={task.id}>
-                        <td>{task.serviceName}</td>
-                        <td>{task.pending}</td>
-                        <td>{task.completions}</td>
-                        <td>
-                          <Button
-                            variant="primary"
-                            size="sm"
-                            onClick={() => handleShowModal(task)}
-                          >
-                            Update
-                          </Button>
-                        </td>
+                {/* Empty Column with Same Height */}
+                <Col md={4} className="d-flex">
+                  <Card className="shadow-sm flex-fill">
+                    <Card.Body></Card.Body>
+                  </Card>
+                </Col>
+              </Row>
+
+              {/* Task Tables */}
+              <Row>
+                <Col>
+                  <h5 className="mb-3 mt-2" style={{ fontSize: "14px" }}>
+                    Package Services
+                  </h5>
+                  <Table striped bordered hover responsive>
+                    <thead>
+                      <tr className="table-info">
+                        <th>Service Name</th>
+                        <th>Pending</th>
+                        <th>Completed</th>
+                        <th>Action</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              </Col>
+                    </thead>
+                    <tbody>
+                      {requests?.map((task) => (
+                        <tr key={task.id}>
+                          <td>{task.serviceName}</td>
+                          <td>{task.pending}</td>
+                          <td>{task.completions}</td>
+                          <td>
+                            <Button
+                              variant="primary"
+                              size="sm"
+                              onClick={() => handleShowModal(task)}
+                            >
+                              Update
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Col>
 
-              <Col>
-                <h5 className="mt-3" style={{ fontSize: "14px" }}>
-                  Ala-Carte Services
-                </h5>
-                <Table striped bordered hover responsive>
-                  <thead>
-                    <tr className="table-info">
-                      <th>Service Name</th>
-                      <th>Pending</th>
-                      <th>Completed</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {requests?.map((task) => (
-                      <tr key={task.id}>
-                        <td>{task.serviceName}</td>
-                        <td>{task.pending}</td>
-                        <td>{task.completions}</td>
-                        <td>
-                          <Button
-                            variant="primary"
-                            size="sm"
-                            onClick={() => handleShowModal(task)}
-                          >
-                            Update
-                          </Button>
-                        </td>
+                <Col>
+                  <h5 className="mt-3" style={{ fontSize: "14px" }}>
+                    Ala-Carte Services
+                  </h5>
+                  <Table striped bordered hover responsive>
+                    <thead>
+                      <tr className="table-info">
+                        <th>Service Name</th>
+                        <th>Pending</th>
+                        <th>Completed</th>
+                        <th>Action</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              </Col>
-            </Row>
+                    </thead>
+                    <tbody>
+                      {requests?.map((task) => (
+                        <tr key={task.id}>
+                          <td>{task.serviceName}</td>
+                          <td>{task.pending}</td>
+                          <td>{task.completions}</td>
+                          <td>
+                            <Button
+                              variant="primary"
+                              size="sm"
+                              onClick={() => handleShowModal(task)}
+                            >
+                              Update
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Col>
+              </Row>
 
-            <Row className="mt-2">
-              <Col md={12}>
-                <h5 className="mt-2" style={{ fontSize: "14px" }}>
-                  Completed Tasks
-                </h5>
-                <Table striped bordered hover responsive>
-                  <thead>
-                    <tr className="table-success">
-                      <th>Service Name</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {requests?.map((task) => (
-                      <tr key={task.id}>
-                        <td>{task.serviceName}</td>
-                        <td>
-                          <Button variant="secondary" size="sm" disabled>
-                            Completed
-                          </Button>
-                        </td>
+              <Row className="mt-2">
+                <Col md={12}>
+                  <h5 className="mt-2" style={{ fontSize: "14px" }}>
+                    Completed Tasks
+                  </h5>
+                  <Table striped bordered hover responsive>
+                    <thead>
+                      <tr className="table-success">
+                        <th>Service Name</th>
+                        <th>Action</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              </Col>
-            </Row>
-          </>
-        )}
+                    </thead>
+                    <tbody>
+                      {requests?.map((task) => (
+                        <tr key={task.id}>
+                          <td>{task.serviceName}</td>
+                          <td>
+                            <Button variant="secondary" size="sm" disabled>
+                              Completed
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Col>
+              </Row>
+            </>
+          )}
 
-        <Modal show={showModal} onHide={handleCloseModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Update {serviceNameSelected} Status</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group className="mb-3">
-                <Form.Label>Completion Notes</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  name="notes"
-                  value={completionData.notes}
-                  onChange={handleChange}
-                />
-              </Form.Group>
+          <Modal show={showModal} onHide={handleCloseModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Update {serviceNameSelected} Status</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Group className="mb-3">
+                  <Form.Label>Completion Notes</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    name="notes"
+                    value={completionData.notes}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
 
-              <Form.Group className="mb-3">
-                <Form.Label>Upload Screenshot or File</Form.Label>
-                <Form.Control
-                  type="file"
-                  name="screenshot"
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleSubmit}>
-              Submit
-            </Button>
-          </Modal.Footer>
-        </Modal>
+                <Form.Group className="mb-3">
+                  <Form.Label>Upload Screenshot or File</Form.Label>
+                  <Form.Control
+                    type="file"
+                    name="screenshot"
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseModal}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={handleSubmit}>
+                Submit
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          </Card.Body>
+        </Card>
       </Container>
     </div>
   );
