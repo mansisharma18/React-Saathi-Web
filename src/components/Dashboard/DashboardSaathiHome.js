@@ -20,7 +20,7 @@ const DashboardSaathiHome = () => {
     const fetchData = async () => {
       axios
         .get(
-          `https://saathi.etheriumtech.com:444/Saathi/admin-users/48/subscribers/services`
+          `https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers/services`
         )
         .then((res) => {
           // Filter the data where status is 1
