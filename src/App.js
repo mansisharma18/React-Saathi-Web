@@ -59,6 +59,7 @@ function App() {
           <Route path="UpdateService/:id" element={<EditService />} />
 
           <Route path="serviceTaskList" element={<ServiceTaskList />} />
+          <Route path="serviceTaskList/:id" element={<ServiceTaskList />} />
           <Route path="createServices" element={<CreateService />} />
           <Route
             path="createPackageServices"

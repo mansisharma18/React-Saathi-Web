@@ -20,16 +20,14 @@ const DashboardSaathiHome = () => {
     const fetchData = async () => {
       axios
         .get(
-          `https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers`
+          `https://saathi.etheriumtech.com:444/Saathi/admin-users/48/subscribers/services`
         )
         .then((res) => {
           // Filter the data where status is 1
-          const filteredData = res.data.filter(
-            (subscriber) => subscriber.status === 1
-          );
+         
 
-          console.log(filteredData[0]?.firstName);
-          setList(filteredData);
+          
+          setList(res.data);
         })
         .catch((err) => console.log(err));
     };
@@ -58,24 +56,25 @@ const DashboardSaathiHome = () => {
     <tr  class="table-info">
       <th scope="col">S.No</th>
       <th scope="col">Subscriber Name</th>
-      <th scope="col">Patron Name</th>
-      <th scope="col">Contact No.</th>
-      <th scope="col">Email</th>
-      <th scope="col">Package</th>
-      <th scope="col">Edit/Delete</th>
+      <th scope="col">Service Name</th>
+      <th scope="col">Requested Time</th>
+      <th scope="col">Status</th>
+      <th scope="col">Update</th>
     </tr>
   </thead>
   <tbody>
                     {list.length > 0 ? list.map((item, index) => (
                       <tr key={index}>
-                        <th scope="row">{index + 1}</th>
-                        <td>{item.firstName} {item.lastName}</td>
+                        <th scope="row"> <div style={{  padding: '5px' }} className="m-2">{index + 1}</div></th>
+                        <td> <div style={{  padding: '5px' }} className="m-2"> {item.subscriberName} </div></td>
                         <td>
-  {item.patrons && item.patrons.length > 0 ? (
+  {item.services && item.services.length > 0 ? (
     <ol>
-      {item.patrons.map((patron, patronIndex) => (
-        <li key={patronIndex}>
-          {patron.firstName} {patron.lastName}
+      {item.services.map((p, index) => (
+        <li key={index}>
+           <div style={{  padding: '5px' }} className="m-2"> 
+          {p.serviceName}
+          </div>
         </li>
       ))}
     </ol>
@@ -83,14 +82,41 @@ const DashboardSaathiHome = () => {
     <span></span>
   )}
 </td>
-                        <td>{item.contactNo}</td>
-                        <td>{item.email}</td>
-                        <td>{item.packageName}</td>
+<td>
+  {item.services && item.services.length > 0 ? (
+    <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
+      {item.services.map((p, index) => (
+        <li key={index}>
+          <div style={{  padding: '5px' }} className="m-2"> 
+          {p.timeRequested} 10:00:00 A.M
+          </div>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <span></span>
+  )}
+</td>
+<td>
+  {item.services && item.services.length > 0 ? (
+   <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
+   {item.services.map((p, index) => (
+     <li key={index} >
+      <div style={{ backgroundColor: '#dc3d3d',color:"white", padding: '5px' }} className="m-2 text-center">  Pending</div>
+      
+     </li>
+   ))}
+ </ul>
+  ) : (
+    <span></span>
+  )}
+</td>
                         <td>
                         
                         <span className="text-decoration-none me-3">
-                          <Link to={`/dashboard/updateSubscriber/${item.subscriberID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
-                            <i className="bi bi-pencil-fill edit-btn-color"></i>
+                          <Link to={`/dashboard/serviceTaskList/${item.subscriberID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                          <div style={{  padding: '5px' }} className="m-2">
+                            <i className="bi bi-pencil-fill edit-btn-color"></i> </div>
                           </Link>
                         </span>
                         {/* <span>
