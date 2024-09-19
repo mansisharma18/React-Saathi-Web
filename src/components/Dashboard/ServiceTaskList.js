@@ -255,28 +255,53 @@ function ServiceTaskList() {
                         </Card.Title>
                         <hr />
                         <Card.Text>
-                          <Row>
-                            <Col style={{ justifyContent: "space-between" }}>
-                              Pending{" "}
-                              <span style={{ fontSize: "36px", color: "red" }}>
-                                {" "}
-                                {pendingRequest.length}
-                              </span>
-                            </Col>
-                          </Row>
-                          <Col>
-                            Completed{" "}
-                            <span
-                              style={{
-                                fontSize: "36px",
-                                color: "green",
-                                textAlign: "right",
-                             
-                              }}
-                            >
-                              {completedRequest.length}
-                            </span>
-                          </Col>
+                          <div className="d-flex justify-content-between">
+                            <div>
+                              {/* Completed Top Left */}
+                              <p
+                                style={{
+                                  fontSize: "14px",
+                                  fontWeight: "bold",
+                                  color: "green",
+                                }}
+                              >
+                                Completed
+                                <span
+                                  style={{
+                                    fontSize: "36px",
+                                    marginLeft: "10px",
+                                  }}
+                                >
+                                  {completedRequest.length}
+                                </span>
+                              </p>
+                            </div>
+                            <div>
+                              {/* Pending Bottom Right */}
+                              <p
+                                style={{
+                                  fontSize: "14px",
+                                  fontWeight: "bold",
+                                  color: "red",
+                                  textAlign: "right",
+                                  position: "absolute",
+                                  bottom: 0,
+                                  right: 0,
+                                }}
+                              >
+                                Pending
+                                <span
+                                  style={{
+                                    fontSize: "36px",
+                                    marginLeft: "10px",
+                                    marginRight:'10px'
+                                  }}
+                                >
+                                  {pendingRequest.length}
+                                </span>
+                              </p>
+                            </div>
+                          </div>
                         </Card.Text>
                       </Card.Body>
                     </Card>
