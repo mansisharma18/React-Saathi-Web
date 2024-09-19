@@ -65,72 +65,76 @@ const List = () => {
 
   return (
     <div>
-       <div className="d-flex">
-   <Container className="justify-content-center aligh-items-center mt-5 px-5">
-
-<Card className="shadow-sm pb-3">
-<Card.Body>
-<div className="d-flex justify-content-center">
-  <div className="mt-2">
-      <h4>Subscribers List</h4>
-      
-  </div>
-
- 
-</div>
-<hr/>
-<div>
-<table class="table  table-bordered table-striped table-font-size">
-  <thead>
-    <tr  class="table-info">
-      <th scope="col">S.No</th>
-      <th scope="col">Subscriber Name</th>
-      <th scope="col">Patron Name</th>
-      <th scope="col">Contact No.</th>
-      <th scope="col">Email</th>
-      <th scope="col">Package</th>
-      <th scope="col">Edit/Delete</th>
-    </tr>
-  </thead>
-  <tbody>
-                    {list.length > 0 ? list.map((item, index) => (
-                      <tr key={index}>
-                        <th scope="row">{index + 1}</th>
-                        <td>{item.firstName} {item.lastName}</td>
-                        <td>
-  {item.patrons && item.patrons.length > 0 ? (
-    <ol>
-      {item.patrons.map((patron, patronIndex) => (
-        <li key={patronIndex}>
-          {patron.firstName} {patron.lastName}
-        </li>
-      ))}
-    </ol>
-  ) : (
-    <span></span>
-  )}
-</td>
-                        <td>{item.contactNo}</td>
-                        <td>{item.email}</td>
-                        <td>{item.packageName}</td>
-                        <td>
-                        
-                        <span className="text-decoration-none me-3">
-                          <Link to={`/dashboard/updateSubscriber/${item.subscriberID}`} style={{ color: 'inherit', textDecoration: 'none' }}>
-                            <i className="bi bi-pencil-fill edit-btn-color"></i>
-                          </Link>
-                        </span>
-                        {/* <span>
+      <div className="d-flex">
+        <Container className="justify-content-center aligh-items-center mt-5 px-5">
+          <Card className="shadow-sm pb-3">
+            <Card.Body>
+              <div className="d-flex justify-content-center">
+                <div className="mt-2">
+                  <h4>Subscribers List</h4>
+                </div>
+              </div>
+              <hr />
+              <div>
+                <table class="table  table-bordered table-striped table-font-size">
+                  <thead>
+                    <tr class="table-info">
+                      <th scope="col">S.No</th>
+                      <th scope="col">Subscriber Name</th>
+                      <th scope="col">Patron Name</th>
+                      <th scope="col">Contact No.</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Package</th>
+                      <th scope="col">Edit/Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {list.length > 0 ? (
+                      list.map((item, index) => (
+                        <tr key={index}>
+                          <th scope="row">{index + 1}</th>
+                          <td>
+                            {item.firstName} {item.lastName}
+                          </td>
+                          <td>
+                            {item.patrons && item.patrons.length > 0 ? (
+                              <ol>
+                                {item.patrons.map((patron, patronIndex) => (
+                                  <li key={patronIndex}>
+                                    {patron.firstName} {patron.lastName}
+                                  </li>
+                                ))}
+                              </ol>
+                            ) : (
+                              <span></span>
+                            )}
+                          </td>
+                          <td>{item.contactNo}</td>
+                          <td>{item.email}</td>
+                          <td>{item.packageName}</td>
+                          <td>
+                            <span className="text-decoration-none me-3">
+                              <Link
+                                to={`/dashboard/updateSubscriber/${item.subscriberID}`}
+                                style={{
+                                  color: "inherit",
+                                  textDecoration: "none",
+                                }}
+                              >
+                                <i className="bi bi-pencil-fill edit-btn-color"></i>
+                              </Link>
+                            </span>
+                            {/* <span>
                           <i
                             className="bi bi-trash3-fill delete-btn-color"
                             onClick={() => handleDelete(item.subscriberID)}
                             style={{ cursor: 'pointer' }}
                           ></i>
                         </span> */}
-                        
-                        </td>
-                      </tr>
-                    )) : (
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
                       <tr>
                         <td colSpan="7">No Subscriber</td>
                       </tr>
