@@ -231,6 +231,39 @@ setActiveAccordion("3"); // Open the second accordion
                     </Accordion.Item>
                   </Accordion>
 
+                  
+                  <Accordion activeKey={activeAccordion} flush>
+                    <Accordion.Item eventKey="1">
+                      <Accordion.Header className="accordion-head" onClick={() => handleAccordionToggle("1")}>
+                        <Nav.Link as="div" className="nav-link">
+                          <ManageAccountsIcon className="me-2" />
+                          <span>Packages & Services</span>
+                        </Nav.Link>
+                      </Accordion.Header>
+                      <Accordion.Body>
+                       
+                      
+
+                        <Nav.Link
+                          as={Link}
+                          to="/dashboard/servicesList"
+                          className={`nav-link ${location.pathname === "/dashboard/servicesList" ? "active-nav-link" : ""}`}
+                        >
+                          List of Services
+                        </Nav.Link>
+                        <Nav.Link
+                          as={Link}
+                          to="/dashboard/packages"
+                          className={`nav-link ${location.pathname === "/dashboard/packages" ? "active-nav-link" : ""}`}
+                        >
+                          List of Packages
+                        </Nav.Link>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+
+
+
                   <Nav.Link
                     as={Link}
                     to="/dashboard/serviceTaskList"
