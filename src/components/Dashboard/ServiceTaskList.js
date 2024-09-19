@@ -20,12 +20,12 @@ function ServiceTaskList() {
   const [alert, setAlert] = useState();
   const [completedRequest, setCompletedRequest] = useState([]);
   const [pendingRequest, setPendingRequest] = useState([]);
-
+  const userId = localStorage.getItem("userId");
   // Function to fetch subscriber list
   const fetchSubscribers = async () => {
     try {
       const response = await fetch(
-        `https://saathi.etheriumtech.com:444/Saathi/admin-users/48/subscribers` //change 48 to saathiID
+        `https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers` //change 48 to saathiID
       );
       const json = await response.json();
       setSubscriber(json);
