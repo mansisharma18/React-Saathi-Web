@@ -1,5 +1,4 @@
-import { responsiveFontSizes } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -11,27 +10,88 @@ import {
   Table,
 } from "react-bootstrap";
 
-function ServiceTaskList() {
-  const [subscriber, setSubscriber] = useState();
-  const [subId, setSubId] = useState(0);
-  const [showModal, setShowModal] = useState(false);
+const ServiceRequest = () => {
+  const [subscriber, setSubscriber] = useState(null); // Store subscriber details
+  const [subscriptionList, setSubscriptionList] = useState([]);
+  const [tasks] = useState([
+    {
+      id: 1,
+      task: "Weekly Call",
+      serviceID: 4,
+      isAlaCarte: false,
+      status: "pending",
+    },
+    {
+      id: 2,
+      task: "Errand Run",
+      serviceID: 5,
+      isAlaCarte: false,
+      status: "pending",
+    },
+    {
+      id: 3,
+      task: "House Cleaning",
+      serviceID: 6,
+      isAlaCarte: true,
+      status: "pending",
+    },
+    {
+      id: 4,
+      task: "Doctor Consultation",
+      serviceID: 7,
+      isAlaCarte: true,
+      status: "completed",
+    },
+    {
+      id: 5,
+      task: "Personal Training",
+      serviceID: 8,
+      isAlaCarte: false,
+      status: "completed",
+    },
+  ]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://saathi.etheriumtech.com:444/Saathi/admin-users/48/subscribers` //change 48 to saathiID
+          `https://saathi.etheriumtech.com:444/Saathi/subscribers/7`
         );
         const json = await response.json();
-        console.log("subscribers", json);
 
-        setSubscriber(json);
+        setSubscriptionList(json.patrons); // Patrons are set here
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
   }, []);
-  const [patron, setPatron] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `https://saathi.etheriumtech.com:444/Saathi/admin-users/48/subscribers`
+        );
+        const json = await response.json();
+        console.log("subscribers", json);
+
+        setSubscriptionList(json); // Patrons are set here
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+  const [subId, setSubId] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [alert, setAlert] = useState("");
+  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [completionData, setCompletionData] = useState({
+    notes: "",
+    screenshot: null,
+  });
+
   const handleShowModal = (task) => {
     setSelectedRequest(task);
     setShowModal(true);
@@ -44,12 +104,7 @@ function ServiceTaskList() {
       [name]: files ? files[0] : value,
     });
   };
-  const [alert, setAlert] = useState("");
-  const [selectedRequest, setSelectedRequest] = useState(null);
-  const [completionData, setCompletionData] = useState({
-    notes: "",
-    screenshot: null,
-  });
+
   const handleSubmit = async () => {
     if (!selectedRequest) return;
 
@@ -90,132 +145,103 @@ function ServiceTaskList() {
       screenshot: null,
     });
   };
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://saathi.etheriumtech.com:444/Saathi/subscribers/${subId}`
-        );
-        const json = await response.json();
-        setPackageDetail(json);
-        setPatron(json.patrons); // Patrons are set here
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, [subId]);
-  const [requests, setRequests] = useState();
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(
-        `https://saathi.etheriumtech.com:444/Saathi/subscribers/${subId}/services`
-      );
-      const json = await response.json();
-      setRequests(json);
-    };
-    fetchData();
-  });
-  const [packageDetails, setPackageDetail] = useState();
+
+  // Separate Ala-Carte and Completed Tasks
+  const alaCarteTasks = tasks.filter(
+    (task) => task.isAlaCarte && task.status === "pending"
+  );
+  const completedTasks = tasks.filter((task) => task.status === "completed");
+  const pendingTasks = tasks.filter(
+    (task) => task.status === "pending" && !task.isAlaCarte
+  );
 
   return (
     <div className="d-flex">
       <Container className="justify-content-center align-items-center mt-5 px-5">
-        <div className="d-flex justify-content-center ">
-          <div className="mt-2">
-            <h4 className="heading-color">To Do List</h4>
-          </div>
-        </div>
-        <hr />
-        <Row>
-          <Col md={4}>
-            <Form.Label>Select a Subscriber</Form.Label>
-            <Form.Select
-              aria-label="Select Subscriber"
-              value={subId}
-              onChange={(event) => setSubId(event.target.value)}
-            >
-              <option value="">Select Subscriber</option>
-              {subscriber?.map((subscriber) => (
-                <option
-                  key={subscriber.subscriberID}
-                  value={subscriber.subscriberID}
-                >
-                  {subscriber.firstName} {subscriber.lastName}
-                </option>
-              ))}
-            </Form.Select>
-          </Col>
-        </Row>
-        {subId !== 0 && patron && (
+        {/* Subscriber Dropdown */}
+        {subscriptionList && (
           <>
-            <Row className="mt-3">
-              {/* Subscriber Info */}
-
-              {/* Associated Patrons */}
-              <Col md={4} className="d-flex">
-                <Card className="shadow-sm flex-fill">
-                  <Card.Body>
-                    <Card.Title
-                      style={{ fontSize: "16px", fontWeight: "bold" }}
+            <Row>
+              <Col md={4}>
+                <Form.Label>Select a Subscriber</Form.Label>
+                <Form.Select
+                  aria-label="Select Subscriber"
+                  value={subId}
+                  onChange={(event) => setSubId(event.target.value)}
+                >
+                  <option value="">Select Subscriber</option>
+                  {subscriber.map((subscriber) => (
+                    <option
+                      key={subscriber.subscriberID}
+                      value={subscriber.subscriberID}
                     >
-                      Associated Patrons
-                    </Card.Title>
-                    <hr />
-                    <Card.Text style={{ fontSize: "14px" }}>
-                      <strong>Patron 1:</strong> {patron[0].firstName}{" "}
-                      {patron[0].lastName} <br />
-                      <strong>Email:</strong> {patron[0].email} <br />
-                      <strong>Contact No:</strong> {patron[0].contactNo} <br />
-                      <br />
-                      <strong>Patron 2:</strong> {patron[1].firstName}{" "}
-                      {patron[1].lastName} <br />
-                      <strong>Contact No:</strong> {patron[1].contactNo}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
+                      {subscriber.firstName} {subscriber.lastName}
+                    </option>
+                  ))}
+                </Form.Select>
               </Col>
-              <Col md={4} className="d-flex">
-                <Card className="shadow-sm flex-fill">
+            </Row>
+            <Row>
+              <Col md={12}>
+                <Card className="shadow-sm">
                   <Card.Body>
-                    <Card.Title
-                      style={{ fontSize: "16px", fontWeight: "bold" }}
-                    >
-                      Package Name: {packageDetails.packageName}{" "}
+                    <Card.Title>
+                      Subscriber: {subscriber.firstName} {subscriber.lastName}
                     </Card.Title>
-                    <hr />
-                    <Card.Text style={{ fontSize: "14px" }}>
-                      <h5 style={{ fontSize: "16px" }}>Services Included:</h5>
-                      <ul style={{ paddingLeft: "20px", fontSize: "14px" }}>
-                        {packageDetails?.packageServices.map(
-                          (service, index) => (
-                            <li key={index} style={{ marginBottom: "10px" }}>
-                              <strong>{service.serviceName}</strong>
-                              {service.description}
-                            </li>
-                          )
-                        )}
+                    <Card.Text>
+                      <strong>Email:</strong> {subscriber.email} <br />
+                      <strong>Contact No:</strong> {subscriber.contactNo} <br />
+                      <strong>Package:</strong> {subscriber.packageName} <br />
+                      <strong>Comments:</strong> {subscriber.comments || "N/A"}
+                    </Card.Text>
+                    <Card.Text>
+                      <strong>Services:</strong>
+                      <ul>
+                        {pendingTasks.map((task) => (
+                          <li key={task.id}>{task.task}</li>
+                        ))}
                       </ul>
                     </Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
-
-              {/* Empty Column with Same Height */}
-              <Col md={4} className="d-flex">
-                <Card className="shadow-sm flex-fill">
-                  <Card.Body>
-                    <Card.Title></Card.Title>
-                    {/* Empty content */}
-                  </Card.Body>
-                </Card>
-              </Col>
-              
             </Row>
 
-            <Row>
-              <Col>
-                <h5 className="mb-3 mt-2" style={{fontSize:"14px"}}>Package Services</h5>
+            {/* Patrons */}
+            <Row className="mt-4">
+              <Col md={12}>
+                <h5 className="mb-3">Associated Patrons</h5>
+                <Table striped bordered hover responsive>
+                  <thead>
+                    <tr className="table-info">
+                      <th>Patron Name</th>
+                      <th>Relation</th>
+                      <th>City</th>
+                      <th>Contact No</th>
+                      <th>Email</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {subscriptionList.map((patron) => (
+                      <tr key={patron.patronID}>
+                        <td>
+                          {patron.firstName} {patron.lastName}
+                        </td>
+                        <td>{patron.relation}</td>
+                        <td>{patron.city}</td>
+                        <td>{patron.contactNo}</td>
+                        <td>{patron.email}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </Col>
+            </Row>
+
+            {/* Pending Task Table */}
+            <Row className="mt-4">
+              <Col md={12}>
+                <h5 className="mb-3">Pending Tasks</h5>
                 <Table
                   striped
                   bordered
@@ -233,11 +259,11 @@ function ServiceTaskList() {
                     </tr>
                   </thead>
                   <tbody>
-                    {requests?.map((task) => (
+                    {pendingTasks.map((task) => (
                       <tr key={task.id}>
-                        <td>{task.serviceName}</td>
-                        <td>{task.pending}</td>
-                        <td>{task.completions}</td>
+                        <td>{task.task}</td>
+                        <td>3</td>
+                        <td>2</td>
                         <td>
                           <Button
                             variant="primary"
@@ -256,8 +282,12 @@ function ServiceTaskList() {
                   </tbody>
                 </Table>
               </Col>
-              <Col >
-                <h5 className="mt-3" style={{fontSize:"14px"}}>Ala-Carte Services</h5>
+            </Row>
+
+            {/* Ala-Carte Service Table */}
+            <Row className="mt-4">
+              <Col md={12}>
+                <h5 className="mb-3">Ala-Carte Services</h5>
                 <Table
                   striped
                   bordered
@@ -275,11 +305,11 @@ function ServiceTaskList() {
                     </tr>
                   </thead>
                   <tbody>
-                    {requests?.map((task) => (
+                    {alaCarteTasks.map((task) => (
                       <tr key={task.id}>
-                        <td>{task.serviceName}</td>
-                        <td>{task.pending}</td>
-                        <td>{task.completions}</td>
+                        <td>{task.task}</td>
+                        <td>3</td>
+                        <td>2</td>
                         <td>
                           <Button
                             variant="primary"
@@ -288,7 +318,7 @@ function ServiceTaskList() {
                               backgroundColor: "#009efb",
                               borderColor: "#009efb",
                             }}
-                            onClick={() => handleShowModal()}
+                            onClick={() => handleShowModal(task)}
                           >
                             Update
                           </Button>
@@ -299,10 +329,11 @@ function ServiceTaskList() {
                 </Table>
               </Col>
             </Row>
-       
-            <Row className="mt-2">
+
+            {/* Completed Task Table */}
+            <Row className="mt-4">
               <Col md={12}>
-                <h5 className="mt-2" style={{fontSize:"14px"}}>Completed Tasks</h5>
+                <h5 className="mb-3">Completed Tasks</h5>
                 <Table
                   striped
                   bordered
@@ -318,9 +349,9 @@ function ServiceTaskList() {
                     </tr>
                   </thead>
                   <tbody>
-                    {requests?.map((task) => (
+                    {completedTasks.map((task) => (
                       <tr key={task.id}>
-                        <td>{task.serviceName}</td>
+                        <td>{task.task}</td>
                         <td>
                           <Button variant="secondary" size="sm" disabled>
                             Completed
@@ -334,6 +365,8 @@ function ServiceTaskList() {
             </Row>
           </>
         )}
+
+        {/* Modal for Task Update */}
         <Modal show={showModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
             <Modal.Title>Update Request Status</Modal.Title>
@@ -370,9 +403,28 @@ function ServiceTaskList() {
             </Button>
           </Modal.Footer>
         </Modal>
+
+        {/* Alert for Task Completion */}
+        {alert && (
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 999,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <div className="alert alert-success">{alert}</div>
+          </div>
+        )}
       </Container>
     </div>
   );
-}
+};
 
-export default ServiceTaskList;
+export default ServiceRequest;
