@@ -47,6 +47,7 @@ const PatronDetails = () => {
     const[comments1,setComments1]=useState('')
     const[displayAddButton,setDisplayAddButton]=useState(true)
     const[displayCancelButton,setDisplayCancelButton]=useState(true)
+    const [loading, setLoading] = useState(false);
     
 
    
@@ -96,6 +97,7 @@ const PatronDetails = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true)
    
   
     const payload = [
@@ -162,6 +164,7 @@ const PatronDetails = () => {
         console.log("Response:", response.data); 
         if (response.data) {
           setAlert('Patron created successfully!!');
+          
         } 
          else {
           setAlert('An error occurred. Please contact the development team.');
@@ -169,6 +172,7 @@ const PatronDetails = () => {
 
         setTimeout(() => {
           setAlert('');
+          setLoading(false)
           navigate('/dashboard')
         }, 5000); // Hide alert after 3 seconds
       })
@@ -185,6 +189,7 @@ const PatronDetails = () => {
         }
         setTimeout(() => {
             setAlert('');
+            setLoading(false)
           }, 5000); // Hide alert after 3 seconds
       });
   };
@@ -619,6 +624,7 @@ const PatronDetails = () => {
   <Button
     variant="primary"
     type="submit"
+    disabled={loading}
     style={{
       backgroundColor: '#009efb',
       borderColor: '#009efb',

@@ -102,7 +102,7 @@ const DashboardSaathiHome = () => {
    <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
    {item.services.map((p, index) => (
      <li key={index} >
-      <div style={{ backgroundColor: '#dc3d3d',color:"white", padding: '5px' }} className="m-2 text-center">  Pending</div>
+      <div style={{color:"red", padding: '5px' }} className="m-2 text-center">  Pending</div>
       
      </li>
    ))}

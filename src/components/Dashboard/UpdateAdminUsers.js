@@ -44,7 +44,7 @@ const UpdateAdminUsers = () => {
           setDob(res.data.dob)
           setBio(res.data.briefBio)
           setSelectedOption(res.data.userType)
-          setPassword(res.data.password)
+          // setPassword(res.data.password)
           setCountryCode(res.data.countryCode)
           setStatus(res.data.status)
           
@@ -86,7 +86,7 @@ const UpdateAdminUsers = () => {
         countryCode: countryCode,
         briefBio: bio,
         userType: selectedOption,
-        // password: password,
+        password: password,
         status: status, // You can adjust this based on your form inputs
         // createdBy: 87,
         updatedBy: userId,
@@ -216,19 +216,14 @@ const UpdateAdminUsers = () => {
                                         />
                                     </Col>
                                     <Col className="p-3">
-                                    <Form.Group className="position-relative">
-                                    <Form.Label className="label-style">Date of Birth</Form.Label>
-        <Form.Control
-            type="date"
-            className="date-input-with-label"
-            style={{ paddingLeft: '45px', fontSize: '12px' }}  // Adjust padding to accommodate the label
-            value={dob}
-            onChange={(event) => setDob(event.target.value)}
-            required
-        />
-    </Form.Group>
-
-                                        
+                                    <Form.Label className="label-style">Password</Form.Label>
+                                        <Form.Control
+                                        type="password"
+                                            placeholder="Password"
+                                            style={{ padding: '8px', fontSize: "12px" }}
+                                            value={password}
+                                            onChange={(event) => setPassword(event.target.value)}
+                                        />
                                     </Col>
                                 </Row>
                                 <Row>
@@ -264,7 +259,7 @@ const UpdateAdminUsers = () => {
                                         </Row>
                                     </Col>
                                     <Col className="p-3">
-                                    <Form.Label className="label-style">Upload Image</Form.Label>
+                                    <Form.Label className="label-style">Change Photograph</Form.Label>
                                         <Form.Control
                                             type="file"
                                             accept="image/*"
@@ -286,7 +281,7 @@ const UpdateAdminUsers = () => {
                                             onChange={(event) => setPassword(event.target.value)}
                                         />
                                     </Col> */}
-                                    <Col className="p-3" md={6}>
+                                    {/* <Col className="p-3" md={6}>
                                     <Form.Label className="label-style">Select Option</Form.Label>
                                         <Form.Select
                                             style={{ padding: '8px', fontSize: "12px" }}
@@ -299,7 +294,7 @@ const UpdateAdminUsers = () => {
                                             <option value="1">Active</option>
                                             <option value="0">Inactive</option>
                                         </Form.Select>
-                                    </Col>
+                                    </Col> */}
                                 </Row>
 
 
