@@ -128,7 +128,11 @@ function ServiceTaskList() {
     if (completionData.screenshot) {
       formData.append("image", completionData.screenshot);
     }
-    formData.append("isAlaCarte", false);
+    if (selectedRequest.alaCarte === false) {
+      formData.append("isAlaCarte", false);
+    } else {
+      formData.append("isAlaCarte", true);
+    }
 
     try {
       const response = await fetch(
@@ -331,6 +335,7 @@ function ServiceTaskList() {
                 </Row>
 
                 {/* Task Tables */}
+
                 <Row className="mt-5">
                   <Col>
                     <h5
@@ -353,73 +358,86 @@ function ServiceTaskList() {
                         </tr>
                       </thead>
                       <tbody>
-                        {pendingRequest?.map((task) => (
-                          <tr key={task.id}>
-                            <td>{task.serviceName}</td>
-                            <td>{task.pending}</td>
-                            <td>{task.completions}</td>
-                            <td>
-                              <Button
-                                variant="primary"
-                                onClick={() => handleShowModal(task)}
-                                style={{
-                                  backgroundColor: "#009efb",
-                                  borderColor: "#009efb",
-                                  color: "white",
-                                  margin: "4px",
-                                  fontSize: "12px",
-                                }}
-                              >
-                                Update
-                              </Button>
-                            </td>
-                          </tr>
-                        ))}
+                        {pendingRequest
+                          ?.filter((task) => !task.alaCarte) // Filter to show only package services
+                          .map((task) => (
+                            <tr key={task.serviceID}>
+                              <td>{task.serviceName}</td>
+                              <td>{task.pending}</td>
+                              <td>{task.completions}</td>
+                              <td>
+                                <Button
+                                  variant="primary"
+                                  onClick={() => handleShowModal(task)}
+                                  style={{
+                                    backgroundColor: "#009efb",
+                                    borderColor: "#009efb",
+                                    color: "white",
+                                    margin: "4px",
+                                    fontSize: "12px",
+                                  }}
+                                >
+                                  Update
+                                </Button>
+                              </td>
+                            </tr>
+                          ))}
                       </tbody>
                     </Table>
                   </Col>
                 </Row>
-                {/* <Row>
-                  <Col>
-                    <h5 className="mt-3" style={{ fontSize: "14px" }}>
-                      Ala-Carte Services
-                    </h5>
-                    <Table striped bordered hover responsive>
-                      <thead>
-                        <tr className="table-info">
-                          <th>Service Name</th>
-                          <th>Pending</th>
-                          <th>Completed</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {requests?.map((task) => (
-                          <tr key={task.id}>
-                            <td>{task.serviceName}</td>
-                            <td>{task.pending}</td>
-                            <td>{task.completions}</td>
-                            <td>
-                              <Button
-                                variant="primary"
-                                onClick={() => handleShowModal(task)}
-                                style={{
-                                  backgroundColor: "#009efb",
-                                  borderColor: "#009efb",
-                                  color: "white",
-                                  margin: "4px",
-                                  fontSize: "12px",
-                                }}
-                              >
-                                Update
-                              </Button>
-                            </td>
+
+                {/* Conditionally render the Ala-Carte Services table only if there are pending Ala-Carte services */}
+                {requests?.filter((task) => task.alaCarte && task.pending > 0)
+                  .length > 0 && (
+                  <Row>
+                    <Col>
+                      <h5 className="mt-3" style={{ fontSize: "14px" }}>
+                        Ala-Carte Services
+                      </h5>
+                      <Table striped bordered hover responsive>
+                        <thead>
+                          <tr className="table-info">
+                            <th>Service Name</th>
+                            <th>Pending</th>
+                            <th>Completed</th>
+                            <th>Action</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </Table>
-                  </Col>
-                </Row> */}
+                        </thead>
+                        <tbody>
+                          {requests
+                            ?.filter(
+                              (task) => task.alaCarte && task.pending > 0
+                            ) // Filter Ala-Carte services with pending tasks
+                            .map((task) => (
+                              <tr key={task.serviceID}>
+                                <td>{task.serviceName}</td>
+                                <td>{task.pending}</td>
+                                <td>{task.completions}</td>
+                                <td>
+                                  <Button
+                                    variant="primary"
+                                    onClick={() => handleShowModal(task)}
+                                    style={{
+                                      backgroundColor: "#009efb",
+                                      borderColor: "#009efb",
+                                      color: "white",
+                                      margin: "4px",
+                                      fontSize: "12px",
+                                    }}
+                                  >
+                                    Update
+                                  </Button>
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </Table>
+                    </Col>
+                  </Row>
+                )}
+
+                {/* Completed Services Table */}
                 <Row className="mt-4">
                   <Col md={12}>
                     <h5
@@ -435,6 +453,8 @@ function ServiceTaskList() {
                       <thead>
                         <tr className="table-info">
                           <th>Service Name</th>
+                          <th>Service Type</th>
+                          {/* New column for Service Type */}
                           <th>Completion Notes</th>
                           <th>Date of Completion</th>
                         </tr>
@@ -451,9 +471,12 @@ function ServiceTaskList() {
                                   )}
                                 </td>
                                 <td>
-                                  {interactionIndex + 1} -{" "}
-                                  {interaction.description}
+                                  {/* Display Ala-Carte or Package Service based on alaCarte property */}
+                                  {task.alaCarte
+                                    ? "Ala-Carte"
+                                    : "Package Service"}
                                 </td>
+                                <td>{interaction.description}</td>
                                 <td>{interaction.createdDate}</td>
                               </tr>
                             )
