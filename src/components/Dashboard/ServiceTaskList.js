@@ -60,16 +60,25 @@ function ServiceTaskList() {
 
   // Fetch requests
   const fetchRequests = async () => {
+    console.log("sub", subId);
+
     if (subId !== 0) {
       const response = await fetch(
         `https://saathi.etheriumtech.com:444/Saathi/subscribers/${subId}/services`
       );
       const json = await response.json();
       console.log("request", json);
-      const completedRequest = json.filter((item) => item.pending === 0);
+
+      // Update logic for completedRequest
+      const completedRequest = json.filter((item) => item.completions > 0);
+      console.log("Completed Request", completedRequest);
+
       setCompletedRequest(completedRequest);
-      const pendingRequest = json.filter((item) => item.pending !== 0);
+
+      // Update logic for pendingRequest
+      const pendingRequest = json.filter((item) => item.pending > 0);
       setPendingRequest(pendingRequest);
+
       setRequests(json);
     }
   };
@@ -144,7 +153,11 @@ function ServiceTaskList() {
       screenshot: null,
     });
   };
-
+  const totalPending = requests?.reduce((sum, item) => sum + item.pending, 0);
+  const totalCompleted = requests?.reduce(
+    (sum, item) => sum + item.completions,
+    0
+  );
   return (
     <div className="d-flex">
       <Container className="justify-content-center align-items-center mt-5 px-5">
@@ -272,7 +285,7 @@ function ServiceTaskList() {
                                     marginLeft: "10px",
                                   }}
                                 >
-                                  {completedRequest.length}
+                                  {totalCompleted}
                                 </span>
                               </p>
                             </div>
@@ -294,10 +307,10 @@ function ServiceTaskList() {
                                   style={{
                                     fontSize: "36px",
                                     marginLeft: "10px",
-                                    marginRight:'10px'
+                                    marginRight: "10px",
                                   }}
                                 >
-                                  {pendingRequest.length}
+                                  {totalPending}
                                 </span>
                               </p>
                             </div>
@@ -309,9 +322,9 @@ function ServiceTaskList() {
                 </Row>
 
                 {/* Task Tables */}
-                <Row>
+                <Row className="mt-5">
                   <Col>
-                    <h5 className="mb-3 mt-2" style={{ fontSize: "14px" }}>
+                    <h5 className="" style={{ fontSize: "16px",color:"#009efb",textAlign:'center' }}>
                       Package Services
                     </h5>
                     <Table striped bordered hover responsive>
@@ -350,7 +363,7 @@ function ServiceTaskList() {
                     </Table>
                   </Col>
                 </Row>
-                <Row>
+                {/* <Row>
                   <Col>
                     <h5 className="mt-3" style={{ fontSize: "14px" }}>
                       Ala-Carte Services
@@ -390,29 +403,40 @@ function ServiceTaskList() {
                       </tbody>
                     </Table>
                   </Col>
-                </Row>
-                <Row className="mt-2">
+                </Row> */}
+                <Row className="mt-4">
                   <Col md={12}>
-                    <h5 className="mt-2" style={{ fontSize: "14px" }}>
-                      Completed Tasks
+                    <h5 style={{ fontSize: "16px",color:"#009efb",textAlign:'center' }}>
+                      Completed Services
                     </h5>
                     <Table striped bordered hover responsive>
                       <thead>
-                        <tr className="table-success">
+                        <tr className="table-info">
                           <th>Service Name</th>
                           <th>Completion Notes</th>
                           <th>Date of Completion</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {completedRequest?.map((task) => (
-                          <tr key={task.id}>
-                            <td>{task.serviceName}</td>
-
-                            <td>Description</td>
-                            <td>{task.completionDate}</td>
-                          </tr>
-                        ))}
+                        {completedRequest?.map((task, index) =>
+                          // Loop through interactions for each task
+                          task.interactions?.map(
+                            (interaction, interactionIndex) => (
+                              <tr key={interaction.interactionID}>
+                                <td>
+                                  {interactionIndex === 0 && (
+                                    <strong>{task.serviceName}</strong>
+                                  )}
+                                </td> 
+                                <td>
+                                 {interactionIndex + 1} -{" "}
+                                  {interaction.description}
+                                </td>
+                                <td>{interaction.createdDate}</td>
+                              </tr>
+                            )
+                          )
+                        )}
                       </tbody>
                     </Table>
                   </Col>
@@ -422,14 +446,14 @@ function ServiceTaskList() {
 
             <Modal show={showModal} onHide={handleCloseModal}>
               <Modal.Header closeButton>
-                <Modal.Title style={{ fontSize: "14px" }}>
+                <Modal.Title style={{ fontSize: "18px",color:"#009efb" }}>
                   Update {serviceNameSelected} Status
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <Form>
                   <Form.Group className="mb-3">
-                    <Form.Label>Completion Notes</Form.Label>
+                    <Form.Label style={{fontSize:"14px"}}>Completion Notes</Form.Label>
                     <Form.Control
                       as="textarea"
                       rows={3}
@@ -440,16 +464,17 @@ function ServiceTaskList() {
                   </Form.Group>
 
                   <Form.Group className="mb-3">
-                    <Form.Label>Upload Screenshot or File</Form.Label>
+                    <Form.Label style={{fontSize:"14px"}}>Upload Screenshot or File</Form.Label>
                     <Form.Control
                       type="file"
                       name="screenshot"
                       onChange={handleChange}
+                      style={{fontSize:"14px"}}
                     />
                   </Form.Group>
                 </Form>
               </Modal.Body>
-              <Modal.Footer>
+              <Modal.Footer style={{justifyContent:'space-between'}}>
                 <Button
                   variant="primary"
                   onClick={handleSubmit}
@@ -461,7 +486,7 @@ function ServiceTaskList() {
                     fontSize: "12px",
                   }}
                 >
-                  Submit
+                  Update
                 </Button>
                 <Button
                   variant="secondary"
@@ -472,7 +497,7 @@ function ServiceTaskList() {
                     fontSize: "12px",
                   }}
                 >
-                  Close
+                  Cancel
                 </Button>
               </Modal.Footer>
             </Modal>
