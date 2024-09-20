@@ -8,12 +8,22 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import PeopleIcon from "@mui/icons-material/People";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
+import { imagePath } from '../../ImagePath';
+import Avatar from '@mui/material/Avatar';
+import StarIcon from '@mui/icons-material/Star';
+
 
 const LeftNavigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const image = localStorage.getItem("userPhoto");
+
+  const imageUrl=`${imagePath}${image.split('webapps/')[1]}`
+
   const user = localStorage.getItem("userType");
+  const fisrtName=localStorage.getItem('firstName')
+  const lastName=localStorage.getItem('lastName')
 
   const [activeAccordion, setActiveAccordion] = useState(null);
 
@@ -60,9 +70,26 @@ setActiveAccordion("3"); // Open the second accordion
           <Navbar.Brand href="/" className="brandMobile">
             Saathi
           </Navbar.Brand>
+
+          {user === "Saathi" && (
+            <>
+            <div className="text-center mt-3">
+              <img
+                src={imageUrl} 
+                alt="Saathi Profile"
+                className="profile-img" // Apply custom class
+              />
+              <div className="d-flex">
+                <div>  <p className="mt-1">{fisrtName} {lastName}</p></div>
+                {/* <div><span style={{color:"yellow",fontSize :"10px"}}><StarIcon/></span></div> */}
+              </div>
+             
+            </div>
+            </>
+          )}
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav" style={{ width: "100%" }}>
-            <Nav className="me-auto flex-column mt-3 leftNavbar">
+            <Nav className="me-auto flex-column  leftNavbar">
               {user === "Admin" && (
                 <>
                   <Nav.Link
@@ -182,6 +209,8 @@ setActiveAccordion("3"); // Open the second accordion
 
               {user === "Saathi" && (
                 <>
+
+
                   <Nav.Link
                     as={Link}
                     to="/dashboard"

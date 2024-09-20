@@ -64,8 +64,17 @@ const Login = () => {
           localStorage.setItem("userType", res.data.userType);
           localStorage.setItem("userId", res.data.adminUserID);
           localStorage.setItem("userPhoto", res.data.picture);
+          localStorage.setItem("firstName",res.data.firstName);
+          localStorage.setItem("lastName",res.data.lastName);
           const user = localStorage.getItem("userType");
           const userId = localStorage.getItem("userId");
+
+          const first=localStorage.getItem('firstName')
+          const last =localStorage.getItem('lastName')
+
+          console.log("name",first)
+          console.log("name",last)
+      
           console.log("userId", userId);
           console.log("user", user);
           console.log("pic",res.data.picture);

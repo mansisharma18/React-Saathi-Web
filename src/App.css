@@ -436,3 +436,29 @@ h4 {
 .accordion-button{
   padding:0 !important;
 }
+
+.profile-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;    /* Ensures the image covers the entire area */
+  border-radius: 50%;   /* Makes the image circular */
+  border: 2px solid #ccc; /* Optional border */
+}
+
+
+.leftside {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Full height */
+  overflow-y: auto; /* Enable scrolling */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+.leftside::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+}
+
+/* Optional for other browsers: */
+.leftside {
+  -ms-overflow-style: none; /* Hide scrollbar in IE and Edge */
+}

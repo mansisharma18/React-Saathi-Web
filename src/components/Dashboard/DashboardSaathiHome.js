@@ -25,7 +25,7 @@ const DashboardSaathiHome = () => {
         .then((res) => {
           // Filter the data where status is 1
          
-
+     console.log(res.data)
           
           setList(res.data);
         })
@@ -88,7 +88,12 @@ const DashboardSaathiHome = () => {
       {item.services.map((p, index) => (
         <li key={index}>
           <div style={{  padding: '5px' }} className="m-2"> 
-          {p.timeRequested} 10:00:00 A.M
+            {p.requestedTime && (
+              <>
+          {`${p.requestedTime}:00`}
+          </>
+            )}
+          
           </div>
         </li>
       ))}
@@ -98,18 +103,25 @@ const DashboardSaathiHome = () => {
   )}
 </td>
 <td>
-  {item.services && item.services.length > 0 ? (
-   <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
-   {item.services.map((p, index) => (
-     <li key={index} >
-      <div style={{color:"red", padding: '5px' }} className="m-2 text-center">  Pending</div>
-      
-     </li>
-   ))}
- </ul>
-  ) : (
-    <span></span>
-  )}
+{item.services && item.services.length > 0 ? (
+  <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
+    {item.services.map((p, index) => (
+      <li key={index}>
+        <div
+          style={{
+            color: p.color === 'amber' ? '#FFBF00' : p.color, // Conditional color setting
+            padding: '5px'
+          }}
+          className="m-2"
+        >
+          Pending
+        </div>
+      </li>
+    ))}
+  </ul>
+) : (
+  <span></span>
+)}
 </td>
                         <td>
                         
