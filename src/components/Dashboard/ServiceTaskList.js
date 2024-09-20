@@ -9,6 +9,7 @@ import {
   Form,
   Table,
 } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
 function ServiceTaskList() {
   const [subscriber, setSubscriber] = useState(null); // Initialize as null
@@ -21,6 +22,14 @@ function ServiceTaskList() {
   const [completedRequest, setCompletedRequest] = useState([]);
   const [pendingRequest, setPendingRequest] = useState([]);
   const userId = localStorage.getItem("userId");
+  const { id } = useParams();
+  useEffect(() => {
+    console.log("useEffect triggered, id from params:", id);
+    if (id) {
+      setSubId(id);
+    }
+  }, []);
+
   // Function to fetch subscriber list
   const fetchSubscribers = async () => {
     try {
@@ -324,7 +333,14 @@ function ServiceTaskList() {
                 {/* Task Tables */}
                 <Row className="mt-5">
                   <Col>
-                    <h5 className="" style={{ fontSize: "16px",color:"#009efb",textAlign:'center' }}>
+                    <h5
+                      className=""
+                      style={{
+                        fontSize: "16px",
+                        color: "#009efb",
+                        textAlign: "center",
+                      }}
+                    >
                       Package Services
                     </h5>
                     <Table striped bordered hover responsive>
@@ -406,7 +422,13 @@ function ServiceTaskList() {
                 </Row> */}
                 <Row className="mt-4">
                   <Col md={12}>
-                    <h5 style={{ fontSize: "16px",color:"#009efb",textAlign:'center' }}>
+                    <h5
+                      style={{
+                        fontSize: "16px",
+                        color: "#009efb",
+                        textAlign: "center",
+                      }}
+                    >
                       Completed Services
                     </h5>
                     <Table striped bordered hover responsive>
@@ -427,9 +449,9 @@ function ServiceTaskList() {
                                   {interactionIndex === 0 && (
                                     <strong>{task.serviceName}</strong>
                                   )}
-                                </td> 
+                                </td>
                                 <td>
-                                 {interactionIndex + 1} -{" "}
+                                  {interactionIndex + 1} -{" "}
                                   {interaction.description}
                                 </td>
                                 <td>{interaction.createdDate}</td>
@@ -446,14 +468,16 @@ function ServiceTaskList() {
 
             <Modal show={showModal} onHide={handleCloseModal}>
               <Modal.Header closeButton>
-                <Modal.Title style={{ fontSize: "18px",color:"#009efb" }}>
+                <Modal.Title style={{ fontSize: "18px", color: "#009efb" }}>
                   Update {serviceNameSelected} Status
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <Form>
                   <Form.Group className="mb-3">
-                    <Form.Label style={{fontSize:"14px"}}>Completion Notes</Form.Label>
+                    <Form.Label style={{ fontSize: "14px" }}>
+                      Completion Notes
+                    </Form.Label>
                     <Form.Control
                       as="textarea"
                       rows={3}
@@ -464,17 +488,19 @@ function ServiceTaskList() {
                   </Form.Group>
 
                   <Form.Group className="mb-3">
-                    <Form.Label style={{fontSize:"14px"}}>Upload Screenshot or File</Form.Label>
+                    <Form.Label style={{ fontSize: "14px" }}>
+                      Upload Screenshot or File
+                    </Form.Label>
                     <Form.Control
                       type="file"
                       name="screenshot"
                       onChange={handleChange}
-                      style={{fontSize:"14px"}}
+                      style={{ fontSize: "14px" }}
                     />
                   </Form.Group>
                 </Form>
               </Modal.Body>
-              <Modal.Footer style={{justifyContent:'space-between'}}>
+              <Modal.Footer style={{ justifyContent: "space-between" }}>
                 <Button
                   variant="primary"
                   onClick={handleSubmit}
