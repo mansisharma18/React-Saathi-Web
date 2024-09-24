@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { imagePath } from '../../ImagePath';
 import Avatar from '@mui/material/Avatar';
 import StarIcon from '@mui/icons-material/Star';
+import { Box } from "@mui/material";
 
 
 const LeftNavigation = () => {
@@ -64,12 +65,12 @@ setActiveAccordion("3"); // Open the second accordion
         className="leftside"
         collapseOnSelect
         expand="lg"
-        style={{ position: "fixed", top: 0 }}
+        style={{ position: "fixed", top: 0 ,width:"16%"}}
       >
         <Container className="d-flex flex-column">
-          <Navbar.Brand href="/" className="brandMobile">
+          <div href="/" className="brandMobile text-center">
             Saathi
-          </Navbar.Brand>
+          </div>
 
           {user === "Saathi" && (
             <>
@@ -80,9 +81,17 @@ setActiveAccordion("3"); // Open the second accordion
                 className="profile-img" // Apply custom class
               />
               <div className="d-flex">
-                <div>  <p className="mt-1">{fisrtName} {lastName}</p></div>
-                {/* <div><span style={{color:"yellow",fontSize :"10px"}}><StarIcon/></span></div> */}
+                <div>  <span className="mt-2 fw-bold">{fisrtName} {lastName}</span></div>
+                {/* <div><span style={{color:"green",height :"6px"}}><StarIcon/></span></div> */}
               </div>
+              <Box display="flex" justifyContent="center" alignItems="center">
+                  {[...Array(5)].map((_, index) => (
+                    <StarIcon
+                      key={index}
+                      style={{ color: "yellow", fontSize: 14 }} // Adjust fontSize as needed
+                    />
+                  ))}
+                </Box>
              
             </div>
             </>
