@@ -18,6 +18,8 @@ const ViewAllPackages = () => {
   const [showModal, setShowModal] = useState(false); // For opening/closing modal
   const [currentPackage, setCurrentPackage] = useState(null); // For storing the package being edited
 
+  const user = localStorage.getItem("userType");
+
   const fetchData = async () => {
     try {
       const res = await axios.get(
@@ -134,7 +136,8 @@ const ViewAllPackages = () => {
                   <th className="text-center align-middle">Description</th>
                   <th className="text-center align-middle">Price (INR)</th>
                   <th className="text-center align-middle">Services</th>
-                  <th className="text-center align-middle">Edit/Delete</th>
+                  {user === "Admin" && (
+                  <th className="text-center align-middle">Edit/Delete</th> )}
                 </tr>
               </thead>
               <tbody>
@@ -171,6 +174,8 @@ const ViewAllPackages = () => {
                             <Badge bg="danger">No services</Badge>
                           )}
                         </td>
+
+                        {user === "Admin" && (
                         <td>
                           <span className="text-decoration-none me-3">
                             <Link
@@ -191,6 +196,7 @@ const ViewAllPackages = () => {
                             ></i>
                           </span>
                         </td>
+                        )}
                       </tr>
                       {item.packageServices &&
                         item.packageServices.length > 0 && (
