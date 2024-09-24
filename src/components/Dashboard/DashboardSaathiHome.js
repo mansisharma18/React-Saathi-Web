@@ -11,10 +11,17 @@ import {
   Form,
   Table,
 } from "react-bootstrap";
+import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 const DashboardSaathiHome = () => {
   const userId = localStorage.getItem("userId");
   const [list, setList] = useState([]);
+  const [sortConfig, setSortConfig] = useState({
+    key: null,
+    direction: "ascending",
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,13 +41,39 @@ const DashboardSaathiHome = () => {
               serviceID: service.serviceID,
             }))
           );
-          console.log(flattenedData)
+          console.log(flattenedData);
           setList(flattenedData);
         })
         .catch((err) => console.log(err));
     };
     fetchData();
   }, [userId]);
+
+  const sortList = (key) => {
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
+
+    const sortedList = [...list].sort((a, b) => {
+      if (a[key] < b[key]) {
+        return direction === "ascending" ? -1 : 1;
+      }
+      if (a[key] > b[key]) {
+        return direction === "ascending" ? 1 : -1;
+      }
+      return 0;
+    });
+    setList(sortedList);
+  };
+
+  // Function to highlight the active sort direction
+  const getArrowStyle = (key, direction) => {
+    return sortConfig.key === key && sortConfig.direction === direction
+      ? { fontWeight: "bold", color: "blue" }
+      : {};
+  };
 
   return (
     <div>
@@ -54,9 +87,9 @@ const DashboardSaathiHome = () => {
                 </div>
               </div>
               <hr />
-          
-          <div className="mb-5 mt-5">
-          <Row className="mt-3">
+
+              <div className="mb-5 mt-5">
+                <Row className="mt-3">
                   {/* Associated Patrons */}
                   <Col md={4} className="d-flex">
                     <Card className="shadow-sm flex-fill">
@@ -68,22 +101,25 @@ const DashboardSaathiHome = () => {
                         </Card.Title>
                         <hr />
                         <Card.Text style={{ fontSize: "14px" }}>
-                          {/* {patron[0] && (
-                            <>
-                              <strong>Patron 1:</strong> {patron[0].firstName}{" "}
-                              {patron[0].lastName} <br />
-                              <strong>Contact No:</strong> {patron[0].contactNo}{" "}
-                              <br />
-                              <br />
-                            </>
-                          )}
-                          {patron[1] && (
-                            <>
-                              <strong>Patron 2:</strong> {patron[1].firstName}{" "}
-                              {patron[1].lastName} <br />
-                              <strong>Contact No:</strong> {patron[1].contactNo}
-                            </>
-                          )} */}
+                          <div>
+                            <p
+                              style={{
+                                fontSize: "14px",
+                                fontWeight: "bold",
+                                color: "green",
+                              }}
+                            >
+                              Total No.
+                              <span
+                                style={{
+                                  fontSize: "36px",
+                                  marginLeft: "10px",
+                                }}
+                              >
+                                4
+                              </span>
+                            </p>
+                          </div>
                         </Card.Text>
                       </Card.Body>
                     </Card>
@@ -96,13 +132,11 @@ const DashboardSaathiHome = () => {
                         <Card.Title
                           style={{ fontSize: "16px", fontWeight: "bold" }}
                         >
-                          Packages Included: 
+                          ..
                         </Card.Title>
                         <hr />
                         <Card.Text style={{ fontSize: "14px" }}>
-                          <h5 style={{ fontSize: "16px" }}>
-                            
-                          </h5>
+                          <h5 style={{ fontSize: "16px" }}></h5>
                           {/* <ul style={{ paddingLeft: "20px", fontSize: "14px" }}>
                             {packageDetails?.packageServices?.map(
                               (service, index) => (
@@ -174,7 +208,7 @@ const DashboardSaathiHome = () => {
                                     marginRight: "10px",
                                   }}
                                 >
-                                  10
+                                  9
                                 </span>
                               </p>
                             </div>
@@ -184,19 +218,65 @@ const DashboardSaathiHome = () => {
                     </Card>
                   </Col>
                 </Row>
-
-          </div>
+              </div>
 
               <div>
                 <Table striped bordered className="table-font-size">
                   <thead>
                     <tr className="table-info">
-                      <th scope="col">S.No</th>
-                      <th scope="col">Subscriber Name</th>
-                      <th scope="col">Service Name</th>
-                      <th scope="col">Requested Time</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Update</th>
+                      <th scope="col" style={{ verticalAlign: 'middle' }}>S.No</th>
+                      {/* <th scope="col">Subscriber Name</th> */}
+                      <th scope="col" style={{ verticalAlign: 'middle' }}>
+                        Subscriber Name
+                        <span style={{ cursor: "pointer" }}>
+                          <ArrowDropUpIcon
+                            onClick={() =>
+                              sortList("subscriberName", "ascending")
+                            }
+                            style={{
+                              ...getArrowStyle("subscriberName", "ascending"),
+                              marginRight: "-10px",
+                            }}
+                          />
+                          <ArrowDropDownIcon
+                            onClick={() =>
+                              sortList("subscriberName", "descending")
+                            }
+                            style={{
+                              ...getArrowStyle("subscriberName", "descending"),
+                            }}
+                          />
+                        </span>
+                      </th>
+                      <th scope="col" style={{ verticalAlign: 'middle' }}>Service Name</th>
+                      {/* <th scope="col">Requested Time</th> */}
+                      <th
+                        scope="col"
+                        style={{ verticalAlign: 'middle' }}
+                      >
+                        Requested Time
+                        <span style={{ cursor: "pointer" }}>
+                          <ArrowDropUpIcon
+                            onClick={() =>
+                              sortList("requestedTime", "ascending")
+                            }
+                            style={{
+                              ...getArrowStyle("requestedTime", "ascending"),
+                              marginRight: "-10px",
+                            }}
+                          />
+                          <ArrowDropDownIcon
+                            onClick={() =>
+                              sortList("requestedTime", "descending")
+                            }
+                            style={{
+                              ...getArrowStyle("requestedTime", "descending"),
+                            }}
+                          />
+                        </span>
+                      </th>
+                      <th scope="col" style={{ verticalAlign: 'middle' }}>Status</th>
+                      <th scope="col" style={{ verticalAlign: 'middle' }}>Update</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -210,7 +290,10 @@ const DashboardSaathiHome = () => {
                           <td>
                             <span
                               style={{
-                                color: item.color === "amber" ? "#FFBF00" : item.color,
+                                color:
+                                  item.color === "amber"
+                                    ? "#FFBF00"
+                                    : item.color,
                                 padding: "5px",
                               }}
                             >
@@ -220,7 +303,10 @@ const DashboardSaathiHome = () => {
                           <td>
                             <Link
                               to={`/dashboard/serviceTaskList/${item.subscriberID}`}
-                              style={{ color: "inherit", textDecoration: "none" }}
+                              style={{
+                                color: "inherit",
+                                textDecoration: "none",
+                              }}
                             >
                               <i className="bi bi-pencil-fill edit-btn-color"></i>
                             </Link>

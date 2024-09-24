@@ -85,7 +85,7 @@ const List = () => {
                       <th scope="col">Contact No.</th>
                       <th scope="col">Email</th>
                       <th scope="col">Package</th>
-                      <th scope="col">Edit/Delete</th>
+                      <th scope="col">Edit</th>
                     </tr>
                   </thead>
                   <tbody>

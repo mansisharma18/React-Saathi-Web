@@ -88,7 +88,7 @@ setActiveAccordion("3"); // Open the second accordion
                   {[...Array(5)].map((_, index) => (
                     <StarIcon
                       key={index}
-                      style={{ color: "yellow", fontSize: 14 }} // Adjust fontSize as needed
+                      style={{ color: "green", fontSize: 14 }} // Adjust fontSize as needed
                     />
                   ))}
                 </Box>

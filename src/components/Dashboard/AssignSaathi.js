@@ -185,6 +185,7 @@ const AssignSaathi = () => {
       <div className="d-flex">
         <Container className="justify-content-center aligh-items-center mt-5 px-5">
           {showFirst && (
+            <>
             <Card className="shadow-sm pb-3">
               <Card.Body>
                 <div className="d-flex justify-content-center">
@@ -292,6 +293,7 @@ const AssignSaathi = () => {
                         Change Assigned Saathi
                       </Button>
                     </div>
+                  
                   </Form>
 
                   {alert && (
@@ -316,6 +318,24 @@ const AssignSaathi = () => {
                 </div>
               </Card.Body>
             </Card>
+
+            {/* <div className="d-flex justify-content-center mt-4">
+                      <Button
+                        variant=""
+                      onClick={handleCardChange}
+                        style={{
+                          backgroundColor: "#009efb",
+                          borderColor: "#009efb",
+                          color: "white",
+                          margin: "4px",
+                          fontSize: "12px",
+                        }}
+                      >
+                        Change Assigned Saathi
+                      </Button>
+                    </div> */}
+
+            </>
           )}
 
           { 
