@@ -8,12 +8,23 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import PeopleIcon from "@mui/icons-material/People";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
+import { imagePath } from '../../ImagePath';
+import Avatar from '@mui/material/Avatar';
+import StarIcon from '@mui/icons-material/Star';
+import { Box } from "@mui/material";
+
 
 const LeftNavigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const image = localStorage.getItem("userPhoto");
+
+  const imageUrl=`${imagePath}${image.split('webapps/')[1]}`
+
   const user = localStorage.getItem("userType");
+  const fisrtName=localStorage.getItem('firstName')
+  const lastName=localStorage.getItem('lastName')
 
   const [activeAccordion, setActiveAccordion] = useState(null);
 
@@ -54,15 +65,40 @@ setActiveAccordion("3"); // Open the second accordion
         className="leftside"
         collapseOnSelect
         expand="lg"
-        style={{ position: "fixed", top: 0 }}
+        style={{ position: "fixed", top: 0 ,width:"16%"}}
       >
         <Container className="d-flex flex-column">
-          <Navbar.Brand href="/" className="brandMobile">
+          <div href="/" className="brandMobile text-center">
             Saathi
-          </Navbar.Brand>
+          </div>
+
+          {user === "Saathi" && (
+            <>
+            <div className="text-center mt-3">
+              <img
+                src={imageUrl} 
+                alt="Saathi Profile"
+                className="profile-img" // Apply custom class
+              />
+              <div className="d-flex">
+                <div>  <span className="mt-2 fw-bold">{fisrtName} {lastName}</span></div>
+                {/* <div><span style={{color:"green",height :"6px"}}><StarIcon/></span></div> */}
+              </div>
+              <Box display="flex" justifyContent="center" alignItems="center">
+                  {[...Array(5)].map((_, index) => (
+                    <StarIcon
+                      key={index}
+                      style={{ color: "green", fontSize: 14 }} // Adjust fontSize as needed
+                    />
+                  ))}
+                </Box>
+             
+            </div>
+            </>
+          )}
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav" style={{ width: "100%" }}>
-            <Nav className="me-auto flex-column mt-3 leftNavbar">
+            <Nav className="me-auto flex-column  leftNavbar">
               {user === "Admin" && (
                 <>
                   <Nav.Link
@@ -182,6 +218,8 @@ setActiveAccordion("3"); // Open the second accordion
 
               {user === "Saathi" && (
                 <>
+
+
                   <Nav.Link
                     as={Link}
                     to="/dashboard"

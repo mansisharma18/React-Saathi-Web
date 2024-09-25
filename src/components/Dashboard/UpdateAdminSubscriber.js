@@ -125,7 +125,7 @@ const UpdateAdminSubscriber = () => {
                     <Card.Body>
                         <div className="d-flex justify-content-center">
                             <div className="mt-2">
-                                <h4>Update</h4>
+                                <h4>Update Subscriber Details</h4>
                             </div>
                           
                         </div>
@@ -203,7 +203,7 @@ const UpdateAdminSubscriber = () => {
                                         
                                     </Col>
                                 </Row>
-                                <Row>
+                                {/* <Row>
                                    
                                     <Col className="p-3" md={6}>
                                     <Form.Label className="label-style">Select Status</Form.Label>
@@ -219,7 +219,7 @@ const UpdateAdminSubscriber = () => {
                                             <option value="0">Inactive</option>
                                         </Form.Select>
                                     </Col>
-                                </Row>
+                                </Row> */}
 
 
 

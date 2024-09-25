@@ -124,7 +124,7 @@ const TopBar = () => {
                   <form>
                     <div className="row">
                       <div className="col-md-12 mt-1 ml-3" style={{width:"250px"}}>
-
+{/* 
                       <div className="search-bar-container" style={{ position: 'relative', display: 'inline-block', width: '100%' }}>
   <input
     type="text"
@@ -146,7 +146,7 @@ const TopBar = () => {
   >
     <i className="bi bi-search"></i>
   </span>
-</div>
+</div> */}
 
 
 

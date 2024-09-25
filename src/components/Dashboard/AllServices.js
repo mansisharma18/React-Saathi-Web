@@ -20,6 +20,8 @@ function AllServices() {
   const [currentService, setCurrentService] = useState(null);
   const [showAlert, setShowAlert] = useState({ message: "", variant: "" });
 
+  const user = localStorage.getItem("userType");
+
   useEffect(() => {
     const fetchServices = async () => {
       try {
@@ -161,8 +163,9 @@ function AllServices() {
                       Duration (Hours)
                     </th>
                     <th className="text-center align-middle">Business Hours</th>
-   
+                    {user === "Admin" && (
                     <th className="text-center align-middle">Edit/Delete</th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
@@ -187,6 +190,7 @@ function AllServices() {
                         {service.businessHoursEnd}
                       </td>
               
+                      {user === "Admin" && (
                       <td>
                         <span className="text-decoration-none me-3">
                           <Link
@@ -208,6 +212,7 @@ function AllServices() {
                           ></i>
                         </span>
                       </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>

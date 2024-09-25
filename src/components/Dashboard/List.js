@@ -71,7 +71,7 @@ const List = () => {
             <Card.Body>
               <div className="d-flex justify-content-center">
                 <div className="mt-2">
-                  <h4>Subscribers List</h4>
+                  <h4>List of Subscribers</h4>
                 </div>
               </div>
               <hr />
@@ -85,7 +85,7 @@ const List = () => {
                       <th scope="col">Contact No.</th>
                       <th scope="col">Email</th>
                       <th scope="col">Package</th>
-                      <th scope="col">Edit/Delete</th>
+                      <th scope="col">Edit</th>
                     </tr>
                   </thead>
                   <tbody>

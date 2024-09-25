@@ -441,7 +441,7 @@ const SubscriberRegisteration = () => {
                           />
                         </Col>
                       </Row>
-                      <Row>
+                      {/* <Row>
                       <Col className="p-3" md={6}>
                         <Form.Label className="label-style">Status</Form.Label>
                         <Form.Select
@@ -456,7 +456,7 @@ const SubscriberRegisteration = () => {
                           <option value="0">Inactive</option>
                         </Form.Select>
                       </Col>
-                      </Row>
+                      </Row> */}
 
                       {selectedOption == "Saathi" && (
                         <Row>
