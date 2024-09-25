@@ -12,29 +12,29 @@ import {
 import { useParams } from "react-router-dom";
 
 function ServiceTaskList() {
-  const [subscriber, setSubscriber] = useState(null); // Initialize as null
+  const [subscriber, setSubscriber] = useState(null);
   const [subId, setSubId] = useState(0);
-  const [patron, setPatron] = useState(null); // Initialize as null
+  const [patron, setPatron] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [requests, setRequests] = useState(null); // Initialize as null
-  const [packageDetails, setPackageDetail] = useState(null); // Initialize as null
+  const [requests, setRequests] = useState(null);
+  const [packageDetails, setPackageDetail] = useState(null);
   const [alert, setAlert] = useState();
   const [completedRequest, setCompletedRequest] = useState([]);
   const [pendingRequest, setPendingRequest] = useState([]);
   const userId = localStorage.getItem("userId");
   const { id } = useParams();
+
   useEffect(() => {
-    console.log("useEffect triggered, id from params:", id);
     if (id) {
       setSubId(id);
     }
-  }, []);
+  }, [id]);
 
   // Function to fetch subscriber list
   const fetchSubscribers = async () => {
     try {
       const response = await fetch(
-        `https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers` //change 48 to saathiID
+        `https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers`
       );
       const json = await response.json();
       setSubscriber(json);
@@ -69,19 +69,14 @@ function ServiceTaskList() {
 
   // Fetch requests
   const fetchRequests = async () => {
-    console.log("sub", subId);
-
     if (subId !== 0) {
       const response = await fetch(
         `https://saathi.etheriumtech.com:444/Saathi/subscribers/${subId}/services`
       );
       const json = await response.json();
-      console.log("request", json);
 
       // Update logic for completedRequest
       const completedRequest = json.filter((item) => item.completions > 0);
-      console.log("Completed Request", completedRequest);
-
       setCompletedRequest(completedRequest);
 
       // Update logic for pendingRequest
@@ -128,11 +123,17 @@ function ServiceTaskList() {
     if (completionData.screenshot) {
       formData.append("image", completionData.screenshot);
     }
-    if (selectedRequest.alaCarte === false) {
-      formData.append("isAlaCarte", false);
-    } else {
+
+    if (selectedRequest.alaCarte) {
       formData.append("isAlaCarte", true);
+      formData.append(
+        "subscriberAlaCarteServicesID",
+        selectedRequest.subscriberAlaCarteServicesID
+      );
+    } else {
+      formData.append("isAlaCarte", false);
     }
+    console.log("formData", formData);
 
     try {
       const response = await fetch(
@@ -143,15 +144,14 @@ function ServiceTaskList() {
         }
       );
       if (response.ok) {
-        setAlert(`Task completed for ${selectedRequest.task}`);
-        // Call fetchRequests again to refresh the list
+        setAlert(`Task completed for ${selectedRequest.serviceName}`);
         fetchRequests();
       } else {
-        setAlert(`Failed to update task for ${selectedRequest.task}`);
+        setAlert(`Failed to update task for ${selectedRequest.serviceName}`);
       }
     } catch (error) {
       console.error("Error submitting task update:", error);
-      setAlert(`Error updating task for ${selectedRequest.task}`);
+      setAlert(`Error updating task for ${selectedRequest.serviceName}`);
     }
 
     setTimeout(() => setAlert(""), 3000);
@@ -166,11 +166,13 @@ function ServiceTaskList() {
       screenshot: null,
     });
   };
+
   const totalPending = requests?.reduce((sum, item) => sum + item.pending, 0);
   const totalCompleted = requests?.reduce(
     (sum, item) => sum + item.completions,
     0
   );
+
   return (
     <div className="d-flex">
       <Container className="justify-content-center align-items-center mt-5 px-5">
@@ -206,7 +208,6 @@ function ServiceTaskList() {
             {subId !== 0 && patron && (
               <>
                 <Row className="mt-3">
-                  {/* Associated Patrons */}
                   <Col md={4} className="d-flex">
                     <Card className="shadow-sm flex-fill">
                       <Card.Body>
@@ -270,7 +271,7 @@ function ServiceTaskList() {
                     </Card>
                   </Col>
 
-                  {/* Empty Column with Same Height */}
+                  {/* Service Requests Summary */}
                   <Col md={4} className="d-flex">
                     <Card className="shadow-sm flex-fill">
                       <Card.Body>
@@ -283,7 +284,6 @@ function ServiceTaskList() {
                         <Card.Text>
                           <div className="d-flex justify-content-between">
                             <div>
-                              {/* Completed Top Left */}
                               <p
                                 style={{
                                   fontSize: "14px",
@@ -303,7 +303,6 @@ function ServiceTaskList() {
                               </p>
                             </div>
                             <div>
-                              {/* Pending Bottom Right */}
                               <p
                                 style={{
                                   fontSize: "14px",
@@ -335,11 +334,9 @@ function ServiceTaskList() {
                 </Row>
 
                 {/* Task Tables */}
-
                 <Row className="mt-5">
                   <Col>
                     <h5
-                      className=""
                       style={{
                         fontSize: "16px",
                         color: "#009efb",
@@ -454,14 +451,12 @@ function ServiceTaskList() {
                         <tr className="table-info">
                           <th>Service Name</th>
                           <th>Service Type</th>
-                          {/* New column for Service Type */}
                           <th>Completion Notes</th>
                           <th>Date of Completion</th>
                         </tr>
                       </thead>
                       <tbody>
                         {completedRequest?.map((task, index) =>
-                          // Loop through interactions for each task
                           task.interactions?.map(
                             (interaction, interactionIndex) => (
                               <tr key={interaction.interactionID}>
@@ -471,7 +466,6 @@ function ServiceTaskList() {
                                   )}
                                 </td>
                                 <td>
-                                  {/* Display Ala-Carte or Package Service based on alaCarte property */}
                                   {task.alaCarte
                                     ? "Ala-Carte"
                                     : "Package Service"}
