@@ -389,7 +389,14 @@ function ServiceTaskList() {
                   .length > 0 && (
                   <Row>
                     <Col>
-                      <h5 className="mt-3" style={{ fontSize: "14px" }}>
+                      <h5
+                        className="mt-3"
+                        style={{
+                          fontSize: "16px",
+                          color: "#009efb",
+                          textAlign: "center",
+                        }}
+                      >
                         Ala-Carte Services
                       </h5>
                       <Table striped bordered hover responsive>
