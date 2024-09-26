@@ -97,7 +97,7 @@ const DashboardSaathiHome = () => {
                         <Card.Title
                           style={{ fontSize: "16px", fontWeight: "bold" }}
                         >
-                          Total Subscribers
+                         Subscribers
                         </Card.Title>
                         <hr />
                         <Card.Text style={{ fontSize: "14px" }}>
@@ -109,7 +109,7 @@ const DashboardSaathiHome = () => {
                                 color: "green",
                               }}
                             >
-                              Total No.
+                          
                               <span
                                 style={{
                                   fontSize: "36px",
@@ -162,7 +162,7 @@ const DashboardSaathiHome = () => {
                         <Card.Title
                           style={{ fontSize: "16px", fontWeight: "bold" }}
                         >
-                          Service Requests
+                          Pending Requests
                         </Card.Title>
                         <hr />
                         <Card.Text>
@@ -176,14 +176,14 @@ const DashboardSaathiHome = () => {
                                   color: "green",
                                 }}
                               >
-                                Completed
+                              
                                 <span
                                   style={{
                                     fontSize: "36px",
                                     marginLeft: "10px",
                                   }}
                                 >
-                                  0
+                                  
                                 </span>
                               </p>
                             </div>
@@ -200,7 +200,7 @@ const DashboardSaathiHome = () => {
                                   right: 0,
                                 }}
                               >
-                                Pending
+                                
                                 <span
                                   style={{
                                     fontSize: "36px",

@@ -31,6 +31,7 @@ import CreatePackageService from "./components/Dashboard/CreatePackageService";
 import EditPackage from "./components/Dashboard/EditPackage";
 import EditService from "./components/Dashboard/EditService";
 import ServiceTaskList from "./components/Dashboard/ServiceTaskList";
+import ProtectedRoute from "./components/Dashboard/ProtectedRoute"; 
 function App() {
   const location = useLocation();
   const isLoginPage = location.pathname === "/";
@@ -46,7 +47,14 @@ function App() {
         <Route path="/home" element={<HomePage />} />
 
         {/* Dashboard layout route */}
-        <Route path="/dashboard" element={<Dashboard />}>
+        <Route path="/dashboard"
+        
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+        >
           <Route index element={<DashboardLandingPage />} />
           <Route path="list" element={<List />} />
           <Route path="createSaathi" element={<CreateSaathi />} />

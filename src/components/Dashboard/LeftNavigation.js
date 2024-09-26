@@ -76,7 +76,7 @@ setActiveAccordion("3"); // Open the second accordion
             <>
             <div className="text-center mt-3">
               <img
-                src={imageUrl} 
+                src={image} 
                 alt="Saathi Profile"
                 className="profile-img" // Apply custom class
               />
