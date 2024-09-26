@@ -86,7 +86,7 @@ const UpdateAdminUsers = () => {
         countryCode: countryCode,
         briefBio: bio,
         userType: selectedOption,
-        password: password,
+        // password: password,
         status: status, // You can adjust this based on your form inputs
         // createdBy: 87,
         updatedBy: userId,

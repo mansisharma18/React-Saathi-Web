@@ -81,44 +81,48 @@ const DashboardSaathiHome = () => {
         <Container className="justify-content-center aligh-items-center mt-5 px-5">
           <Card className="shadow-sm pb-3">
             <Card.Body>
-              <div className="d-flex justify-content-center">
+              {/* <div className="d-flex justify-content-center">
                 <div className="mt-2">
                   <h4>Service Requests</h4>
                 </div>
               </div>
-              <hr />
+              <hr /> */}
 
               <div className="mb-5 mt-5">
                 <Row className="mt-3">
                   {/* Associated Patrons */}
                   <Col md={4} className="d-flex">
                     <Card className="shadow-sm flex-fill">
+                   
                       <Card.Body>
                         <Card.Title
                           style={{ fontSize: "16px", fontWeight: "bold" }}
                         >
-                          Total Subscribers
+                        <div className="d-flex justify-content-between align-items-center" >
+                          <div> Subscribers </div>
+                          <div className="float-end fw-bold font-20" style={{color:"gray"}}>4</div>
+                        </div>
                         </Card.Title>
                         <hr />
-                        <Card.Text style={{ fontSize: "14px" }}>
-                          <div>
-                            <p
-                              style={{
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                                color: "green",
-                              }}
-                            >
-                              Total No.
-                              <span
-                                style={{
-                                  fontSize: "36px",
-                                  marginLeft: "10px",
-                                }}
-                              >
-                                4
-                              </span>
-                            </p>
+                        <Card.Text>
+                          <div className="" style={{color:"gray"}}>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="" style={{fontSize:"14px"}}> Gold</div>
+                            <div className="" style={{fontSize:"20px"}}>2</div>
+                          </div>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="" style={{fontSize:"14px"}}> Silver</div>
+                            <div className=""  style={{fontSize:"20px"}}>2</div>
+                          </div>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="" style={{fontSize:"14px"}}> Bronze</div>
+                            <div className=""  style={{fontSize:"20px"}}>2</div>
+                          </div>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="" style={{fontSize:"14px"}}> Basic</div>
+                            <div className=""  style={{fontSize:"20px"}}>2</div>
+                          </div>
+                          <div></div>
                           </div>
                         </Card.Text>
                       </Card.Body>
@@ -128,28 +132,36 @@ const DashboardSaathiHome = () => {
                   {/* Package Details */}
                   <Col md={4} className="d-flex">
                     <Card className="shadow-sm flex-fill">
-                      <Card.Body>
+                    <Card.Body>
                         <Card.Title
                           style={{ fontSize: "16px", fontWeight: "bold" }}
                         >
-                          ..
+                        <div className="d-flex justify-content-between align-items-center" >
+                          <div> Completed Tasks </div>
+                          <div className="float-end fw-bold font-20" style={{color:"green"}}>9</div>
+                        </div>
                         </Card.Title>
                         <hr />
-                        <Card.Text style={{ fontSize: "14px" }}>
-                          <h5 style={{ fontSize: "16px" }}></h5>
-                          {/* <ul style={{ paddingLeft: "20px", fontSize: "14px" }}>
-                            {packageDetails?.packageServices?.map(
-                              (service, index) => (
-                                <li
-                                  key={index}
-                                  style={{ marginBottom: "10px" }}
-                                >
-                                  <strong>{service.serviceName}</strong>
-                                  {service.description}
-                                </li>
-                              )
-                            )}
-                          </ul> */}
+                        <Card.Text>
+                          <div className="" style={{color:"gray"}}>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="font-14"> Destination Drive</div>
+                            <div className="font-20">2</div>
+                          </div>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="font-14"> Phone Call</div>
+                            <div className="font-20">2</div>
+                          </div> 
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="font-14"> House Visit</div>
+                            <div className="font-20">2</div>
+                          </div>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="font-14"> Running Errands</div>
+                            <div className="font-20">2</div>
+                          </div>
+                          <div></div>
+                          </div>
                         </Card.Text>
                       </Card.Body>
                     </Card>
@@ -162,56 +174,31 @@ const DashboardSaathiHome = () => {
                         <Card.Title
                           style={{ fontSize: "16px", fontWeight: "bold" }}
                         >
-                          Service Requests
+                        <div className="d-flex justify-content-between align-items-center" >
+                          <div> Pending Tasks </div>
+                          <div className="float-end fw-bold font-20" style={{color:"red"}}>9</div>
+                        </div>
                         </Card.Title>
                         <hr />
                         <Card.Text>
-                          <div className="d-flex justify-content-between">
-                            <div>
-                              {/* Completed Top Left */}
-                              <p
-                                style={{
-                                  fontSize: "14px",
-                                  fontWeight: "bold",
-                                  color: "green",
-                                }}
-                              >
-                                Completed
-                                <span
-                                  style={{
-                                    fontSize: "36px",
-                                    marginLeft: "10px",
-                                  }}
-                                >
-                                  0
-                                </span>
-                              </p>
-                            </div>
-                            <div>
-                              {/* Pending Bottom Right */}
-                              <p
-                                style={{
-                                  fontSize: "14px",
-                                  fontWeight: "bold",
-                                  color: "red",
-                                  textAlign: "right",
-                                  position: "absolute",
-                                  bottom: 0,
-                                  right: 0,
-                                }}
-                              >
-                                Pending
-                                <span
-                                  style={{
-                                    fontSize: "36px",
-                                    marginLeft: "10px",
-                                    marginRight: "10px",
-                                  }}
-                                >
-                                  9
-                                </span>
-                              </p>
-                            </div>
+                          <div className="" style={{color:"gray"}}>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="font-14"> Destination Drive</div>
+                            <div className="font-20">2</div>
+                          </div>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="font-14"> Phone Call</div>
+                            <div className="font-20">2</div>
+                          </div> 
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="font-14"> House Visit</div>
+                            <div className="font-20">2</div>
+                          </div>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="font-14"> Running Errands</div>
+                            <div className="font-20">2</div>
+                          </div>
+                          <div></div>
                           </div>
                         </Card.Text>
                       </Card.Body>

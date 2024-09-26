@@ -41,56 +41,6 @@ const TopBar = () => {
 
 
 
-            <div className="nav-item d-md-block me-auto d-sm-block d-lg-none ">
-              {/* <Link className="nav-link" to="/profile"> */}
-
-
-              <div className="dropstart ">
-              
-                <ul className="dropdown-menu">
-
-                  <li>
-                    <div className="d-flex bg-light">
-                      <div><img src="#" alt="avatar" style={{ width: "30px", height: "30px" }} /></div>
-                      <div className="ms-2">
-                        <div className="row"><span className="fw-bold">John Doe</span></div>
-                        <div className="row"><span style={{ fontSize: "12px" }} >johndoe@gmail.com</span></div>
-                        <div className="row" style={{ color: "#3347B0" }}><span style={{ fontSize: "12px" }}>+91 9876543256</span></div>
-                      </div>
-                    </div>
-
-                  </li>
-
-                  <li>
-                    <div className="d-flex align-items-center mt-2 ms-1">
-                      <i className="bi bi-person"></i>
-                      <Link className="dropdown-item" to="/profile">View Profile</Link>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="d-flex align-items-center ms-1">
-                      <i className="bi bi-file-bar-graph"></i>
-                      <Link className="dropdown-item" to="#">Dashboard</Link>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="d-flex align-items-center ms-1">
-                      <i className="bi bi-file-lock"></i>
-                      <Link className="dropdown-item" href="#">Change Password</Link>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="d-flex align-items-center ms-1">
-                      <i className="bi bi-box-arrow-in-right"></i>
-                      <Link className="dropdown-item" href="#">Logout</Link>
-                    </div>
-                  </li>
-
-                </ul>
-              </div>
-
-
-            </div>
 
             <div > <button style={{ border: "none" }} className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvasLg" aria-controls="sidebarOffcanvasLg" aria-label="Toggle navigation">
               <span style={{ fontSize: "18px" }}>S</span>
@@ -195,7 +145,7 @@ const TopBar = () => {
                  <div>
                     
                  <Avatar 
-  src={imageUrl} 
+  src={image} 
   alt=''
   sx={{ 
     width: 34, 
