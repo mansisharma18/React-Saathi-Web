@@ -40,8 +40,9 @@ const DashboardAdminHome = () => {
                         <Card.Title
                           style={{ fontSize: "16px", fontWeight: "bold" }}
                         >
-                         Subscribers
+                         User Stats
                         </Card.Title>
+                        {/* registered users and subscribers */}
                         <hr />
                         <Card.Text style={{ fontSize: "14px" }}>
                           <div>
@@ -76,7 +77,7 @@ const DashboardAdminHome = () => {
                         <Card.Title
                           style={{ fontSize: "16px", fontWeight: "bold" }}
                         >
-                          Saathis
+                          Saathis Stats
                         </Card.Title>
                         <hr />
                         <Card.Text style={{ fontSize: "14px" }}>
@@ -94,6 +95,7 @@ const DashboardAdminHome = () => {
                               )
                             )}
                           </ul> */}
+                          {/* total no of saathi */}
                         </Card.Text>
                       </Card.Body>
                     </Card>
@@ -106,7 +108,7 @@ const DashboardAdminHome = () => {
                         <Card.Title
                           style={{ fontSize: "16px", fontWeight: "bold" }}
                         >
-                          Packages
+                         Subscribers /and Packages
                         </Card.Title>
                         <hr />
                         <Card.Text>
@@ -174,7 +176,7 @@ const DashboardAdminHome = () => {
                         <Card.Title
                           style={{ fontSize: "16px", fontWeight: "bold" }}
                         >
-                         Services
+                         Package Services
                         </Card.Title>
                         <hr />
                         <Card.Text style={{ fontSize: "14px" }}>
@@ -204,34 +206,7 @@ const DashboardAdminHome = () => {
                   </Col>
 
                   {/* Package Details */}
-                  <Col md={4} className="d-flex">
-                    <Card className="shadow-sm flex-fill">
-                      <Card.Body>
-                        <Card.Title
-                          style={{ fontSize: "16px", fontWeight: "bold" }}
-                        >
-                          Saathis Unassigned
-                        </Card.Title>
-                        <hr />
-                        <Card.Text style={{ fontSize: "14px" }}>
-                          <h5 style={{ fontSize: "16px" }}></h5>
-                          {/* <ul style={{ paddingLeft: "20px", fontSize: "14px" }}>
-                            {packageDetails?.packageServices?.map(
-                              (service, index) => (
-                                <li
-                                  key={index}
-                                  style={{ marginBottom: "10px" }}
-                                >
-                                  <strong>{service.serviceName}</strong>
-                                  {service.description}
-                                </li>
-                              )
-                            )}
-                          </ul> */}
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </Col>
+                  
 
                   {/* Empty Column with Same Height */}
                   <Col md={4} className="d-flex">
