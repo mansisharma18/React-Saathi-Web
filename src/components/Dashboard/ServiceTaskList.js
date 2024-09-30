@@ -110,6 +110,8 @@ function ServiceTaskList() {
     const { name, value, files } = e.target;
     setCompletionData({
       ...completionData,
+    
+
       [name]: files ? files[0] : value,
     });
   };
@@ -121,7 +123,7 @@ function ServiceTaskList() {
     const formData = new FormData();
     formData.append("description", completionData.notes);
     if (completionData.screenshot) {
-      formData.append("image", completionData.screenshot);
+      formData.append("file", completionData.screenshot);
     }
 
     if (selectedRequest.alaCarte) {
