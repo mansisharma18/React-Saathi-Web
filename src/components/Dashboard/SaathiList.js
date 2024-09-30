@@ -68,7 +68,7 @@ const SaathiList = () => {
                                 <div className="me-3">
                                   <Avatar
                                     alt={`${item.firstName} ${item.lastName}`}
-                                    src={picturePath}
+                                    src={item.picturePath}
                                     sx={{ width: 34, height: 34 }}
                                   />
                                 </div>

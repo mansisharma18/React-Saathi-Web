@@ -108,7 +108,7 @@ const SubscribersList = () => {
                         <td>{item.lastName}</td>
                         <td>{item.email}</td>
                         <td>{item.contactNo}</td>
-                        <td>{item.saathi.firstName} {item.saathi.lastName}</td>
+                        <td>{item.saathi?.firstName} {item.saathi?.lastName}</td>
                         <td>{item.packageName}</td>
                         <td>
                         <span className="text-decoration-none me-3">
