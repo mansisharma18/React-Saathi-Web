@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../../ApiPath';
 
 
 
@@ -21,7 +22,7 @@ const SubscribersList = () => {
         const fetchData = async () => {
        
 
-        axios.get(`https://saathi.etheriumtech.com:444/Saathi/subscribers`)
+        axios.get(`${baseUrl}/subscribers`)
         .then(res => {
             console.log(res.data[0].firstName)
             const activeUsers = res.data.filter(user => user.status === 1);
@@ -48,7 +49,7 @@ const SubscribersList = () => {
        
     
         try {
-          const response = await axios.put(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${id}`,{
+          const response = await axios.put(`${baseUrl}/subscribers/${id}`,{
 
             "status":0
             

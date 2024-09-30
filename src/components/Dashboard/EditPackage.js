@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom"; // useParams to get packageID
 import { Table } from "react-bootstrap";
+import { baseUrl } from "../../ApiPath";
 
 const EditPackage = () => {
   const [packageName, setPackageName] = useState("");
@@ -33,7 +34,7 @@ const EditPackage = () => {
       try {
         // Fetch all available services
         const servicesResponse = await axios.get(
-          `https://saathi.etheriumtech.com:444/Saathi/alacarteservices`
+          `${baseUrl}/alacarteservices`
         );
         const data = servicesResponse.data;
         const filteredData = data.filter((item) => item.status === 1);
@@ -42,7 +43,7 @@ const EditPackage = () => {
 
         // Fetch package details by packageID
         const packageResponse = await axios.get(
-          `https://saathi.etheriumtech.com:444/Saathi/subscription-package/${id}`
+          `${baseUrl}/subscription-package/${id}`
         );
         const packageData = packageResponse.data;
         console.log(packageData);
@@ -160,7 +161,7 @@ const EditPackage = () => {
 
     try {
       const response = await axios.put(
-        `https://saathi.etheriumtech.com:444/Saathi/subscription-package/${id}`,
+        `${baseUrl}/subscription-package/${id}`,
         packageData
       );
       setAlert("Package updated successfully!");

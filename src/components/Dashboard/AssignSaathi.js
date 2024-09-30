@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import Alert from "react-bootstrap/Alert";
 import { useNavigate } from "react-router-dom";
+import { baseUrl } from "../../ApiPath";
 
 const AssignSaathi = () => {
   const [sub, setSub] = useState([]);
@@ -34,7 +35,7 @@ const AssignSaathi = () => {
     const fetchList = async () => {
       try {
         const res = await axios.get(
-          `https://saathi.etheriumtech.com:444/Saathi/subscribers/without-saathi`
+          `${baseUrl}/subscribers/without-saathi`
         );
         console.log(res.data[0].firstName);
         setSub(res.data);
@@ -47,7 +48,7 @@ const AssignSaathi = () => {
     const fetchWithSaathiList = async () => {
       try {
         const res = await axios.get(
-          `https://saathi.etheriumtech.com:444/Saathi/subscribers/with-saathi`
+          `${baseUrl}/subscribers/with-saathi`
         );
         console.log("new response", res.data[0].subscriber.firstName);
         setSubList(res.data);
@@ -60,7 +61,7 @@ const AssignSaathi = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `https://saathi.etheriumtech.com:444/Saathi/admin-users/saathi`
+          `${baseUrl}/admin-users/saathi`
         );
         const filteredData = res.data.filter((user) => user.status === 1); // Filter users with status 1
         console.log(filteredData[0]?.firstName); // Optional: log the first user's name (if exists)
@@ -76,7 +77,7 @@ const AssignSaathi = () => {
     e.preventDefault(); // Prevent default form submission
     axios
       .put(
-        `https://saathi.etheriumtech.com:444/Saathi/subscribers/${parseInt(
+        `${baseUrl}/subscribers/${parseInt(
           selectedSub
         )}/assign-saathi?saathiID=${parseInt(selectedSaathi)}`
       )
@@ -143,7 +144,7 @@ const AssignSaathi = () => {
     e.preventDefault(); // Prevent default form submission
     axios
       .put(
-        `https://saathi.etheriumtech.com:444/Saathi/subscribers/${parseInt(
+        `${baseUrl}/subscribers/${parseInt(
           changedSub
         )}/assign-saathi?saathiID=${changedSaathi}`,
         {

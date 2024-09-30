@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../../ApiPath';
 
 const MyAccount = () => {
   const [list, setList] = useState([]);
@@ -13,7 +14,7 @@ const MyAccount = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users`);
+        const res = await axios.get(`${baseUrl}/admin-users`);
         // Filter users with status 1
         const activeUsers = res.data.filter(user => user.status == 1);
         // Sort by createdDate in descending order (latest first)
@@ -43,7 +44,7 @@ const MyAccount = () => {
     });
 
     try {
-      const response = await axios.post(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${id}`, formData, {
+      const response = await axios.post(`${baseUrl}/admin-users/${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

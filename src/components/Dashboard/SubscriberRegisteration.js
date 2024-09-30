@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Alert from "react-bootstrap/Alert";
+import { baseUrl } from "../../ApiPath";
 
 const SubscriberRegisteration = () => {
   const [first, setFirst] = useState("");
@@ -43,7 +44,7 @@ const SubscriberRegisteration = () => {
     const fetchSubList = async () => {
       axios
         .get(
-          `https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers`
+          `${baseUrl}/admin-users/${userId}/subscribers`
         )
         .then((res) => {
           console.log(res.data[0].firstName);
@@ -62,7 +63,7 @@ const SubscriberRegisteration = () => {
       try {
         axios
           .get(
-            `https://saathi.etheriumtech.com:444/Saathi/subscribers/${subId}`
+            `${baseUrl}/subscribers/${subId}`
           )
           .then((res) => {
             console.log(res.data);
@@ -95,7 +96,7 @@ const SubscriberRegisteration = () => {
     const fetchPackageList = async () => {
       axios
         .get(
-          `https://saathi.etheriumtech.com:444/Saathi/subscription-package/all`
+          `${baseUrl}/subscription-package/all`
         )
         .then((res) => {
           console.log("packagess", res.data);
@@ -121,7 +122,7 @@ const SubscriberRegisteration = () => {
     e.preventDefault();
 
     axios
-      .put(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${subId}`, {
+      .put(`${baseUrl}/subscribers/${subId}`, {
         firstName: first,
         lastName: last,
         email: email,

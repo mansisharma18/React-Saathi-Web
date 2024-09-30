@@ -10,6 +10,7 @@ import {
   Table,
 } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { baseUrl } from "../../ApiPath";
 
 function ServiceTaskList() {
   const [subscriber, setSubscriber] = useState(null);
@@ -34,7 +35,7 @@ function ServiceTaskList() {
   const fetchSubscribers = async () => {
     try {
       const response = await fetch(
-        `https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers`
+        `${baseUrl}/admin-users/${userId}/subscribers`
       );
       const json = await response.json();
       setSubscriber(json);
@@ -51,7 +52,7 @@ function ServiceTaskList() {
   const fetchSubscriberDetails = async () => {
     try {
       const response = await fetch(
-        `https://saathi.etheriumtech.com:444/Saathi/subscribers/${subId}`
+        `${baseUrl}/subscribers/${subId}`
       );
       const json = await response.json();
       setPackageDetail(json);
@@ -71,7 +72,7 @@ function ServiceTaskList() {
   const fetchRequests = async () => {
     if (subId !== 0) {
       const response = await fetch(
-        `https://saathi.etheriumtech.com:444/Saathi/subscribers/${subId}/services`
+        `${baseUrl}/subscribers/${subId}/services`
       );
       const json = await response.json();
 
@@ -137,7 +138,7 @@ function ServiceTaskList() {
 
     try {
       const response = await fetch(
-        `https://saathi.etheriumtech.com:444/Saathi/subscribers/${subId}/services/${selectedRequest.serviceID}/complete`,
+        `${baseUrl}/subscribers/${subId}/services/${selectedRequest.serviceID}/complete`,
         {
           method: "POST",
           body: formData,

@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../../ApiPath";
 
 function AllServices() {
   const [services, setServices] = useState([]);
@@ -26,7 +27,7 @@ function AllServices() {
     const fetchServices = async () => {
       try {
         const response = await axios.get(
-          `https://saathi.etheriumtech.com:444/Saathi/alacarteservices/active`
+          `${baseUrl}/alacarteservices/active`
         );
         setServices(response.data);
       } catch (err) {
@@ -57,7 +58,7 @@ function AllServices() {
       try {
         const updatedService = { status: 0 };
         await axios.put(
-          `https://saathi.etheriumtech.com:444/Saathi/alacarteservices/${serviceID}`,
+          `${baseUrl}/alacarteservices/${serviceID}`,
           updatedService
         );
 
@@ -96,7 +97,7 @@ function AllServices() {
 
   const handleSaveChanges = async () => {
     if (currentService) {
-      const url = `https://saathi.etheriumtech.com:444/Saathi/alacarteservices/${currentService.serviceID}`;
+      const url = `${baseUrl}/alacarteservices/${currentService.serviceID}`;
       try {
         await axios.put(url, currentService);
         const updatedServices = services.map((service) =>

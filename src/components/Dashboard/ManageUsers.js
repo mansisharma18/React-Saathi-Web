@@ -11,6 +11,7 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { baseUrl } from "../../ApiPath";
 
 const ManageUsers = () => {
   const [first, setFirst] = useState("");
@@ -85,7 +86,7 @@ const ManageUsers = () => {
     // Send a POST request using Axios with the form data
     axios
       .post(
-        `https://saathi.etheriumtech.com:444/Saathi/admin-users`,
+        `${baseUrl}/admin-users`,
         formData,
         {
           headers: {

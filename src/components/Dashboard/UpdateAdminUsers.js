@@ -10,6 +10,7 @@ import axios from "axios";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { baseUrl } from '../../ApiPath';
 
 const UpdateAdminUsers = () => {
     const [first, setFirst] = useState('');
@@ -34,7 +35,7 @@ const UpdateAdminUsers = () => {
     const fetchData = async () => {
       try {
        
-      axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${id}`)
+      axios.get(`${baseUrl}/admin-users/${id}`)
       .then(res => {
           console.log(res.data.firstName)
           setFirst(res.data.firstName)
@@ -108,7 +109,7 @@ const UpdateAdminUsers = () => {
         console.log(`${key}: ${value}`);
       }
     axios
-    .post(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${id}`, formData, {
+    .post(`${baseUrl}/admin-users/${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

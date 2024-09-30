@@ -14,6 +14,7 @@ import {
 import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { baseUrl } from "../../ApiPath";
 
 const DashboardSaathiHome = () => {
   const userId = localStorage.getItem("userId");
@@ -28,7 +29,7 @@ const DashboardSaathiHome = () => {
     const fetchData = async () => {
       axios
         .get(
-          `https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers/services`
+          `${baseUrl}/admin-users/${userId}/subscribers/services`
         )
         .then((res) => {
           // Map the data to create a flat structure with services separated by subscriber
@@ -51,7 +52,7 @@ const DashboardSaathiHome = () => {
     const fetchServices = async () => {
       axios
         .get(
-          `https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers/services/all`
+          `${baseUrl}/admin-users/${userId}/subscribers/services/all`
         )
         .then((res) => {
           setServices(res.data)

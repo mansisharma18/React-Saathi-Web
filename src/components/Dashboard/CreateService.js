@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner"; // For loading state
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { baseUrl } from "../../ApiPath";
 
 function CreateService() {
   // States for Service Section
@@ -73,7 +74,7 @@ function CreateService() {
       setErrors({});
 
       const response = await axios.post(
-        `https://saathi.etheriumtech.com:444/Saathi/alacarteservices`,
+        `${baseUrl}/alacarteservices`,
         serviceData
       );
 

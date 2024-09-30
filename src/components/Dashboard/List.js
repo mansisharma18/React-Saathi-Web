@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../../ApiPath";
 
 const List = () => {
   const userId = localStorage.getItem("userId");
@@ -18,7 +19,7 @@ const List = () => {
     const fetchData = async () => {
       axios
         .get(
-          `https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers`
+          `${baseUrl}/admin-users/${userId}/subscribers`
         )
         .then((res) => {
           // Filter the data where status is 1
@@ -42,7 +43,7 @@ const List = () => {
     if (confirmation) {
       try {
         const response = await axios.put(
-          `https://saathi.etheriumtech.com:444/Saathi/subscribers/${id}`,
+          `${baseUrl}/subscribers/${id}`,
           {
             status: 0,
           }
