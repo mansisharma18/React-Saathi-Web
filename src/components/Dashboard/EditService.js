@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner"; // For loading state
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom"; // useParams to get id from URL
+import { baseUrl } from "../../ApiPath";
 
 function EditService() {
   // States for Service Section
@@ -38,7 +39,7 @@ function EditService() {
       try {
         setLoading(true);
         const response = await axios.get(
-          `https://saathi.etheriumtech.com:444/Saathi/alacarteservices/${id}`
+          `${baseUrl}/alacarteservices/${id}`
         );
         const serviceData = response.data;
 
@@ -109,7 +110,7 @@ function EditService() {
       setErrors({});
 
       const response = await axios.put(
-        `https://saathi.etheriumtech.com:444/Saathi/alacarteservices/${id}`,
+        `${baseUrl}/alacarteservices/${id}`,
         serviceData
       );
 

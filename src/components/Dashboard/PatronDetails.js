@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Alert from 'react-bootstrap/Alert';
+import { baseUrl } from '../../ApiPath';
 
 
 const PatronDetails = () => {
@@ -60,7 +61,7 @@ const PatronDetails = () => {
       const fetchData = async () => {
      
 
-      axios.get(`https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers`)
+      axios.get(`${baseUrl}/admin-users/${userId}/subscribers`)
       .then(res => {
           console.log(res.data[0].firstName)
           // setList(res.data)
@@ -158,7 +159,7 @@ const PatronDetails = () => {
     //   });
     // }
     axios
-      .post(`https://saathi.etheriumtech.com:444/Saathi/patrons`,payload
+      .post(`${baseUrl}/patrons`,payload
       )
       .then((response) => {
         console.log("Response:", response.data); 

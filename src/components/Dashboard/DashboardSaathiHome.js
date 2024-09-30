@@ -14,10 +14,12 @@ import {
 import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { baseUrl } from "../../ApiPath";
 
 const DashboardSaathiHome = () => {
   const userId = localStorage.getItem("userId");
   const [list, setList] = useState([]);
+  const[services,setServices]=useState({})
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "ascending",
@@ -27,7 +29,7 @@ const DashboardSaathiHome = () => {
     const fetchData = async () => {
       axios
         .get(
-          `https://saathi.etheriumtech.com:444/Saathi/admin-users/${userId}/subscribers/services`
+          `${baseUrl}/admin-users/${userId}/subscribers/services`
         )
         .then((res) => {
           // Map the data to create a flat structure with services separated by subscriber
@@ -46,6 +48,23 @@ const DashboardSaathiHome = () => {
         })
         .catch((err) => console.log(err));
     };
+
+    const fetchServices = async () => {
+      axios
+        .get(
+          `${baseUrl}/admin-users/${userId}/subscribers/services/all`
+        )
+        .then((res) => {
+          setServices(res.data)
+          console.log(services,"services")
+            })
+          
+        .catch((err) => console.log(err));
+    };
+
+    fetchServices()
+
+    
     fetchData();
   }, [userId]);
 
@@ -100,28 +119,21 @@ const DashboardSaathiHome = () => {
                         >
                         <div className="d-flex justify-content-between align-items-center" >
                           <div> Subscribers </div>
-                          <div className="float-end fw-bold font-20" style={{color:"gray"}}>4</div>
+                          <div className="float-end fw-bold font-20" style={{color:"gray"}}>{services?.totalSubscribers}</div>
                         </div>
                         </Card.Title>
                         <hr />
                         <Card.Text>
                           <div className="" style={{color:"gray"}}>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="" style={{fontSize:"14px"}}> Gold</div>
-                            <div className="" style={{fontSize:"20px"}}>2</div>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="" style={{fontSize:"14px"}}> Silver</div>
-                            <div className=""  style={{fontSize:"20px"}}>2</div>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="" style={{fontSize:"14px"}}> Bronze</div>
-                            <div className=""  style={{fontSize:"20px"}}>2</div>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="" style={{fontSize:"14px"}}> Basic</div>
-                            <div className=""  style={{fontSize:"20px"}}>2</div>
-                          </div>
+
+                         {services?.packageDetails?.length > 0 && services.packageDetails.map((service, index) => (
+  <div key={index} className="d-flex justify-content-between align-items-center">
+    <div className="font-14">{service.packageName}</div>
+    <div className="font-20">{service.subscriberCount}</div>
+  </div>
+))}
+
+
                           <div></div>
                           </div>
                         </Card.Text>
@@ -138,28 +150,20 @@ const DashboardSaathiHome = () => {
                         >
                         <div className="d-flex justify-content-between align-items-center" >
                           <div> Completed Tasks </div>
-                          <div className="float-end fw-bold font-20" style={{color:"green"}}>9</div>
+                          <div className="float-end fw-bold font-20" style={{color:"green"}}>{services?.totalCompleted}</div>
                         </div>
                         </Card.Title>
                         <hr />
                         <Card.Text>
                           <div className="" style={{color:"gray"}}>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="font-14"> Destination Drive</div>
-                            <div className="font-20">2</div>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="font-14"> Phone Call</div>
-                            <div className="font-20">2</div>
-                          </div> 
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="font-14"> House Visit</div>
-                            <div className="font-20">2</div>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="font-14"> Running Errands</div>
-                            <div className="font-20">2</div>
-                          </div>
+
+                          {services?.serviceBreakdown?.map((service, index) => (
+      <div key={index} className="d-flex justify-content-between align-items-center">
+        <div className="font-14">{service.serviceName}</div>
+        <div className="font-20">{service.completed}</div>
+      </div>
+    ))}
+                          
                           <div></div>
                           </div>
                         </Card.Text>
@@ -176,28 +180,20 @@ const DashboardSaathiHome = () => {
                         >
                         <div className="d-flex justify-content-between align-items-center" >
                           <div> Pending Tasks </div>
-                          <div className="float-end fw-bold font-20" style={{color:"red"}}>9</div>
+                          <div className="float-end fw-bold font-20" style={{color:"red"}}>{services?.totalPending}</div>
                         </div>
                         </Card.Title>
                         <hr />
                         <Card.Text>
                           <div className="" style={{color:"gray"}}>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="font-14"> Destination Drive</div>
-                            <div className="font-20">2</div>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="font-14"> Phone Call</div>
-                            <div className="font-20">2</div>
-                          </div> 
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="font-14"> House Visit</div>
-                            <div className="font-20">2</div>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="font-14"> Running Errands</div>
-                            <div className="font-20">2</div>
-                          </div>
+
+                          {services?.serviceBreakdown?.map((service, index) => (
+      <div key={index} className="d-flex justify-content-between align-items-center">
+        <div className="font-14">{service.serviceName}</div>
+        <div className="font-20">{service.pending}</div>
+      </div>
+    ))}
+
                           <div></div>
                           </div>
                         </Card.Text>

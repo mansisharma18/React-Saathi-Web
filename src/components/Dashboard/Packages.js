@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Table } from "react-bootstrap";
+import { baseUrl } from "../../ApiPath";
 
 const Packages = () => {
   const [packageName, setPackageName] = useState("");
@@ -31,7 +32,7 @@ const Packages = () => {
     const fetchServices = async () => {
       try {
         const response = await axios.get(
-          `https://saathi.etheriumtech.com:444/Saathi/alacarteservices`
+          `${baseUrl}/alacarteservices`
         );
         const data = response.data;
         const filteredData = data.filter((item) => item.status === 1);
@@ -144,7 +145,7 @@ const Packages = () => {
 
     try {
       const response = await axios.post(
-        `https://saathi.etheriumtech.com:444/Saathi/subscription-package`,
+        `${baseUrl}/subscription-package`,
         packageData
       );
       setAlert("Package created successfully!");

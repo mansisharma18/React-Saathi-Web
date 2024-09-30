@@ -10,6 +10,7 @@ import axios from "axios";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { baseUrl } from '../../ApiPath';
 
 
 const UpdateAdminSubscriber = () => {
@@ -36,7 +37,7 @@ const UpdateAdminSubscriber = () => {
         const fetchData = async () => {
           try {
            
-          axios.get(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${id}`)
+          axios.get(`${baseUrl}/subscribers/${id}`)
           .then(res => {
               console.log(res.data)
             //   console.log(res.data[0].firstName)
@@ -70,7 +71,7 @@ const UpdateAdminSubscriber = () => {
        
         
         axios
-      .put(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${id}`, {
+      .put(`${baseUrl}/subscribers/${id}`, {
 
        "firstName": first,
        "lastName": last,

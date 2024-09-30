@@ -9,6 +9,7 @@ import {
   Form,
   Table,
 } from "react-bootstrap";
+import { baseUrl } from "../../ApiPath";
 
 const ServiceRequest = () => {
   const [subscriber, setSubscriber] = useState(null); // Store subscriber details
@@ -55,7 +56,7 @@ const ServiceRequest = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://saathi.etheriumtech.com:444/Saathi/subscribers/7`
+          `${baseUrl}/subscribers/7`
         );
         const json = await response.json();
 
@@ -71,7 +72,7 @@ const ServiceRequest = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://saathi.etheriumtech.com:444/Saathi/admin-users/48/subscribers`
+          `${baseUrl}/admin-users/48/subscribers`
         );
         const json = await response.json();
         console.log("subscribers", json);
@@ -116,7 +117,7 @@ const ServiceRequest = () => {
 
     try {
       const response = await fetch(
-        `https://saathi.etheriumtech.com:444/Saathi/subscribers/${subscriber.subscriberID}/services/${selectedRequest.serviceID}/complete`,
+        `${baseUrl}/subscribers/${subscriber.subscriberID}/services/${selectedRequest.serviceID}/complete`,
         {
           method: "POST",
           body: formData,

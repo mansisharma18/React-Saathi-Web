@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Avatar from "@mui/material/Avatar";
 import axios from "axios";
 import { imagePath } from "../../ImagePath";
+import { baseUrl } from "../../ApiPath";
 
 const SaathiList = () => {
   const [list, setList] = useState([]);
@@ -12,7 +13,7 @@ const SaathiList = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `https://saathi.etheriumtech.com:444/Saathi/admin-users/saathi/subscribers`
+          `${baseUrl}/admin-users/saathi/subscribers`
         );
         const activeUsers = res.data.filter((user) => user.status === 1);
         const sortedUsers = activeUsers.sort(
@@ -68,7 +69,7 @@ const SaathiList = () => {
                                 <div className="me-3">
                                   <Avatar
                                     alt={`${item.firstName} ${item.lastName}`}
-                                    src={picturePath}
+                                    src={item.picturePath}
                                     sx={{ width: 34, height: 34 }}
                                   />
                                 </div>

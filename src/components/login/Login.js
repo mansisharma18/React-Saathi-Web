@@ -8,6 +8,7 @@ import Card from "react-bootstrap/Card";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import Alert from 'react-bootstrap/Alert';
+import { baseUrl } from "../../ApiPath";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ const Login = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://saathi.etheriumtech.com:444/Saathi/subscribers/active`,
+          `${baseUrl}/subscribers/active`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -53,7 +54,7 @@ const Login = () => {
     });
 
     axios
-      .post(`https://saathi.etheriumtech.com:444/Saathi/admin/login`, formData, {
+      .post(`${baseUrl}/admin/login`, formData, {
         headers: {
           "Content-Type": "multipart/form-data", // Specify the content type as form data
         },

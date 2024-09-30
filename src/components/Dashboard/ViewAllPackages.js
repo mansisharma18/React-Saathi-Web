@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../../ApiPath";
 
 const ViewAllPackages = () => {
   const [list, setList] = useState([]);
@@ -23,7 +24,7 @@ const ViewAllPackages = () => {
   const fetchData = async () => {
     try {
       const res = await axios.get(
-        `https://saathi.etheriumtech.com:444/Saathi/subscription-package/active`
+        `${baseUrl}/subscription-package/active`
       );
       setList(res.data);
     } catch (err) {
@@ -60,7 +61,7 @@ const ViewAllPackages = () => {
           status: 0,
         };
         await axios.put(
-          `https://saathi.etheriumtech.com:444/Saathi/subscription-package/${packageID}`,
+          `${baseUrl}/subscription-package/${packageID}`,
           updatedPackage
         );
         fetchData(); // Refresh the list after deletion
@@ -77,7 +78,7 @@ const ViewAllPackages = () => {
   };
 
   const handleSave = async () => {
-    const url = `https://saathi.etheriumtech.com:444/Saathi/subscription-package/${currentPackage.packageID}`;
+    const url = `${baseUrl}/subscription-package/${currentPackage.packageID}`;
     const updatedPackage = {
       packageName: currentPackage.packageName,
       packageDescription: currentPackage.packageDescription,

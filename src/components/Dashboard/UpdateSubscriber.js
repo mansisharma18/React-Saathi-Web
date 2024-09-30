@@ -10,6 +10,7 @@ import axios from "axios";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { baseUrl } from '../../ApiPath';
 
 const UpdateSubscriber = () => {
 
@@ -89,7 +90,7 @@ const UpdateSubscriber = () => {
         const fetchData = async () => {
           try {
            
-          axios.get(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${id}`)
+          axios.get(`${baseUrl}/subscribers/${id}`)
           .then(res => {
               console.log(res.data)
               console.log(res.data.firstName)
@@ -174,7 +175,7 @@ const UpdateSubscriber = () => {
         const fetchPackageList = async () => {
             axios
               .get(
-                `https://saathi.etheriumtech.com:444/Saathi/subscription-package/active`
+                `${baseUrl}/subscription-package/active`
               )
               .then((res) => {
                 console.log("packagess", res.data);
@@ -198,7 +199,7 @@ const UpdateSubscriber = () => {
        
         
         axios
-      .put(`https://saathi.etheriumtech.com:444/Saathi/subscribers/${id}`, {
+      .put(`${baseUrl}/subscribers/${id}`, {
   
        "firstName": first,
        "lastName": last,
@@ -276,7 +277,7 @@ const UpdateSubscriber = () => {
         }
 
         axios
-        .put(`https://saathi.etheriumtech.com:444/Saathi/patrons/${patron1Id}`,payload
+        .put(`${baseUrl}/patrons/${patron1Id}`,payload
         )
         .then((response) => {
           console.log("Response:", response.data); 
@@ -333,7 +334,7 @@ const UpdateSubscriber = () => {
         }
 
         axios
-        .put(`https://saathi.etheriumtech.com:444/Saathi/patrons/${patron2Id}`,payload
+        .put(`${baseUrl}/patrons/${patron2Id}`,payload
         )
         .then((response) => {
           console.log("Response:", response.data); 
