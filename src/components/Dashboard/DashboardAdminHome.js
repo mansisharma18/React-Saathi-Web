@@ -202,7 +202,7 @@ const DashboardAdminHome = () => {
                         >
                         <div className="d-flex justify-content-between align-items-center" >
                           <div> Package Services </div>
-                          <div className="float-end fw-bold font-20" style={{color:"#009efb"}}>50</div>
+                          <div className="float-end fw-bold font-20" style={{color:"#009efb"}}>56</div>
                         </div>
                         </Card.Title>
                         <hr />
@@ -218,11 +218,11 @@ const DashboardAdminHome = () => {
 
 <div  className="d-flex justify-content-between align-items-center">
         <div className="font-14">Completed</div>
-        <div className="font-20" style={{color:"green"}}>5</div>
+        <div className="font-20" style={{color:"green"}}>{services.totalCompletedPackageServices}</div>
       </div>
       <div className="d-flex justify-content-between align-items-center">
         <div className="font-14" >Pending</div>
-        <div className="font-20" style={{color:"red"}}>18</div>
+        <div className="font-20" style={{color:"red"}}>{services.totalPendingPackageServices}</div>
       </div>
 
                           <div></div>
@@ -240,7 +240,7 @@ const DashboardAdminHome = () => {
                         >
                         <div className="d-flex justify-content-between align-items-center" >
                           <div> Ala-Carte Services</div>
-                          <div className="float-end fw-bold font-20" style={{color:"#009efb"}}>25</div>
+                          <div className="float-end fw-bold font-20" style={{color:"#009efb"}}>6</div>
                         </div>
                         </Card.Title>
                         <hr />
@@ -256,11 +256,11 @@ const DashboardAdminHome = () => {
 
 <div  className="d-flex justify-content-between align-items-center">
         <div className="font-14">Completed</div>
-        <div className="font-20 " style={{color:"green"}}>5</div>
+        <div className="font-20 " style={{color:"green"}}>{services.totalCompletedAlaCarteServices}</div>
       </div>
       <div className="d-flex justify-content-between align-items-center">
         <div className="font-14">Pending</div>
-        <div className="font-20" style={{color:"red"}}>18</div>
+        <div className="font-20" style={{color:"red"}}>{services.totalPendingAlaCarteServices}</div>
       </div>
 
                           <div></div>
