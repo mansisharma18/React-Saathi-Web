@@ -52,6 +52,9 @@ const SaathiList = () => {
                       <th scope="col" className="col-6">
                         Subscribers Associated
                       </th>
+                      <th scope="col" className="col-6">
+                        Rating
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -91,12 +94,13 @@ const SaathiList = () => {
                                 <span></span>
                               )}
                             </td>
+                            <td>5</td>
                           </tr>
                         );
                       })
                     ) : (
                       <tr>
-                        <td colSpan="3">No data available</td>
+                        <td colSpan="4">No data available</td>
                       </tr>
                     )}
                   </tbody>
