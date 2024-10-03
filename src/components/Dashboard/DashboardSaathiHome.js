@@ -119,19 +119,23 @@ const DashboardSaathiHome = () => {
                         >
                         <div className="d-flex justify-content-between align-items-center" >
                           <div> Subscribers </div>
-                          <div className="float-end fw-bold font-20" style={{color:"gray"}}>{services?.totalSubscribers}</div>
+                          <div className="float-end fw-bold font-20" style={{color:"#009efb"}}>{services?.totalSubscribers}</div>
                         </div>
                         </Card.Title>
                         <hr />
                         <Card.Text>
                           <div className="" style={{color:"gray"}}>
+                          {services?.packageDetails?.length > 0 && 
+  services.packageDetails
+    .sort((a, b) => a.packageName.localeCompare(b.packageName))  // Sorting based on packageName
+    .map((service, index) => (
+      <div key={index} className="d-flex justify-content-between align-items-center">
+        <div className="font-14">{service.packageName}</div>
+        <div className="font-20">{service.subscriberCount}</div>
+      </div>
+  ))
+}
 
-                         {services?.packageDetails?.length > 0 && services.packageDetails.map((service, index) => (
-  <div key={index} className="d-flex justify-content-between align-items-center">
-    <div className="font-14">{service.packageName}</div>
-    <div className="font-20">{service.subscriberCount}</div>
-  </div>
-))}
 
 
                           <div></div>
@@ -156,13 +160,17 @@ const DashboardSaathiHome = () => {
                         <hr />
                         <Card.Text>
                           <div className="" style={{color:"gray"}}>
-
-                          {services?.serviceBreakdown?.map((service, index) => (
+                          {services?.serviceBreakdown?.length > 0 && 
+  services.serviceBreakdown
+    .sort((a, b) => a.serviceName.localeCompare(b.serviceName))  // Sorting based on serviceName
+    .map((service, index) => (
       <div key={index} className="d-flex justify-content-between align-items-center">
         <div className="font-14">{service.serviceName}</div>
         <div className="font-20">{service.completed}</div>
       </div>
-    ))}
+  ))
+}
+
                           
                           <div></div>
                           </div>
@@ -187,13 +195,16 @@ const DashboardSaathiHome = () => {
                         <Card.Text>
                           <div className="" style={{color:"gray"}}>
 
-                          {services?.serviceBreakdown?.map((service, index) => (
+                          {services?.serviceBreakdown?.length > 0 && 
+  services.serviceBreakdown
+    .sort((a, b) => a.serviceName.localeCompare(b.serviceName))  // Sorting based on serviceName
+    .map((service, index) => (
       <div key={index} className="d-flex justify-content-between align-items-center">
         <div className="font-14">{service.serviceName}</div>
         <div className="font-20">{service.pending}</div>
       </div>
-    ))}
-
+  ))
+}
                           <div></div>
                           </div>
                         </Card.Text>
@@ -202,6 +213,17 @@ const DashboardSaathiHome = () => {
                   </Col>
                 </Row>
               </div>
+
+              {list.length >0 && (
+                <>
+                 <Card className="shadow-sm pb-3">
+            <Card.Body>
+              <div className="d-flex justify-content-center">
+                <div className="mt-2">
+                  <h4>Ala-carte Service Requests</h4>
+                </div>
+              </div>
+              <hr />
 
               <div>
                 <Table striped bordered className="table-font-size">
@@ -304,6 +326,12 @@ const DashboardSaathiHome = () => {
                   </tbody>
                 </Table>
               </div>
+              </Card.Body>
+              </Card>
+                </>
+              )}
+
+            
             </Card.Body>
           </Card>
         </Container>

@@ -86,6 +86,7 @@ const List = () => {
                       <th scope="col">Contact No.</th>
                       <th scope="col">Email</th>
                       <th scope="col">Package</th>
+                      <th scope="col">Status</th>
                       <th scope="col">Edit</th>
                     </tr>
                   </thead>
@@ -107,12 +108,13 @@ const List = () => {
                                 ))}
                               </ol>
                             ) : (
-                              <span></span>
+                              <span style={{color:"red" ,marginLeft:"20px"}}> Pending</span>
                             )}
                           </td>
                           <td>{item.contactNo}</td>
                           <td>{item.email}</td>
                           <td>{item.packageName}</td>
+                          <td>Active</td>
                           <td>
                             <span className="text-decoration-none me-3">
                               <Link
