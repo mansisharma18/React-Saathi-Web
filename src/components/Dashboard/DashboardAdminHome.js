@@ -70,7 +70,7 @@ const DashboardAdminHome = () => {
                         >
                         <div className="d-flex justify-content-between align-items-center" >
                           <div> Users </div>
-                          <div className="float-end fw-bold font-20" style={{color:"#009efb"}}>6</div>
+                          <div className="float-end fw-bold font-20" style={{color:"#009efb"}}>{services?.subscriberCounts?.RegisteredUsers}</div>
                         </div>
                         </Card.Title>
                         <hr />
@@ -85,8 +85,8 @@ const DashboardAdminHome = () => {
 ))} */} 
                             <div className="d-flex justify-content-between align-items-center">
     <div className="font-14">Registered</div>
-    {/* <div className="font-20">{services?.subscriberCounts?.Registered-Users}</div> */}
-    <div className="font-20">20</div>
+    <div className="font-20">{services?.subscriberCounts?.RegisteredUsers}</div>
+    {/* <div className="font-20">20</div> */}
   </div>
 
   <div className="d-flex justify-content-between align-items-center">
