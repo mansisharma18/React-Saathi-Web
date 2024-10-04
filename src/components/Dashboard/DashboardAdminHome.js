@@ -112,7 +112,7 @@ const DashboardAdminHome = () => {
                         >
                         <div className="d-flex justify-content-between align-items-center" >
                           <div> Subscriptions </div>
-                          <div className="float-end fw-bold font-20 appColor" style={{color:"#009efb"}}>4</div>
+                          <div className="float-end fw-bold font-20 appColor" style={{color:"#009efb"}}></div>
                         </div>
                         </Card.Title>
                         <hr />
@@ -202,7 +202,7 @@ const DashboardAdminHome = () => {
                         >
                         <div className="d-flex justify-content-between align-items-center" >
                           <div> Package Services </div>
-                          <div className="float-end fw-bold font-20" style={{color:"#009efb"}}>56</div>
+                          <div className="float-end fw-bold font-20" style={{color:"#009efb"}}>0</div>
                         </div>
                         </Card.Title>
                         <hr />
@@ -240,7 +240,7 @@ const DashboardAdminHome = () => {
                         >
                         <div className="d-flex justify-content-between align-items-center" >
                           <div> Ala-Carte Services</div>
-                          <div className="float-end fw-bold font-20" style={{color:"#009efb"}}>6</div>
+                          <div className="float-end fw-bold font-20" style={{color:"#009efb"}}>0</div>
                         </div>
                         </Card.Title>
                         <hr />
