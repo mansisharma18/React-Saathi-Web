@@ -51,9 +51,7 @@ function ServiceTaskList() {
   // Fetch selected subscriber's details and patrons
   const fetchSubscriberDetails = async () => {
     try {
-      const response = await fetch(
-        `${baseUrl}/subscribers/${subId}`
-      );
+      const response = await fetch(`${baseUrl}/subscribers/${subId}`);
       const json = await response.json();
       setPackageDetail(json);
       setPatron(json.patrons); // Patrons are set here
@@ -71,9 +69,7 @@ function ServiceTaskList() {
   // Fetch requests
   const fetchRequests = async () => {
     if (subId !== 0) {
-      const response = await fetch(
-        `${baseUrl}/subscribers/${subId}/services`
-      );
+      const response = await fetch(`${baseUrl}/subscribers/${subId}/services`);
       const json = await response.json();
 
       // Update logic for completedRequest
@@ -111,7 +107,6 @@ function ServiceTaskList() {
     const { name, value, files } = e.target;
     setCompletionData({
       ...completionData,
-    
 
       [name]: files ? files[0] : value,
     });
@@ -199,11 +194,13 @@ function ServiceTaskList() {
                   onChange={(event) => setSubId(event.target.value)}
                 >
                   <option value="">Select Subscriber</option>
-                  {subscriber?.map((sub) => (
-                    <option key={sub.subscriberID} value={sub.subscriberID}>
-                      {sub.firstName} {sub.lastName}
-                    </option>
-                  ))}
+                  {subscriber
+                    ?.filter((item) => item.status === 1)
+                    .map((sub) => (
+                      <option key={sub.subscriberID} value={sub.subscriberID}>
+                        {sub.firstName} {sub.lastName}
+                      </option>
+                    ))}
                 </Form.Select>
               </Col>
             </Row>
@@ -352,13 +349,14 @@ function ServiceTaskList() {
                       <thead>
                         <tr className="table-info">
                           <th>Service Name</th>
-                          <th>Pending</th>
-                          <th>Completed</th>
+                          <th>Requested Date </th>
+                          <th>Preferred Date and Time </th>
+                          <th>Service Rating</th>
                           <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {pendingRequest
+                        {requests
                           ?.filter((task) => !task.alaCarte) // Filter to show only package services
                           .map((task) => (
                             <tr key={task.serviceID}>
@@ -366,9 +364,21 @@ function ServiceTaskList() {
                               <td>{task.pending}</td>
                               <td>{task.completions}</td>
                               <td>
+                                {task.interactions.length > 0 &&
+                                  task.interactions.map((item) => (
+                                    <Row
+                                      key={item.interactionID}
+                                      style={{ marginLeft: "10px" }}
+                                    >
+                                      {item.createdDate}
+                                    </Row>
+                                  ))}
+                              </td>
+                              <td>
                                 <Button
                                   variant="primary"
                                   onClick={() => handleShowModal(task)}
+                                  disabled={task.pending === 0} // Disable if pending is zero or no interactions available
                                   style={{
                                     backgroundColor: "#009efb",
                                     borderColor: "#009efb",
@@ -408,6 +418,7 @@ function ServiceTaskList() {
                             <th>Service Name</th>
                             <th>Pending</th>
                             <th>Completed</th>
+                            <th>Requested Date</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -421,6 +432,7 @@ function ServiceTaskList() {
                                 <td>{task.serviceName}</td>
                                 <td>{task.pending}</td>
                                 <td>{task.completions}</td>
+                                <td>{task.requestedDate}</td>
                                 <td>
                                   <Button
                                     variant="primary"
