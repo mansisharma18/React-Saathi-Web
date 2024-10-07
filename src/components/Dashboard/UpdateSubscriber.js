@@ -457,7 +457,7 @@ const UpdateSubscriber = () => {
     </Row>
     <Row>
 
-    <Col className="p-3">
+    <Col  className="p-3">
     <Form.Label className="label-style">
                             Package
                           </Form.Label>
@@ -502,7 +502,7 @@ const UpdateSubscriber = () => {
     </Col>
 
       
-        <Col className="p-3">
+        {/* <Col className="p-3">
         <Form.Label className="label-style">Status</Form.Label>
             <Form.Select
                 style={{ padding: '8px', fontSize: "12px" }}
@@ -515,7 +515,7 @@ const UpdateSubscriber = () => {
                 <option value="1">Active</option>
                 <option value="0">Inactive</option>
             </Form.Select>
-        </Col>
+        </Col> */}
     </Row>
 
 

@@ -23,8 +23,8 @@ const PatronDetails = () => {
     const[mob1,setMob1]=useState('')
     const[email,setEmail]=useState('')
     const[email1,setEmail1]=useState('')
-    const[dob,setDob]=useState('')
-    const[dob1,setDob1]=useState('')
+    const[dob,setDob]=useState(null)
+    const[dob1,setDob1]=useState(null)
     const[add1,setAdd1]=useState('')
     const[add1Second,setAdd1Second]=useState('')
     const[add2,setAdd2]=useState('')
@@ -49,6 +49,7 @@ const PatronDetails = () => {
     const[displayAddButton,setDisplayAddButton]=useState(true)
     const[displayCancelButton,setDisplayCancelButton]=useState(true)
     const [loading, setLoading] = useState(false);
+    const [isPatron2NA, setIsPatron2NA] = useState(false);
     
 
    
@@ -95,11 +96,33 @@ const PatronDetails = () => {
     setDisplayAddButton(true)
   }
 
+  const handlePatron2NACheckbox = (e) => {
+    const checked = e.target.checked;
+    setIsPatron2NA(checked);
+    
+    // If N/A is checked, fill all fields with 'N/A'
+    if (checked) {
+      setFirst1('N/A');
+      setLast1('N/A');
+      setEmail1('N/A');
+      setDob1('');
+      setMob1('N/A');
+      setCountryCode1('N/A');
+      setAdd1Second('N/A');
+      setAdd2Second('N/A');
+      setCity1('N/A');
+      setState1('N/A');
+      setCountry1('N/A');
+      setRelation1('N/A');
+      setComments1('N/A');
+    }
+  };
+  
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true)
-   
   
     const payload = [
       {
@@ -118,46 +141,59 @@ const PatronDetails = () => {
         country: country,
         relation: relation,
         subscriberID: parseInt(subId),
+        comments:comments
       },
       {
         firstName: first1,
         lastName: last1,
         email: email1,
-        dob: dob1,
-        contactNo: mob1,
+        dob: dob1 ? dob1 : null,
+        contactNo:mob1,
         countryCode: countryCode1,
         createdBy: parseInt(userId),
         updatedBy: null,
         address1: add1Second,
         address2: add2Second,
-        city: city1,
+        city:city1,
         state: state1,
-        country: country1,
-        relation: relation1,
+        country:country1,
+        relation:relation1,
         subscriberID: parseInt(subId),
+        comments:comments1
       }
     ];
 
-    // Only add the second patron's data if the fields are filled out
-    // if (first1 && last1 && email1 && mob1 && countryCode1) {
-    //   payload.push({
-    //     firstName: first1,
-    //     lastName: last1,
-    //     email: email1,
-    //     dob: dob1,
-    //     contactNo: mob1,
-    //     countryCode: countryCode1,
-    //     createdBy: parseInt(userId),
-    //     updatedBy: null,
-    //     address1: add1Second,
-    //     address2: add2Second,
-    //     city: city1,
-    //     state: state1,
-    //     country: country1,
-    //     relation: relation1,
-    //     subscriberID: parseInt(subId),
-    //   });
-    // }
+    const secondPayload = {
+      firstName: first1 == "N/A" ? "" : first1,
+      lastName: last1 == "N/A" ? "" : last1,
+      email: email1 == "N/A" ? "" : email1,
+      dob: dob1 == "N/A" ? "" : dob1 ? dob1 : null,
+      contactNo: mob1 == "N/A" ? "" : mob1,
+      countryCode: countryCode1 == "N/A" ? "" : countryCode1,
+      createdBy: parseInt(userId),
+      updatedBy: null,
+      address1: add1Second == "N/A" ? "" : add1Second,
+      address2: add2Second == "N/A" ? "" : add2Second,
+      city: city1 == "N/A" ? "" : city1,
+      state: state1 == "N/A" ? "" : state1,
+      country: country1 == "N/A" ? "" : country1,
+      relation: relation1 == "N/A" ? "" : relation1,
+      subscriberID: parseInt(subId),
+      comments: comments1 == "N/A" ? "" : comments1
+    };
+    
+  // // Function to check if all important fields are valid (not "N/A" or empty)
+  // const isObjectValid = (obj) => {
+  //   // Required fields for second patron
+  //   const requiredFields = ['firstName', 'lastName', 'email', 'contactNo', 'countryCode'];
+  //   return requiredFields.every((key) => obj[key] !== "" && obj[key] !== null);
+  // };
+
+  // // Only add the second patron if the important fields are valid
+  // if (isObjectValid(secondPayload)) {
+  //   payload.push(secondPayload);
+  // }
+
     axios
       .post(`${baseUrl}/patrons`,payload
       )
@@ -276,6 +312,7 @@ const PatronDetails = () => {
             style={{ padding: '8px',fontSize:"12px" }}
             value={dob} 
             onChange={(event) => setDob(event.target.value)}
+
             required
           />
         </Col>
@@ -414,6 +451,19 @@ const PatronDetails = () => {
         </div>
      </div>
 <hr/>
+
+<Row>
+<div>
+        <label className="label-style me-1">
+         N/A:
+        </label>
+        <input
+            type="checkbox"
+            checked={isPatron2NA}
+            onChange={handlePatron2NACheckbox}
+          />
+      </div>
+</Row>
       <Row>
         <Col className="p-3">
         <Form.Label className="label-style">First Name</Form.Label>
@@ -450,6 +500,9 @@ const PatronDetails = () => {
             style={{ padding: '8px',fontSize:"12px" }}
             value={dob1} 
             onChange={(event) => setDob1(event.target.value)}
+          
+
+            disabled={isPatron2NA}
             required
           />
         </Col>

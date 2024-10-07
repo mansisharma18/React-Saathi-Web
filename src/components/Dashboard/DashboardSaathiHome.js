@@ -291,7 +291,7 @@ const DashboardSaathiHome = () => {
                           <td>{index + 1}</td>
                           <td>{item.subscriberName}</td>
                           <td>{item.serviceName}</td>
-                          <td>{`${item.requestedTime}:00`}</td>
+                          <td>{item.requestedTime}</td>
                           <td>
                             <span
                               style={{
