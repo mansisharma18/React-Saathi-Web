@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Alert from "react-bootstrap/Alert";
 import { baseUrl } from "../../ApiPath";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const SubscriberRegisteration = () => {
   const [first, setFirst] = useState("");
@@ -121,12 +123,15 @@ const SubscriberRegisteration = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const formattedNumber = `+${mob.slice(0, countryCode.length)}-${mob.slice(countryCode.length)}`;
+
+
     axios
       .put(`${baseUrl}/subscribers/${subId}`, {
         firstName: first,
         lastName: last,
         email: email,
-        contactNo: mob,
+        contactNo:formattedNumber,
         countryCode: countryCode,
         status: status,
         updatedBy: parseInt(userId),
@@ -256,9 +261,9 @@ const SubscriberRegisteration = () => {
                           />
                         </Col>
 
-                        <Col className="p-3">
+                        {/* <Col className="p-3">
                           <Row className="align-items-center">
-                            {/* Country Code Select */}
+                          
                             <Col xs="auto" lg={2}>
                               <Form.Label className="label-style">
                                 Code
@@ -274,11 +279,11 @@ const SubscriberRegisteration = () => {
                                 <option>+91</option>
                                 <option value="+91">+91 (India)</option>
                                 <option value="+44">+44 (UK)</option>
-                                {/* Add more options as needed */}
+                    
                               </Form.Select>
                             </Col>
 
-                            {/* Phone Number Input */}
+                        
                             <Col>
                               <Form.Label className="label-style">
                                 Phone Number
@@ -292,7 +297,21 @@ const SubscriberRegisteration = () => {
                               />
                             </Col>
                           </Row>
-                        </Col>
+                        </Col> */}
+                         <Col xs="auto" className="p-3" lg={6}>
+  <Form.Label className="label-style">Phone Number</Form.Label>
+  <div className="w-100">
+    <PhoneInput
+      country={'in'}
+      value={mob}
+      onChange={(value, country) => {
+        setMob(value);
+        setCountryCode(country.dialCode);
+      }}
+      inputStyle={{ width: '100%' }} // Ensure full width
+    />
+  </div>
+</Col>
                       </Row>
                       <Row>
                         <Col className="p-3">

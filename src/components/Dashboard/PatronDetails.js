@@ -9,6 +9,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Alert from 'react-bootstrap/Alert';
 import { baseUrl } from '../../ApiPath';
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
+
 
 
 const PatronDetails = () => {
@@ -123,6 +127,9 @@ const PatronDetails = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true)
+
+    const formattedNumber = `+${mob.slice(0, countryCode.length)}-${mob.slice(countryCode.length)}`;
+    const formattedNumber1 = `+${mob1.slice(0, countryCode1.length)}-${mob1.slice(countryCode1.length)}`;
   
     const payload = [
       {
@@ -130,7 +137,7 @@ const PatronDetails = () => {
         lastName: last,
         email: email,
         dob: dob,
-        contactNo: mob,
+        contactNo:formattedNumber,
         countryCode: countryCode,
         createdBy: parseInt(userId),
         updatedBy: null,
@@ -148,7 +155,7 @@ const PatronDetails = () => {
         lastName: last1,
         email: email1,
         dob: dob1 ? dob1 : null,
-        contactNo:mob1,
+        contactNo:formattedNumber1,
         countryCode: countryCode1,
         createdBy: parseInt(userId),
         updatedBy: null,
@@ -320,38 +327,49 @@ const PatronDetails = () => {
 
 
       <Row>
-      <Col className="p-3">
+      {/* <Col className="p-3">
       <Row className="align-items-center">
-    {/* Country Code Select */}
     <Col xs="auto" lg={2}>
     <Form.Label className="label-style">Code</Form.Label>
       <Form.Select
         style={{ padding: '8px', fontSize: '12px' }}
         aria-label="Select Country Code"
-        value={countryCode} // Add a state for countryCode
-        onChange={(event) => setCountryCode(event.target.value)} // Set the state for countryCode
+        value={countryCode} 
+        onChange={(event) => setCountryCode(event.target.value)} 
       >
-        {/* Replace the options below with a full list of country codes as needed */}
+
         <option >+91</option>
         <option value="+91">+91 (India)</option>
         <option value="+44">+44 (UK)</option>
-        {/* Add more options as needed */}
       </Form.Select>
     </Col>
     
-    {/* Phone Number Input */}
     <Col>
     <Form.Label className="label-style">Phone No</Form.Label>
       <Form.Control
         placeholder="Patron's Phone Number"
         style={{ padding: '8px', fontSize: '12px' }}
-        value={mob} // Use state to manage the phone number input
-        onChange={(event) => setMob(event.target.value)} // Update state on change
+        value={mob} 
+        onChange={(event) => setMob(event.target.value)} 
         required
       />
     </Col>
   </Row>
-        </Col>
+        </Col> */}
+           <Col xs="auto" className="p-3" lg={6}>
+  <Form.Label className="label-style">Phone Number</Form.Label>
+  <div className="w-100">
+    <PhoneInput
+      country={'in'}
+      value={mob}
+      onChange={(value, country) => {
+        setMob(value);
+        setCountryCode(country.dialCode);
+      }}
+      inputStyle={{ width: '100%' }} // Ensure full width
+    />
+  </div>
+</Col>
         <Col className="p-3">
         <Form.Label className="label-style">Relation with Subscriber</Form.Label>
         <Form.Control placeholder="Patron's Relation with Subscriber"
@@ -510,26 +528,25 @@ const PatronDetails = () => {
 
 
       <Row>
-      <Col className="p-3">
+      {/* <Col className="p-3">
       <Row className="align-items-center">
-    {/* Country Code Select */}
+
     <Col xs="auto" lg={2}>
     <Form.Label className="label-style">Code</Form.Label>
       <Form.Select
         style={{ padding: '8px', fontSize: '12px' }}
         aria-label="Select Country Code"
-        value={countryCode1} // Add a state for countryCode
-        onChange={(event) => setCountryCode1(event.target.value)} // Set the state for countryCode
+        value={countryCode1} 
+        onChange={(event) => setCountryCode1(event.target.value)} 
       >
-        {/* Replace the options below with a full list of country codes as needed */}
+    
         <option >+91</option>
         <option value="+91">+91 (India)</option>
         <option value="+44">+44 (UK)</option>
-        {/* Add more options as needed */}
+  
       </Form.Select>
     </Col>
     
-    {/* Phone Number Input */}
     <Col>
     <Form.Label className="label-style">Phone No</Form.Label>
       <Form.Control
@@ -541,7 +558,23 @@ const PatronDetails = () => {
       />
     </Col>
   </Row>
-        </Col>
+        </Col> */}
+
+<Col xs="auto" className="p-3" lg={6}>
+  <Form.Label className="label-style">Phone Number</Form.Label>
+  <div className="w-100">
+    <PhoneInput
+      country={'in'}
+      value={mob1}
+      onChange={(value, country) => {
+        setMob1(value);
+        setCountryCode1(country.dialCode);
+      }}
+      inputStyle={{ width: '100%' }} // Ensure full width
+      disabled={isPatron2NA}
+    />
+  </div>
+</Col>
         <Col className="p-3">
         <Form.Label className="label-style">Relation with the Subscriber</Form.Label>
         <Form.Control placeholder="Patron's Relation with Subscriber"
