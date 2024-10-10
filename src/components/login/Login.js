@@ -67,6 +67,7 @@ const Login = () => {
           localStorage.setItem("userPhoto", res.data.picture);
           localStorage.setItem("firstName",res.data.firstName);
           localStorage.setItem("lastName",res.data.lastName);
+          localStorage.setItem("email",res.data.email);
           const user = localStorage.getItem("userType");
           const userId = localStorage.getItem("userId");
 

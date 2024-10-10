@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import avimg from "../../assets/images/download.png";
 import Container from "react-bootstrap/Container";
@@ -20,6 +20,9 @@ const TopBar = () => {
   const[currentPswd,setCurrentPswd]=useState('')
   const[newPswd,setNewPswd]=useState('')
   const[alert,setAlert]=useState(false)
+  const[confirmPswd,setConfirmPswd]=useState('')
+  const [passwordError, setPasswordError] = useState(""); 
+  const [typingTimeout, setTypingTimeout] = useState(null);
 
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
@@ -28,6 +31,7 @@ const TopBar = () => {
   const image = localStorage.getItem("userPhoto");
   const firstName=localStorage.getItem('firstName')
   const lastName=localStorage.getItem('lastName')
+  const Email=localStorage.getItem('email')
 
   const imageUrl = `${imagePath}${image.split("webapps/")[1]}`;
   const handleLogout = () => {
@@ -39,13 +43,42 @@ const TopBar = () => {
     navigate("/");
   };
 
-  
+  const handleConfirmPasswordChange = (event) => {
+    const confirmPassword = event.target.value;
+    setConfirmPswd(confirmPassword);
+
+    // Clear the previous timeout
+    if (typingTimeout) {
+      clearTimeout(typingTimeout);
+    }
+
+    // Set a new timeout to check passwords after 500 milliseconds
+    const newTimeout = setTimeout(() => {
+      if (newPswd && confirmPassword && newPswd !== confirmPassword) {
+        setPasswordError("Passwords do not match");
+      } else {
+        setPasswordError(""); // Clear the error if passwords match
+      }
+    }, 500); // Adjust the duration as needed
+
+    setTypingTimeout(newTimeout); // Store the timeout ID
+  };
+
+  // Clear the timeout if the component unmounts
+  useEffect(() => {
+    return () => {
+      if (typingTimeout) {
+        clearTimeout(typingTimeout);
+      }
+    };
+  }, [typingTimeout]);
+
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent default form submission
     axios
       .put(
         `${baseUrl}/admin-users/change-password`,{
-          "email":email,
+          "email":Email,
           "oldPassword":currentPswd,
           "newPassword":newPswd
         }
@@ -249,6 +282,8 @@ const TopBar = () => {
 </li> */}
                 </ul>
 
+
+
                 {/* Modal for changing password */}
                 <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -258,7 +293,7 @@ const TopBar = () => {
           {/* React Bootstrap Form */}
           <Form onSubmit={handleSubmit}> 
 
-          <Row className="">
+          {/* <Row className="">
               <Col  className="mb-2">
                 <Form.Group controlId="email">
                   <Form.Label  className="label-style">Enter Email</Form.Label>
@@ -269,7 +304,8 @@ const TopBar = () => {
                    required />
                 </Form.Group>
               </Col>
-            </Row>
+            </Row> */}
+           
             <Row>
               <Col className="mb-2">
                 <Form.Group controlId="formCurrentPassword">
@@ -297,8 +333,40 @@ const TopBar = () => {
                 </Form.Group>
               </Col>
             </Row>
+            <Row>
+              
+              <Col  className="mb-2">
+                <Form.Group controlId="formNewPassword">
+                  <Form.Label className="label-style">Confirm New Password</Form.Label>
+                  <Form.Control type="password" placeholder="Confirm new password"
+                    style={{ padding: "8px", fontSize: "12px" }}
+                    value={confirmPswd}
+                    onChange={handleConfirmPasswordChange}
+                    required />
+                </Form.Group>
+              </Col>
+            </Row>
+            {passwordError && (
+      <Alert variant="danger">
+        {passwordError}
+      </Alert>
+    )}
+
+     {/* Success Alert */}
+     {alert && (
+      <Alert variant="success" className="text-center">
+        {alert}
+      </Alert>
+    )}
             
-            <Button variant="primary" type="submit">
+            <Button  type="submit" disabled={!!passwordError}
+             variant="primary"
+    
+             style={{
+              
+               color: 'white',
+               margin: "4px",
+               fontSize: "12px"}}>
             Save 
           </Button>
           </Form>
@@ -308,6 +376,7 @@ const TopBar = () => {
          
         </Modal.Footer>
       </Modal>
+    
   
               </span>
             </div>
