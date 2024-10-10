@@ -280,6 +280,7 @@ const DashboardSaathiHome = () => {
                           />
                         </span>
                       </th>
+                      <th scope="col" style={{ verticalAlign: 'middle' }}>Preffered Time</th>
                       <th scope="col" style={{ verticalAlign: 'middle' }}>Status</th>
                       <th scope="col" style={{ verticalAlign: 'middle' }}>Update</th>
                     </tr>
@@ -292,6 +293,7 @@ const DashboardSaathiHome = () => {
                           <td>{item.subscriberName}</td>
                           <td>{item.serviceName}</td>
                           <td>{item.requestedTime}</td>
+                          <td>..</td>
                           <td>
                             <span
                               style={{
@@ -320,7 +322,7 @@ const DashboardSaathiHome = () => {
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="6">No Service Request</td>
+                        <td colSpan="7">No Service Request</td>
                       </tr>
                     )}
                   </tbody>

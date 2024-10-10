@@ -51,13 +51,14 @@ const ManageUsers = () => {
     event.preventDefault();
 
     setLoading(true)
+    const formattedNumber = `+${mob.slice(0, countryCode.length)}-${mob.slice(countryCode.length)}`;
 
     const AdMap = {
       firstName: first,
       lastName: last,
       email: email,
       // dob: dob,
-      contactNo: mob,
+      contactNo:formattedNumber,
       countryCode: countryCode,
       briefBio: bio,
       userType: selectedOption,
@@ -239,44 +240,21 @@ const ManageUsers = () => {
                       </Col>
                     </Row>
                     <Row>
-                      <Col className="p-3">
-                        <Row className="align-items-center">
-                          {/* Country Code Select */}
-                          <Col xs="auto" lg={2}>
-                            <Form.Label className="label-style">
-                              Code
-                            </Form.Label>
-                            <Form.Select
-                              style={{ padding: "8px", fontSize: "12px" }}
-                              aria-label="Select Country Code"
-                              value={countryCode}
-                              onChange={(event) =>
-                                setCountryCode(event.target.value)
-                              }
-                              required
-                            >
-                              <option>+91</option>
-                              <option value="+91">+91 (India)</option>
-                              <option value="+44">+44 (UK)</option>
-                              {/* Add more options as needed */}
-                            </Form.Select>
-                          </Col>
+                    <Col xs="auto" className="p-3" lg={6}>
+  <Form.Label className="label-style">Phone Number</Form.Label>
+  <div className="w-100">
+    <PhoneInput
+      country={'in'}
+      value={mob}
+      onChange={(value, country) => {
+        setMob(value);
+        setCountryCode(country.dialCode);
+      }}
+      inputStyle={{ width: '100%' }} // Ensure full width
+    />
+  </div>
+</Col>
 
-                          {/* Phone Number Input */}
-                          <Col>
-                            <Form.Label className="label-style">
-                              Phone Number
-                            </Form.Label>
-                            <Form.Control
-                              placeholder="Phone Number"
-                              style={{ padding: "8px", fontSize: "12px" }}
-                              value={mob}
-                              onChange={(event) => setMob(event.target.value)}
-                              required
-                            />
-                          </Col>
-                        </Row>
-                      </Col>
                       <Col className="p-3">
                         <Form.Label className="label-style">
                           Upload Photograph

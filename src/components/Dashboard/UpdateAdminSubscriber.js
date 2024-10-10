@@ -11,6 +11,9 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { baseUrl } from '../../ApiPath';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+
 
 
 const UpdateAdminSubscriber = () => {
@@ -68,7 +71,7 @@ const UpdateAdminSubscriber = () => {
       const handleSubmit=(e)=>{
         e.preventDefault()
     
-       
+        const formattedNumber = `+${mob.slice(0, countryCode.length)}-${mob.slice(countryCode.length)}`;
         
         axios
       .put(`${baseUrl}/subscribers/${id}`, {
@@ -76,7 +79,7 @@ const UpdateAdminSubscriber = () => {
        "firstName": first,
        "lastName": last,
         "email": email,
-        "contactNo": mob,
+        "contactNo": formattedNumber,
         "countryCode": countryCode,
         "status":status,
         "updatedBy": parseInt(userId),
@@ -169,9 +172,9 @@ const UpdateAdminSubscriber = () => {
                                             required
                                         />
                                     </Col>
-                                    <Col className="p-3">
+                                    {/* <Col className="p-3">
                                     <Row className="align-items-center">
-                                            {/* Country Code Select */}
+                                    
                                             <Col xs="auto" lg={2}>
                                             <Form.Label className="label-style">Code</Form.Label>
                                                 <Form.Select
@@ -184,11 +187,11 @@ const UpdateAdminSubscriber = () => {
                                                     <option>+91</option>
                                                     <option value="+91">+91 (India)</option>
                                                     <option value="+44">+44 (UK)</option>
-                                                    {/* Add more options as needed */}
+                                          
                                                 </Form.Select>
                                             </Col>
 
-                                            {/* Phone Number Input */}
+                              
                                             <Col>
                                             <Form.Label className="label-style">Phone Number</Form.Label>
                                                 <Form.Control
@@ -202,7 +205,21 @@ const UpdateAdminSubscriber = () => {
                                         </Row>
 
                                         
-                                    </Col>
+                                    </Col> */}
+                                     <Col xs="auto" className="p-3" lg={6}>
+  <Form.Label className="label-style">Phone Number</Form.Label>
+  <div className="w-100">
+    <PhoneInput
+      country={'in'}
+      value={mob}
+      onChange={(value, country) => {
+        setMob(value);
+        setCountryCode(country.dialCode);
+      }}
+      inputStyle={{ width: '100%' }} // Ensure full width
+    />
+  </div>
+</Col>
                                 </Row>
                                 {/* <Row>
                                    

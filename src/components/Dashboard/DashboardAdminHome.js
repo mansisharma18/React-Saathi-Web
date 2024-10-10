@@ -20,6 +20,8 @@ const DashboardAdminHome = () => {
   const userId = localStorage.getItem("userId");
   const [list, setList] = useState([]);
   const[services,setServices]=useState({})
+  const [subList, setSubList] = useState(null);
+  const [sub, setSub] = useState(null);
 
   useEffect(() => {
 
@@ -43,6 +45,73 @@ const DashboardAdminHome = () => {
     };
 
     fetchServices()
+
+    // const fetchList = async () => {
+    //   try {
+    //     const res = await axios.get(
+    //       `${baseUrl}/subscribers/without-saathi`
+    //     );
+    //     console.log(res.data[0].firstName);
+    //     // setSub(res.data.length);
+    //     if (res.data && res.data.length > 0) {
+    //       console.log(res.data[0].firstName);
+    //       setSub(res.data.length);
+    //       console.log("listtt")
+    //     } else {
+    //       console.log('No subscribers without Saathi found');
+    //       setSub(0);
+    //       console.log("listtt")
+    //     }
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
+    const fetchList = async () => {
+      try {
+        const res = await axios.get(`${baseUrl}/subscribers/without-saathi`);
+        console.log('API Response:', res.data); // Log the entire response
+   
+        if (res.data && res.data.length > 0) {
+          console.log(res.data[0].firstName);
+          setSub(res.data.length);
+          console.log("listtt");
+        } else {
+          console.log('No subscribers without Saathi found');
+          setSub(0);
+          console.log("listtt");
+        }
+      } catch (err) {
+        console.error('Error fetching list:', err); // Log any errors
+      }
+    };
+   
+    fetchList();
+    
+
+    const fetchWithSaathiList = async () => {
+      try {
+        const res = await axios.get(
+          `${baseUrl}/subscribers/with-saathi`
+        );
+        console.log("new response", res.data[0].subscriber.firstName);
+        // setSubList(res.data.length);
+        if (res.data && res.data.length > 0) {
+          console.log(res.data[0].firstName);
+          setSubList(res.data.length);
+          console.log("list");
+        } else {
+          console.log('No subscribers with Saathi found');
+          setSubList(0);
+          console.log("list");
+        }
+        console.log("list",subList)
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+   
+    fetchWithSaathiList();
   }, [userId]);
 
   return (
@@ -277,22 +346,26 @@ const DashboardAdminHome = () => {
                           style={{ fontSize: "16px", fontWeight: "bold" }}
                         >
                         <div className="d-flex justify-content-between align-items-center" >
-                          <div> Saathi Ratings </div>
-                          <div className="float-end fw-bold font-20" style={{color:"#009efb"}}>{services?.totalPending}</div>
+                          <div> Saathi Assignment </div>
+                          <div className="float-end fw-bold font-20" style={{color:"#009efb"}}></div>
                         </div>
                         </Card.Title>
                         <hr />
                         <Card.Text>
                           <div className="" style={{color:"gray"}}>
-
-                          {services?.serviceBreakdown?.map((service, index) => (
-      <div key={index} className="d-flex justify-content-between align-items-center">
-        <div className="font-14">{service.serviceName}</div>
-        <div className="font-20">{service.pending}</div>
+                          <div  className="d-flex justify-content-between align-items-center">
+        <div className="font-14">Users with Saathi</div>
+        <div className="font-20" style={{color:"green"}}>{subList}</div>
       </div>
-    ))}
+      <div className="d-flex justify-content-between align-items-center">
+        <div className="font-14" >Users Without Saathi</div>
+        <div className="font-20" style={{color:"red"}}> {sub}</div>
+      </div>
+                       
 
-                          <div></div>
+                          <div>
+
+                          </div>
                           </div>
                         </Card.Text>
                       </Card.Body>

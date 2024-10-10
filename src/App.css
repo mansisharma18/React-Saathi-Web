@@ -482,3 +482,7 @@ h4 {
 .appColor{
   color:#009efb;
 }
+
+.dropdown-toggle::after{
+content:none !important
+}

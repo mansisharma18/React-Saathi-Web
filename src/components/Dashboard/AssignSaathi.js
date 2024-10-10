@@ -278,7 +278,7 @@ const AssignSaathi = () => {
                         Cancel
                       </Button>
                     </div>
-
+{/* 
                     <div className="d-flex justify-content-center mt-4">
                       <Button
                         variant=""
@@ -293,7 +293,7 @@ const AssignSaathi = () => {
                       >
                         Change Assigned Saathi
                       </Button>
-                    </div>
+                    </div> */}
                   
                   </Form>
 
@@ -319,6 +319,23 @@ const AssignSaathi = () => {
                 </div>
               </Card.Body>
             </Card>
+
+            
+            <div className="d-flex justify-content-center mt-4">
+                      <Button
+                        variant=""
+                      onClick={handleCardChange}
+                        style={{
+                          backgroundColor: "#009efb",
+                          borderColor: "#009efb",
+                          color: "white",
+                          margin: "4px",
+                          fontSize: "12px",
+                        }}
+                      >
+                        Change Assigned Saathi
+                      </Button>
+                    </div>
 
             {/* <div className="d-flex justify-content-center mt-4">
                       <Button
