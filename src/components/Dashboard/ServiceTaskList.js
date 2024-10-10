@@ -8,10 +8,12 @@ import {
   Modal,
   Form,
   Table,
+
 } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { baseUrl } from "../../ApiPath";
-
+import StarIcon from '@mui/icons-material/Star';
+import { Box } from "@mui/material";
 function ServiceTaskList() {
   const [subscriber, setSubscriber] = useState(null);
   const [subId, setSubId] = useState(0);
@@ -94,14 +96,38 @@ function ServiceTaskList() {
   const [completionData, setCompletionData] = useState({
     notes: "",
     screenshot: null,
+    preferredDate: "",
+    preferredTime: "",
   });
   const [serviceNameSelected, setServiceNameSelected] = useState("");
 
-  const handleShowModal = (task) => {
+  const handleShowModal = (task, preferredDateTime) => {
     setSelectedRequest(task);
     setServiceNameSelected(task.serviceName);
+    
+    setCompletionData({
+      ...completionData,
+      preferredDate: preferredDateTime.preferredDate || "",
+      preferredTime: preferredDateTime.preferredTime || "",
+    });
     setShowModal(true);
   };
+  
+  const totalPackagePending = requests
+  ?.filter((task) => !task.alaCarte)
+  .reduce((sum, task) => sum + task.pending, 0);
+
+const totalPackageCompleted = requests
+  ?.filter((task) => !task.alaCarte)
+  .reduce((sum, task) => sum + task.completions, 0);
+
+const totalAlaCartePending = requests
+  ?.filter((task) => task.alaCarte)
+  .reduce((sum, task) => sum + task.pending, 0);
+
+const totalAlaCarteCompleted = requests
+  ?.filter((task) => task.alaCarte)
+  .reduce((sum, task) => sum + task.completions, 0);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -130,6 +156,8 @@ function ServiceTaskList() {
       );
     } else {
       formData.append("isAlaCarte", false);
+      formData.append("preferredDate", completionData.preferredDate);
+      formData.append("preferredTime", completionData.preferredTime);
     }
     console.log("formData", formData);
 
@@ -262,7 +290,8 @@ function ServiceTaskList() {
                                 >
                                   <strong>{service.serviceName}</strong>
                                   {service.description}
-                                </li>
+                             
+                                </li> 
                               )
                             )}
                           </ul>
@@ -273,134 +302,136 @@ function ServiceTaskList() {
 
                   {/* Service Requests Summary */}
                   <Col md={4} className="d-flex">
-                    <Card className="shadow-sm flex-fill">
-                      <Card.Body>
-                        <Card.Title
-                          style={{ fontSize: "16px", fontWeight: "bold" }}
-                        >
-                          Service Requests
-                        </Card.Title>
-                        <hr />
-                        <Card.Text>
-                          <div className="d-flex justify-content-between">
-                            <div>
-                              <p
-                                style={{
-                                  fontSize: "14px",
-                                  fontWeight: "bold",
-                                  color: "green",
-                                }}
-                              >
-                                Completed
-                                <span
-                                  style={{
-                                    fontSize: "36px",
-                                    marginLeft: "10px",
-                                  }}
-                                >
-                                  {totalCompleted}
-                                </span>
-                              </p>
-                            </div>
-                            <div>
-                              <p
-                                style={{
-                                  fontSize: "14px",
-                                  fontWeight: "bold",
-                                  color: "red",
-                                  textAlign: "right",
-                                  position: "absolute",
-                                  bottom: 0,
-                                  right: 0,
-                                }}
-                              >
-                                Pending
-                                <span
-                                  style={{
-                                    fontSize: "36px",
-                                    marginLeft: "10px",
-                                    marginRight: "10px",
-                                  }}
-                                >
-                                  {totalPending}
-                                </span>
-                              </p>
-                            </div>
-                          </div>
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </Col>
+    <Card className="shadow-sm flex-fill">
+      <Card.Body>
+        <Card.Title style={{ fontSize: "16px", fontWeight: "bold" }}>
+          Service Requests Summary
+        </Card.Title>
+        <hr />
+        <Card.Text>
+          <h6>Package Services</h6>
+          <div className="d-flex justify-content-between">
+            <div>
+              <p style={{ fontSize: "14px", fontWeight: "bold", color: "green" }}>
+                Completed:
+                <span style={{ fontSize: "24px", marginLeft: "10px" }}>
+                  {totalPackageCompleted}
+                </span>
+              </p>
+            </div>
+            <div>
+              <p style={{ fontSize: "14px", fontWeight: "bold", color: "red" }}>
+                Pending:
+                <span style={{ fontSize: "24px", marginLeft: "10px" }}>
+                  {totalPackagePending}
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <h6 className="mt-4">Ala-Carte Services</h6>
+          <div className="d-flex justify-content-between">
+            <div>
+              <p style={{ fontSize: "14px", fontWeight: "bold", color: "green" }}>
+                Completed:
+                <span style={{ fontSize: "24px", marginLeft: "10px" }}>
+                  {totalAlaCarteCompleted}
+                </span>
+              </p>
+            </div>
+            <div>
+              <p style={{ fontSize: "14px", fontWeight: "bold", color: "red" }}>
+                Pending:
+                <span style={{ fontSize: "24px", marginLeft: "10px" }}>
+                  {totalAlaCartePending}
+                </span>
+              </p>
+            </div>
+          </div>
+        </Card.Text>
+      </Card.Body>
+    </Card>
+  </Col>
                 </Row>
 
                 {/* Task Tables */}
-                <Row className="mt-5">
-                  <Col>
-                    <h5
-                      style={{
-                        fontSize: "16px",
-                        color: "#009efb",
-                        textAlign: "center",
-                      }}
-                    >
-                      Package Services
-                    </h5>
-                    <Table striped bordered hover responsive>
-                      <thead>
-                        <tr className="table-info">
-                          <th>Service Name</th>
-                          <th>Requested Date </th>
-                          <th>Preferred Date and Time </th>
-                          <th>Service Rating</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {requests
-                          ?.filter((task) => !task.alaCarte) // Filter to show only package services
-                          .map((task) => (
-                            <tr key={task.serviceID}>
-                              <td>{task.serviceName}</td>
-                              <td>{task.pending}</td>
-                              <td>{task.completions}</td>
-                              <td>
-                                {task.interactions.length > 0 &&
-                                  task.interactions.map((item) => (
-                                    <Row
-                                      key={item.interactionID}
-                                      style={{ marginLeft: "10px" }}
-                                    >
-                                      {item.createdDate}
-                                    </Row>
-                                  ))}
-                              </td>
-                              <td>
-                                <Button
-                                  variant="primary"
-                                  onClick={() => handleShowModal(task)}
-                                  disabled={task.pending === 0} // Disable if pending is zero or no interactions available
-                                  style={{
-                                    backgroundColor: "#009efb",
-                                    borderColor: "#009efb",
-                                    color: "white",
-                                    margin: "4px",
-                                    fontSize: "12px",
-                                  }}
-                                >
-                                  Update
-                                </Button>
-                              </td>
-                            </tr>
-                          ))}
-                      </tbody>
-                    </Table>
-                  </Col>
-                </Row>
+                {/* Task Tables */}
+{/* Task Tables */}
+<Row className="mt-5">
+  <Col>
+    <h5
+      style={{
+        fontSize: "16px",
+        color: "#009efb",
+        textAlign: "center",
+      }}
+    >
+      Package Services
+    </h5>
+    <Table striped bordered hover responsive>
+      <thead>
+        <tr className="table-info">
+          <th>Service Name</th>
+          <th>Preferred Date</th>
+          <th>Preferred Time</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {requests
+          ?.filter((task) => !task.alaCarte) // Filter for package services only
+          .flatMap((task) => {
+            const totalOccurrences = task.pending + task.completions;
+            const preferredDatesTimes = task.preferredDatesTimes || [];
+            
+            // Create rows based on total pending + completions
+            return Array.from({ length: totalOccurrences }).map(
+              (_, index) => {
+                const preferredDateTime = preferredDatesTimes[index] || {}; // Handle missing entries
+                const { preferredDate, preferredTime, completionStatus } =
+                  preferredDateTime || {};
+
+                return (
+                  <tr key={`${task.serviceID}-${index}`}>
+                    <td>{task.serviceName}</td>
+                    <td>{preferredDate || ""}</td>
+                    <td>{preferredTime || ""}</td>
+                    <td>{completionStatus || "Pending"}</td>
+                    <td>
+                      <Button
+                        variant="primary"
+                        onClick={() =>
+                          handleShowModal(task, preferredDateTime)
+                        } // Pass both task and preferredDateTime to the modal
+                        disabled={completionStatus === "Completed"}
+                        style={{
+                          backgroundColor: "#009efb",
+                          borderColor: "#009efb",
+                          color: "white",
+                          margin: "4px",
+                          fontSize: "12px",
+                        }}
+                      >
+                        Update
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              }
+            );
+          })}
+      </tbody>
+    </Table>
+  </Col>
+</Row>
+
+
 
                 {/* Conditionally render the Ala-Carte Services table only if there are pending Ala-Carte services */}
                 {requests?.filter((task) => task.alaCarte && task.pending > 0)
                   .length > 0 && (
-                  <Row>
+                    <Row>
                     <Col>
                       <h5
                         className="mt-3"
@@ -416,44 +447,43 @@ function ServiceTaskList() {
                         <thead>
                           <tr className="table-info">
                             <th>Service Name</th>
-                            <th>Pending</th>
-                            <th>Completed</th>
-                            <th>Requested Date</th>
+                            <th>Preferred Date</th>
+                            <th>Preferred Time</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
                           {requests
-                            ?.filter(
-                              (task) => task.alaCarte && task.pending > 0
-                            ) // Filter Ala-Carte services with pending tasks
-                            .map((task) => (
-                              <tr key={task.serviceID}>
-                                <td>{task.serviceName}</td>
-                                <td>{task.pending}</td>
-                                <td>{task.completions}</td>
-                                <td>{task.requestedDate}</td>
-                                <td>
-                                  <Button
-                                    variant="primary"
-                                    onClick={() => handleShowModal(task)}
-                                    style={{
-                                      backgroundColor: "#009efb",
-                                      borderColor: "#009efb",
-                                      color: "white",
-                                      margin: "4px",
-                                      fontSize: "12px",
-                                    }}
-                                  >
-                                    Update
-                                  </Button>
-                                </td>
-                              </tr>
-                            ))}
+                            ?.filter((task) => task.alaCarte && task.pending > 0) // Filter Ala-Carte services with pending tasks
+                            .map((task) =>
+                              task.preferredDatesTimes.map((preferredDateTime, index) => (
+                                <tr key={`${task.serviceID}-${index}`}>
+                                  <td>{task.serviceName}</td>
+                                  <td>{preferredDateTime.preferredDate || ""}</td>
+                                  <td>{preferredDateTime.preferredTime || ""}</td>
+                                  <td>
+                                    <Button
+                                      variant="primary"
+                                      onClick={() => handleShowModal(task, preferredDateTime)} // Pass the preferredDate and preferredTime
+                                      style={{
+                                        backgroundColor: "#009efb",
+                                        borderColor: "#009efb",
+                                        color: "white",
+                                        margin: "4px",
+                                        fontSize: "12px",
+                                      }}
+                                    >
+                                      Update
+                                    </Button>
+                                  </td>
+                                </tr>
+                              ))
+                            )}
                         </tbody>
                       </Table>
                     </Col>
                   </Row>
+                  
                 )}
 
                 {/* Completed Services Table */}
@@ -475,6 +505,7 @@ function ServiceTaskList() {
                           <th>Service Type</th>
                           <th>Completion Notes</th>
                           <th>Date of Completion</th>
+                          <th>Service Rating</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -494,6 +525,14 @@ function ServiceTaskList() {
                                 </td>
                                 <td>{interaction.description}</td>
                                 <td>{interaction.createdDate}</td>
+                                <td>  <Box display="flex" justifyContent="center" alignItems="center">
+                  {[...Array(5)].map((_, index) => (
+                    <StarIcon
+                      key={index}
+                      style={{ color: "green", fontSize: 14 }} // Adjust fontSize as needed
+                    />
+                  ))}
+                </Box></td>
                               </tr>
                             )
                           )
