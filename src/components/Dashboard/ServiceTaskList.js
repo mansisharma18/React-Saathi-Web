@@ -10,7 +10,7 @@ import {
   Table,
 
 } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { baseUrl } from "../../ApiPath";
 import StarIcon from '@mui/icons-material/Star';
 import { Box } from "@mui/material";
@@ -61,6 +61,7 @@ const fetchSubscriberDetails = async () => {
     setPackageDetail(json);
 
     if (!json.patrons || json.patrons.length === 0) {
+      setPatron("");
       // If no patrons, show the modal to prompt adding a patron
       setShowAddPatronModal(true);
     } else {
@@ -244,14 +245,22 @@ const totalAlaCarteCompleted = requests
             No patrons are associated with this subscriber. Please add a patron first.
           </p>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer style={{alignItems:'center',justifyContent:'center'}}>
+          <Link
+          to={`/dashboard/patronDetails/${subId}`}
+          style={{
+            color: "inherit",
+            textDecoration: "none",
+          }}>
           <Button
             variant="primary"
-            onClick={handleRedirectToPatronScreen}
+          
             style={{ fontSize: "14px" }}
           >
-            Go to Patron Screen
+            Add Patron
           </Button>
+          </Link>
+         
         </Modal.Footer>
       </Modal>
         <Card className="shadow-sm pb-3">
@@ -425,14 +434,14 @@ const totalAlaCarteCompleted = requests
       <thead>
         <tr className="table-info">
           <th><Col >
-                <Form.Label style={{ fontSize: "14px" }}>Select Service Name</Form.Label>
+                {/* <Form.Label style={{ fontSize: "14px" }}>Select Service Name</Form.Label> */}
                 <Form.Select
                   aria-label="Select Service Name"
                   value={selectedServiceName}
-                  style={{ fontSize: "14px" }}
+                  style={{ fontSize: "14px" ,fontWeight:'bold'}}
                   onChange={handleServiceNameChange}
                 >
-                  <option value="">All Services</option>
+                  <option value="" style={{fontSize:'14px'}}> Service Name</option>
                   {[...new Set(requests?.map((req) => req.serviceName))].map(
                     (serviceName, index) => (
                       <option key={index} value={serviceName}>
@@ -442,7 +451,7 @@ const totalAlaCarteCompleted = requests
                   )}
                 </Form.Select>
               </Col></th>
-          <th>Preferred Date</th>
+          <th style={{alignItems:'center',alignSelf:'center',marginBottom:'10px'}}>Preferred Date</th>
           <th>Preferred Time</th>
           <th>Status</th>
           <th>Action</th>

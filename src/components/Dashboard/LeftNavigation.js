@@ -1,5 +1,5 @@
-import React, { useState ,useEffect} from "react";
-import { useLocation,Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useLocation, Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import { Accordion, Nav } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
@@ -8,11 +8,10 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import PeopleIcon from "@mui/icons-material/People";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
-import { imagePath } from '../../ImagePath';
-import Avatar from '@mui/material/Avatar';
-import StarIcon from '@mui/icons-material/Star';
+import { imagePath } from "../../ImagePath";
+import Avatar from "@mui/material/Avatar";
+import StarIcon from "@mui/icons-material/Star";
 import { Box } from "@mui/material";
-
 
 const LeftNavigation = () => {
   const navigate = useNavigate();
@@ -20,31 +19,35 @@ const LeftNavigation = () => {
 
   const image = localStorage.getItem("userPhoto");
 
-  const imageUrl=`${imagePath}${image.split('webapps/')[1]}`
+  const imageUrl = `${imagePath}${image.split("webapps/")[1]}`;
 
   const user = localStorage.getItem("userType");
-  const fisrtName=localStorage.getItem('firstName')
-  const lastName=localStorage.getItem('lastName')
+  const fisrtName = localStorage.getItem("firstName");
+  const lastName = localStorage.getItem("lastName");
 
   const [activeAccordion, setActiveAccordion] = useState(null);
 
   useEffect(() => {
-    if (location.pathname.includes("/dashboard/userRegisteration") ||
-        location.pathname.includes("/dashboard/assignSaathi") ||
-        location.pathname.includes("/dashboard/myAccount")) {
+    if (
+      location.pathname.includes("/dashboard/userRegisteration") ||
+      location.pathname.includes("/dashboard/assignSaathi") ||
+      location.pathname.includes("/dashboard/myAccount")
+    ) {
       setActiveAccordion("0"); // Open the first accordion
-    } else if (location.pathname.includes("/dashboard/createPackage") ||
-               location.pathname.includes("/dashboard/createServices") ||
-               location.pathname.includes("/dashboard/servicesList") ||
-               location.pathname.includes("/dashboard/packages")) {
+    } else if (
+      location.pathname.includes("/dashboard/createPackage") ||
+      location.pathname.includes("/dashboard/createServices") ||
+      location.pathname.includes("/dashboard/servicesList") ||
+      location.pathname.includes("/dashboard/packages")
+    ) {
       setActiveAccordion("1"); // Open the second accordion
-    }else if (location.pathname.includes("/dashboard/subscriberRegisteration") ||
-    location.pathname.includes("/dashboard/patronDetails") ||
-    location.pathname.includes("/dashboard/list") )
-     {
-setActiveAccordion("3"); // Open the second accordion
-}
-     else {
+    } else if (
+      location.pathname.includes("/dashboard/subscriberRegisteration") ||
+      location.pathname.includes("/dashboard/patronDetails") ||
+      location.pathname.includes("/dashboard/list")
+    ) {
+      setActiveAccordion("3"); // Open the second accordion
+    } else {
       setActiveAccordion(null); // Close all accordions if no match
     }
   }, [location.pathname]);
@@ -65,7 +68,7 @@ setActiveAccordion("3"); // Open the second accordion
         className="leftside"
         collapseOnSelect
         expand="lg"
-        style={{ position: "fixed", top: 0 ,width:"16%"}}
+        style={{ position: "fixed", top: 0, width: "16%" }}
       >
         <Container className="d-flex flex-column">
           <div href="/" className="brandMobile text-center">
@@ -74,17 +77,22 @@ setActiveAccordion("3"); // Open the second accordion
 
           {user === "Saathi" && (
             <>
-            <div className="text-center mt-3">
-              <img
-                src={image} 
-                alt="Saathi Profile"
-                className="profile-img" // Apply custom class
-              />
-              <div className="d-flex">
-                <div>  <span className="mt-2 fw-bold">{fisrtName} {lastName}</span></div>
-                {/* <div><span style={{color:"green",height :"6px"}}><StarIcon/></span></div> */}
-              </div>
-              <Box display="flex" justifyContent="center" alignItems="center">
+              <div className="text-center mt-3">
+                <img
+                  src={image}
+                  alt="Saathi Profile"
+                  className="profile-img" // Apply custom class
+                />
+                <div className="d-flex">
+                  <div>
+                    {" "}
+                    <span className="mt-2 fw-bold">
+                      {fisrtName} {lastName}
+                    </span>
+                  </div>
+                  {/* <div><span style={{color:"green",height :"6px"}}><StarIcon/></span></div> */}
+                </div>
+                <Box display="flex" justifyContent="center" alignItems="center">
                   {[...Array(5)].map((_, index) => (
                     <StarIcon
                       key={index}
@@ -92,8 +100,7 @@ setActiveAccordion("3"); // Open the second accordion
                     />
                   ))}
                 </Box>
-             
-            </div>
+              </div>
             </>
           )}
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -102,9 +109,13 @@ setActiveAccordion("3"); // Open the second accordion
               {user === "Admin" && (
                 <>
                   <Nav.Link
-                  as={Link}
+                    as={Link}
                     to="/dashboard"
-                    className={`nav-link ${location.pathname === "/dashboard" ? "active-nav-link" : ""}`}
+                    className={`nav-link ${
+                      location.pathname === "/dashboard"
+                        ? "active-nav-link"
+                        : ""
+                    }`}
                   >
                     <HomeIcon className="me-2" />
                     <span>Home</span>
@@ -125,7 +136,11 @@ setActiveAccordion("3"); // Open the second accordion
                         <Nav.Link
                           as={Link}
                           to="/dashboard/userRegisteration"
-                          className={`nav-link ${location.pathname === "/dashboard/userRegisteration" ? "active-nav-link" : ""}`}
+                          className={`nav-link ${
+                            location.pathname === "/dashboard/userRegisteration"
+                              ? "active-nav-link"
+                              : ""
+                          }`}
                           onClick={() => setActiveAccordion("0")} // Ensure the accordion remains open
                         >
                           User Registration
@@ -133,7 +148,11 @@ setActiveAccordion("3"); // Open the second accordion
                         <Nav.Link
                           as={Link}
                           to="/dashboard/assignSaathi"
-                          className={`nav-link ${location.pathname === "/dashboard/assignSaathi" ? "active-nav-link" : ""}`}
+                          className={`nav-link ${
+                            location.pathname === "/dashboard/assignSaathi"
+                              ? "active-nav-link"
+                              : ""
+                          }`}
                           onClick={() => setActiveAccordion("0")} // Keep the accordion open
                         >
                           Assign a Saathi
@@ -141,7 +160,11 @@ setActiveAccordion("3"); // Open the second accordion
                         <Nav.Link
                           as={Link}
                           to="/dashboard/myAccount"
-                          className={`nav-link ${location.pathname === "/dashboard/myAccount" ? "active-nav-link" : ""}`}
+                          className={`nav-link ${
+                            location.pathname === "/dashboard/myAccount"
+                              ? "active-nav-link"
+                              : ""
+                          }`}
                           onClick={() => setActiveAccordion("0")} // Keep it open
                         >
                           Manage Users
@@ -150,10 +173,12 @@ setActiveAccordion("3"); // Open the second accordion
                     </Accordion.Item>
                   </Accordion>
 
-
                   <Accordion activeKey={activeAccordion} flush>
                     <Accordion.Item eventKey="1">
-                      <Accordion.Header className="accordion-head" onClick={() => handleAccordionToggle("1")}>
+                      <Accordion.Header
+                        className="accordion-head"
+                        onClick={() => handleAccordionToggle("1")}
+                      >
                         <Nav.Link as="div" className="nav-link">
                           <ManageAccountsIcon className="me-2" />
                           <span>Packages & Services</span>
@@ -163,14 +188,22 @@ setActiveAccordion("3"); // Open the second accordion
                         <Nav.Link
                           as={Link}
                           to="/dashboard/createPackage"
-                          className={`nav-link ${location.pathname === "/dashboard/createPackage" ? "active-nav-link" : ""}`}
+                          className={`nav-link ${
+                            location.pathname === "/dashboard/createPackage"
+                              ? "active-nav-link"
+                              : ""
+                          }`}
                         >
                           Add New Package
                         </Nav.Link>
                         <Nav.Link
                           as={Link}
                           to="/dashboard/createServices"
-                          className={`nav-link ${location.pathname === "/dashboard/createServices" ? "active-nav-link" : ""}`}
+                          className={`nav-link ${
+                            location.pathname === "/dashboard/createServices"
+                              ? "active-nav-link"
+                              : ""
+                          }`}
                         >
                           Add New Service
                         </Nav.Link>
@@ -178,14 +211,22 @@ setActiveAccordion("3"); // Open the second accordion
                         <Nav.Link
                           as={Link}
                           to="/dashboard/servicesList"
-                          className={`nav-link ${location.pathname === "/dashboard/serviceList" ? "active-nav-link" : ""}`}
+                          className={`nav-link ${
+                            location.pathname === "/dashboard/serviceList"
+                              ? "active-nav-link"
+                              : ""
+                          }`}
                         >
                           List of Services
                         </Nav.Link>
                         <Nav.Link
                           as={Link}
                           to="/dashboard/packages"
-                          className={`nav-link ${location.pathname === "/dashboard/packages" ? "active-nav-link" : ""}`}
+                          className={`nav-link ${
+                            location.pathname === "/dashboard/packages"
+                              ? "active-nav-link"
+                              : ""
+                          }`}
                         >
                           List of Packages
                         </Nav.Link>
@@ -193,11 +234,14 @@ setActiveAccordion("3"); // Open the second accordion
                     </Accordion.Item>
                   </Accordion>
 
-
                   <Nav.Link
                     as={Link}
                     to="/dashboard/subscribers"
-                    className={`nav-link ${location.pathname === "/dashboard/subscribers" ? "active-nav-link" : ""}`}
+                    className={`nav-link ${
+                      location.pathname === "/dashboard/subscribers"
+                        ? "active-nav-link"
+                        : ""
+                    }`}
                   >
                     <PeopleIcon className="me-2" /> Subscribers
                   </Nav.Link>
@@ -205,7 +249,11 @@ setActiveAccordion("3"); // Open the second accordion
                   <Nav.Link
                     as={Link}
                     to="/dashboard/saathis"
-                    className={`nav-link ${location.pathname === "/dashboard/saathis" ? "active-nav-link" : ""}`}
+                    className={`nav-link ${
+                      location.pathname === "/dashboard/saathis"
+                        ? "active-nav-link"
+                        : ""
+                    }`}
                   >
                     <PeopleIcon className="me-2" /> Saathis
                   </Nav.Link>
@@ -218,12 +266,14 @@ setActiveAccordion("3"); // Open the second accordion
 
               {user === "Saathi" && (
                 <>
-
-
                   <Nav.Link
                     as={Link}
                     to="/dashboard"
-                    className={`nav-link ${location.pathname === "/dashboard" ? "active-nav-link" : ""}`}
+                    className={`nav-link ${
+                      location.pathname === "/dashboard"
+                        ? "active-nav-link"
+                        : ""
+                    }`}
                   >
                     <HomeIcon className="me-2" />
                     <span>Home</span>
@@ -242,9 +292,14 @@ setActiveAccordion("3"); // Open the second accordion
                       </Accordion.Header>
                       <Accordion.Body>
                         <Nav.Link
-                           as={Link}
+                          as={Link}
                           to="/dashboard/subscriberRegisteration"
-                          className={`nav-link ${location.pathname === "/dashboard/subscriberRegisteration" ? "active-nav-link" : ""}`}
+                          className={`nav-link ${
+                            location.pathname ===
+                            "/dashboard/subscriberRegisteration"
+                              ? "active-nav-link"
+                              : ""
+                          }`}
                           onClick={() => setActiveAccordion("3")} // Keep the accordion open
                         >
                           Subscriber Activation
@@ -252,7 +307,11 @@ setActiveAccordion("3"); // Open the second accordion
                         <Nav.Link
                           as={Link}
                           to="/dashboard/patronDetails"
-                          className={`nav-link ${location.pathname === "/dashboard/patronDetails" ? "active-nav-link" : ""}`}
+                          className={`nav-link ${
+                            location.pathname === "/dashboard/patronDetails"
+                              ? "active-nav-link"
+                              : ""
+                          }`}
                           onClick={() => setActiveAccordion("3")} // Keep it open
                         >
                           Patron Registration
@@ -260,7 +319,11 @@ setActiveAccordion("3"); // Open the second accordion
                         <Nav.Link
                           as={Link}
                           to="/dashboard/list"
-                          className={`nav-link ${location.pathname === "/dashboard/list" ? "active-nav-link" : ""}`}
+                          className={`nav-link ${
+                            location.pathname === "/dashboard/list"
+                              ? "active-nav-link"
+                              : ""
+                          }`}
                           onClick={() => setActiveAccordion("3")} // Keep it open
                         >
                           Manage Subscribers
@@ -269,30 +332,37 @@ setActiveAccordion("3"); // Open the second accordion
                     </Accordion.Item>
                   </Accordion>
 
-                  
                   <Accordion activeKey={activeAccordion} flush>
                     <Accordion.Item eventKey="1">
-                      <Accordion.Header className="accordion-head" onClick={() => handleAccordionToggle("1")}>
+                      <Accordion.Header
+                        className="accordion-head"
+                        onClick={() => handleAccordionToggle("1")}
+                      >
                         <Nav.Link as="div" className="nav-link">
                           <ManageAccountsIcon className="me-2" />
                           <span>Packages & Services</span>
                         </Nav.Link>
                       </Accordion.Header>
                       <Accordion.Body>
-                       
-                      
-
                         <Nav.Link
                           as={Link}
                           to="/dashboard/servicesList"
-                          className={`nav-link ${location.pathname === "/dashboard/servicesList" ? "active-nav-link" : ""}`}
+                          className={`nav-link ${
+                            location.pathname === "/dashboard/servicesList"
+                              ? "active-nav-link"
+                              : ""
+                          }`}
                         >
                           List of Services
                         </Nav.Link>
                         <Nav.Link
                           as={Link}
                           to="/dashboard/packages"
-                          className={`nav-link ${location.pathname === "/dashboard/packages" ? "active-nav-link" : ""}`}
+                          className={`nav-link ${
+                            location.pathname === "/dashboard/packages"
+                              ? "active-nav-link"
+                              : ""
+                          }`}
                         >
                           List of Packages
                         </Nav.Link>
@@ -300,12 +370,14 @@ setActiveAccordion("3"); // Open the second accordion
                     </Accordion.Item>
                   </Accordion>
 
-
-
                   <Nav.Link
                     as={Link}
                     to="/dashboard/serviceTaskList"
-                    className={`nav-link ${location.pathname === "/dashboard/serviceTaskList" ? "active-nav-link" : ""}`}
+                    className={`nav-link ${
+                      location.pathname === "/dashboard/serviceTaskList"
+                        ? "active-nav-link"
+                        : ""
+                    }`}
                   >
                     <ManageAccountsIcon className="me-2" />
                     Services

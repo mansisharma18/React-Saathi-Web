@@ -76,7 +76,7 @@ function App() {
           <Route path="servicesList" element={<AllServices />} />
           <Route path="packages" element={<ViewAllPackages />} />
           <Route path="createPackage" element={<Packages />} />
-          <Route path="patronDetails" element={<PatronDetails />} />
+          <Route path="patronDetails/:id" element={<PatronDetails />} />
           <Route path="updateAdminUsers/:id" element={<UpdateAdminUsers />} />
           <Route path="updateSubscriber/:id" element={<UpdateSubscriber />} />
           <Route

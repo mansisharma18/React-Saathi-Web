@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Alert from 'react-bootstrap/Alert';
 import { baseUrl } from '../../ApiPath';
@@ -46,7 +46,8 @@ const PatronDetails = () => {
     const[sub,setSub]=useState('')
     const[alert,setAlert]=useState('')
     const[list,setList]=useState('')
-    const[subId,setSubId]=useState('')
+    const {id}=useParams()
+    const[subId,setSubId]=useState(id?id:'')
     const[newPatron,setNewPatron]=useState(false)
     const[comments,setComments]=useState('')
     const[comments1,setComments1]=useState('')
@@ -54,6 +55,7 @@ const PatronDetails = () => {
     const[displayCancelButton,setDisplayCancelButton]=useState(true)
     const [loading, setLoading] = useState(false);
     const [isPatron2NA, setIsPatron2NA] = useState(false);
+
     
 
    
