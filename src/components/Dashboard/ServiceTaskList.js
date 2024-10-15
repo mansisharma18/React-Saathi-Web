@@ -22,8 +22,10 @@ function ServiceTaskList() {
   const [requests, setRequests] = useState(null);
   const [packageDetails, setPackageDetail] = useState(null);
   const [alert, setAlert] = useState();
+  const [filteredRequests, setFilteredRequests] = useState([]);
   const [completedRequest, setCompletedRequest] = useState([]);
   const [pendingRequest, setPendingRequest] = useState([]);
+  const [selectedServiceName, setSelectedServiceName] = useState(""); 
   const userId = localStorage.getItem("userId");
   const { id } = useParams();
 
@@ -51,17 +53,29 @@ function ServiceTaskList() {
   }, []);
 
   // Fetch selected subscriber's details and patrons
-  const fetchSubscriberDetails = async () => {
-    try {
-      const response = await fetch(`${baseUrl}/subscribers/${subId}`);
-      const json = await response.json();
-      setPackageDetail(json);
-      setPatron(json.patrons); // Patrons are set here
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+ // Fetch selected subscriber's details and patrons
+const fetchSubscriberDetails = async () => {
+  try {
+    const response = await fetch(`${baseUrl}/subscribers/${subId}`);
+    const json = await response.json();
+    setPackageDetail(json);
 
+    if (!json.patrons || json.patrons.length === 0) {
+      // If no patrons, show the modal to prompt adding a patron
+      setShowAddPatronModal(true);
+    } else {
+      setPatron(json.patrons); // Patrons are set here
+      setShowAddPatronModal(false); // Hide the modal if patrons are found
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+const [showAddPatronModal, setShowAddPatronModal] = useState(false);
+const handleRedirectToPatronScreen = () => {
+  // Redirect to the patron screen, assuming the patron screen route is '/patrons'
+  window.location.href = "/dashboard/patronDetails";
+};
   useEffect(() => {
     if (subId !== 0) {
       fetchSubscriberDetails();
@@ -137,13 +151,22 @@ const totalAlaCarteCompleted = requests
       [name]: files ? files[0] : value,
     });
   };
-
+  // Filtered services based on selected service name
+  useEffect(() => {
+    const filtered = requests?.filter((request) => {
+      if (selectedServiceName === "") return true; // No filter applied, show all
+      return request.serviceName === selectedServiceName;
+    });
+    setFilteredRequests(filtered); // Update the filtered requests
+  }, [selectedServiceName, requests]); 
+ 
   // Handle form submission and refresh data
   const handleSubmit = async () => {
     if (!selectedRequest) return;
 
     const formData = new FormData();
     formData.append("description", completionData.notes);
+    formData.append("frequencyInstance",selectedRequest.frequencyInstance)
     if (completionData.screenshot) {
       formData.append("file", completionData.screenshot);
     }
@@ -156,8 +179,11 @@ const totalAlaCarteCompleted = requests
       );
     } else {
       formData.append("isAlaCarte", false);
-      formData.append("preferredDate", completionData.preferredDate);
-      formData.append("preferredTime", completionData.preferredTime);
+      if(selectedRequest.preferredDatesTimes.length !== 0){
+        formData.append("preferredDate", completionData.preferredDate);
+        formData.append("preferredTime", completionData.preferredTime);
+      }
+     
     }
     console.log("formData", formData);
 
@@ -198,10 +224,36 @@ const totalAlaCarteCompleted = requests
     (sum, item) => sum + item.completions,
     0
   );
+  const handleServiceNameChange = (e) => {
+    console.log("value from service change",e.target.value);
+    
+    setSelectedServiceName(e.target.value); // Set selected service name
+  };
 
   return (
     <div className="d-flex">
       <Container className="justify-content-center align-items-center mt-5 px-5">
+      <Modal show={showAddPatronModal} onHide={() => setShowAddPatronModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title style={{ fontSize: "18px", color: "#ff0000" }}>
+            No Patrons Found
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p style={{ fontSize: "14px" }}>
+            No patrons are associated with this subscriber. Please add a patron first.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            onClick={handleRedirectToPatronScreen}
+            style={{ fontSize: "14px" }}
+          >
+            Go to Patron Screen
+          </Button>
+        </Modal.Footer>
+      </Modal>
         <Card className="shadow-sm pb-3">
           <Card.Body>
             <div className="d-flex justify-content-center">
@@ -278,7 +330,7 @@ const totalAlaCarteCompleted = requests
                         </Card.Title>
                         <hr />
                         <Card.Text style={{ fontSize: "14px" }}>
-                          <h5 style={{ fontSize: "16px" }}>
+                          <h5 style={{ fontSize: "14px" }}>
                             Services Included:
                           </h5>
                           <ul style={{ paddingLeft: "20px", fontSize: "14px" }}>
@@ -288,8 +340,8 @@ const totalAlaCarteCompleted = requests
                                   key={index}
                                   style={{ marginBottom: "10px" }}
                                 >
-                                  <strong>{service.serviceName}</strong>
-                                  {service.description}
+                                 {service.serviceName}
+                                  
                              
                                 </li> 
                               )
@@ -309,7 +361,7 @@ const totalAlaCarteCompleted = requests
         </Card.Title>
         <hr />
         <Card.Text>
-          <h6>Package Services</h6>
+          <h6 style={{fontSize:'14px'}}>Package Services</h6>
           <div className="d-flex justify-content-between">
             <div>
               <p style={{ fontSize: "14px", fontWeight: "bold", color: "green" }}>
@@ -357,6 +409,7 @@ const totalAlaCarteCompleted = requests
                 {/* Task Tables */}
                 {/* Task Tables */}
 {/* Task Tables */}
+
 <Row className="mt-5">
   <Col>
     <h5
@@ -371,7 +424,24 @@ const totalAlaCarteCompleted = requests
     <Table striped bordered hover responsive>
       <thead>
         <tr className="table-info">
-          <th>Service Name</th>
+          <th><Col >
+                <Form.Label style={{ fontSize: "14px" }}>Select Service Name</Form.Label>
+                <Form.Select
+                  aria-label="Select Service Name"
+                  value={selectedServiceName}
+                  style={{ fontSize: "14px" }}
+                  onChange={handleServiceNameChange}
+                >
+                  <option value="">All Services</option>
+                  {[...new Set(requests?.map((req) => req.serviceName))].map(
+                    (serviceName, index) => (
+                      <option key={index} value={serviceName}>
+                        {serviceName}
+                      </option>
+                    )
+                  )}
+                </Form.Select>
+              </Col></th>
           <th>Preferred Date</th>
           <th>Preferred Time</th>
           <th>Status</th>
@@ -379,11 +449,14 @@ const totalAlaCarteCompleted = requests
         </tr>
       </thead>
       <tbody>
-        {requests
+        {filteredRequests
           ?.filter((task) => !task.alaCarte) // Filter for package services only
-          .flatMap((task) => {
+          .map((task) => {
             const totalOccurrences = task.pending + task.completions;
             const preferredDatesTimes = task.preferredDatesTimes || [];
+            const interactionLength = task.interactions.length
+          console.log("Interactions Length",interactionLength);
+          
             
             // Create rows based on total pending + completions
             return Array.from({ length: totalOccurrences }).map(
@@ -397,14 +470,14 @@ const totalAlaCarteCompleted = requests
                     <td>{task.serviceName}</td>
                     <td>{preferredDate || ""}</td>
                     <td>{preferredTime || ""}</td>
-                    <td>{completionStatus || "Pending"}</td>
+                    <td>{task.completionStatus || "Pending"}</td>
                     <td>
                       <Button
                         variant="primary"
                         onClick={() =>
                           handleShowModal(task, preferredDateTime)
                         } // Pass both task and preferredDateTime to the modal
-                        disabled={completionStatus === "Completed"}
+                        disabled={completionStatus === "Completed" || interactionLength !=0 }
                         style={{
                           backgroundColor: "#009efb",
                           borderColor: "#009efb",
@@ -429,7 +502,7 @@ const totalAlaCarteCompleted = requests
 
 
                 {/* Conditionally render the Ala-Carte Services table only if there are pending Ala-Carte services */}
-                {requests?.filter((task) => task.alaCarte && task.pending > 0)
+                {requests?.filter((task) => task.alaCarte && task.frequencyCount > 0)
                   .length > 0 && (
                     <Row>
                     <Col>
@@ -454,7 +527,7 @@ const totalAlaCarteCompleted = requests
                         </thead>
                         <tbody>
                           {requests
-                            ?.filter((task) => task.alaCarte && task.pending > 0) // Filter Ala-Carte services with pending tasks
+                            ?.filter((task) => task.alaCarte && task.completionStatus ==="Not Completed") // Filter Ala-Carte services with pending tasks
                             .map((task) =>
                               task.preferredDatesTimes.map((preferredDateTime, index) => (
                                 <tr key={`${task.serviceID}-${index}`}>
