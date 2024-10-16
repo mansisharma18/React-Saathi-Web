@@ -31,29 +31,29 @@ import CreatePackageService from "./components/Dashboard/CreatePackageService";
 import EditPackage from "./components/Dashboard/EditPackage";
 import EditService from "./components/Dashboard/EditService";
 import ServiceTaskList from "./components/Dashboard/ServiceTaskList";
-import ProtectedRoute from "./components/Dashboard/ProtectedRoute"; 
+import ProtectedRoute from "./components/Dashboard/ProtectedRoute";
 function App() {
   const location = useLocation();
-  const isLoginPage = location.pathname === "/";
-  const isHomePage = location.pathname === "/home";
+
 
   return (
     <div className="">
       <Routes>
         {/* Route for Login Page */}
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<HomePage/>}/>
+        <Route path="/login" element={<Login />} />
 
         {/* Route for Home Page */}
         <Route path="/home" element={<HomePage />} />
 
         {/* Dashboard layout route */}
-        <Route path="/dashboard"
-        
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
         >
           <Route index element={<DashboardLandingPage />} />
           <Route path="list" element={<List />} />
@@ -76,7 +76,7 @@ function App() {
           <Route path="servicesList" element={<AllServices />} />
           <Route path="packages" element={<ViewAllPackages />} />
           <Route path="createPackage" element={<Packages />} />
-          <Route path="patronDetails/:id" element={<PatronDetails />} />
+          <Route path="patronDetails/:id?" element={<PatronDetails />} />
           <Route path="updateAdminUsers/:id" element={<UpdateAdminUsers />} />
           <Route path="updateSubscriber/:id" element={<UpdateSubscriber />} />
           <Route

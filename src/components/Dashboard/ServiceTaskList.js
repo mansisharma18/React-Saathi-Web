@@ -234,7 +234,8 @@ const totalAlaCarteCompleted = requests
   return (
     <div className="d-flex">
       <Container className="justify-content-center align-items-center mt-5 px-5">
-      <Modal show={showAddPatronModal} onHide={() => setShowAddPatronModal(false)}>
+      <Modal show={showAddPatronModal} onHide={() => { setShowAddPatronModal(false); setSubId(0); }}>
+
         <Modal.Header closeButton>
           <Modal.Title style={{ fontSize: "18px", color: "#ff0000" }}>
             No Patrons Found

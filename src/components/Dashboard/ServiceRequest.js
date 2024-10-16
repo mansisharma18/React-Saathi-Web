@@ -98,7 +98,7 @@ const ServiceRequest = () => {
               <Col md={6} className="mb-4" key={request.id}>
                 <Card className="shadow-sm border-0">
                   <Card.Body>
-                    <Card.Title className="text-primary">
+                    <Card.Title className="text-default">
                       {request.clientName}
                     </Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">
