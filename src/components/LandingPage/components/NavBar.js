@@ -28,7 +28,9 @@ function NavBar() {
         scrollY > 0 ? "bg-white/70" : "bg-white"
       }`}
       aria-label="Main navigation"
+      
     >
+      <a href="https://etheriumtech.com">
       <div className="flex justify-between items-center p-3 px-12">
         {/* Logo */}
         <a
@@ -42,7 +44,7 @@ function NavBar() {
         {/* Navigation Links */}
         <div className={`${open ? "block" : "hidden"} md:flex`}>
           <ul className="flex flex-col md:flex-row md:gap-8 absolute md:static top-16 right-5 md:bg-transparent">
-            {navItems.map(({ name, href }, index) => (
+            {/* {navItems.map(({ name, href }, index) => (
               <li key={index} className="md:hover:underline">
                 <a
                   href={href}
@@ -51,7 +53,7 @@ function NavBar() {
                   {name}
                 </a>
               </li>
-            ))}
+            ))} */}
           </ul>
         </div>
 
@@ -92,6 +94,7 @@ function NavBar() {
           </button>
         </div>
       </div>
+      </a>
     </nav>
   );
 }
