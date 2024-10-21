@@ -32,21 +32,25 @@ const DashboardSaathiHome = () => {
         .then((res) => {
           // Map the data to create a flat structure with services separated by subscriber
           const flattenedData = res.data.flatMap((subscriber) =>
-            subscriber.services.map((service) => ({
-              subscriberID: subscriber.subscriberID,
-              subscriberName: subscriber.subscriberName,
-              serviceName: service.serviceName,
-              requestedTime: service.requestedTime,
-              color: service.color,
-              serviceID: service.serviceID,
-            }))
+            subscriber.services.flatMap((service) =>
+              service.preferredDateTimes.map((dateTime) => ({
+                subscriberID: subscriber.subscriberID,
+                subscriberName: subscriber.subscriberName,
+                serviceName: service.serviceName,
+                requestedTime: dateTime.requestedDate,
+                preferredDate: dateTime.preferredDate,
+                color: dateTime.color,
+                serviceID: service.serviceID,
+                completionStatus: dateTime.completionStatus,
+              }))
+            )
           );
-          console.log(flattenedData);
+          console.log("flat Data", flattenedData);
           setList(flattenedData);
         })
         .catch((err) => console.log(err));
     };
-
+  
     const fetchServices = async () => {
       axios
         .get(`${baseUrl}/admin-users/${userId}/subscribers/services/all`)
@@ -54,15 +58,13 @@ const DashboardSaathiHome = () => {
           setServices(res.data);
           console.log(services, "services");
         })
-
         .catch((err) => console.log(err));
     };
-
+  
     fetchServices();
-
     fetchData();
   }, [userId]);
-
+  
   const sortList = (key) => {
     let direction = "ascending";
     if (sortConfig.key === key && sortConfig.direction === "ascending") {
@@ -244,163 +246,96 @@ const DashboardSaathiHome = () => {
               </div>
 
               {list.length > 0 && (
-                <>
-                  <Card className="shadow-sm pb-3">
-                    <Card.Body>
-                      <div className="d-flex justify-content-center">
-                        <div className="mt-2">
-                          <h4>Ala-carte Service Requests</h4>
-                        </div>
-                      </div>
-                      <hr />
+  <>
+    <Card className="shadow-sm pb-3">
+      <Card.Body>
+        <div className="d-flex justify-content-center">
+          <div className="mt-2">
+            <h4>Ala-carte Service Requests</h4>
+          </div>
+        </div>
+        <hr />
 
-                      <div>
-                        <Table striped bordered className="table-font-size">
-                          <thead>
-                            <tr className="table-info">
-                              <th
-                                scope="col"
-                                style={{ verticalAlign: "middle" }}
-                              >
-                                S.No
-                              </th>
-                              {/* <th scope="col">Subscriber Name</th> */}
-                              <th
-                                scope="col"
-                                style={{ verticalAlign: "middle" }}
-                              >
-                                Subscriber Name
-                                <span style={{ cursor: "pointer" }}>
-                                  <ArrowDropUpIcon
-                                    onClick={() =>
-                                      sortList("subscriberName", "ascending")
-                                    }
-                                    style={{
-                                      ...getArrowStyle(
-                                        "subscriberName",
-                                        "ascending"
-                                      ),
-                                      marginRight: "-10px",
-                                    }}
-                                  />
-                                  <ArrowDropDownIcon
-                                    onClick={() =>
-                                      sortList("subscriberName", "descending")
-                                    }
-                                    style={{
-                                      ...getArrowStyle(
-                                        "subscriberName",
-                                        "descending"
-                                      ),
-                                    }}
-                                  />
-                                </span>
-                              </th>
-                              <th
-                                scope="col"
-                                style={{ verticalAlign: "middle" }}
-                              >
-                                Service Name
-                              </th>
-                              {/* <th scope="col">Requested Time</th> */}
-                              <th
-                                scope="col"
-                                style={{ verticalAlign: "middle" }}
-                              >
-                                Requested Time
-                                <span style={{ cursor: "pointer" }}>
-                                  <ArrowDropUpIcon
-                                    onClick={() =>
-                                      sortList("requestedTime", "ascending")
-                                    }
-                                    style={{
-                                      ...getArrowStyle(
-                                        "requestedTime",
-                                        "ascending"
-                                      ),
-                                      marginRight: "-10px",
-                                    }}
-                                  />
-                                  <ArrowDropDownIcon
-                                    onClick={() =>
-                                      sortList("requestedTime", "descending")
-                                    }
-                                    style={{
-                                      ...getArrowStyle(
-                                        "requestedTime",
-                                        "descending"
-                                      ),
-                                    }}
-                                  />
-                                </span>
-                              </th>
-                              <th
-                                scope="col"
-                                style={{ verticalAlign: "middle" }}
-                              >
-                                Preffered Time
-                              </th>
-                              <th
-                                scope="col"
-                                style={{ verticalAlign: "middle" }}
-                              >
-                                Status
-                              </th>
-                              <th
-                                scope="col"
-                                style={{ verticalAlign: "middle" }}
-                              >
-                                Update
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {list.length > 0 ? (
-                              list.map((item, index) => (
-                                <tr key={index}>
-                                  <td>{index + 1}</td>
-                                  <td>{item.subscriberName}</td>
-                                  <td>{item.serviceName}</td>
-                                  <td>{item.requestedTime}</td>
-                                  <td>..</td>
-                                  <td>
-                                    <span
-                                      style={{
-                                        color:
-                                          item.color === "amber"
-                                            ? "#FFBF00"
-                                            : item.color,
-                                        padding: "5px",
-                                      }}
-                                    >
-                                      Pending
-                                    </span>
-                                  </td>
-                                  <td>
-                                    <Link
-                                      to={`/dashboard/serviceTaskList/${item.subscriberID}`}
-                                      style={{
-                                        color: "inherit",
-                                        textDecoration: "none",
-                                      }}
-                                    >
-                                      <i className="bi bi-pencil-fill edit-btn-color"></i>
-                                    </Link>
-                                  </td>
-                                </tr>
-                              ))
-                            ) : (
-                              <tr>
-                                <td colSpan="7">No Service Request</td>
-                              </tr>
-                            )}
-                          </tbody>
-                        </Table>
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </>
+        <div>
+          <Table striped bordered className="table-font-size">
+            <thead>
+              <tr className="table-info">
+                <th scope="col" style={{ verticalAlign: "middle" }}>S.No</th>
+                <th scope="col" style={{ verticalAlign: "middle" }}>
+                  Subscriber Name
+                  <span style={{ cursor: "pointer" }}>
+                    <ArrowDropUpIcon
+                      onClick={() => sortList("subscriberName", "ascending")}
+                      style={{
+                        ...getArrowStyle("subscriberName", "ascending"),
+                        marginRight: "-10px",
+                      }}
+                    />
+                    <ArrowDropDownIcon
+                      onClick={() => sortList("subscriberName", "descending")}
+                      style={getArrowStyle("subscriberName", "descending")}
+                    />
+                  </span>
+                </th>
+                <th scope="col" style={{ verticalAlign: "middle" }}>Service Name</th>
+                <th scope="col" style={{ verticalAlign: "middle" }}>
+                  Requested Time
+                  <span style={{ cursor: "pointer" }}>
+                    <ArrowDropUpIcon
+                      onClick={() => sortList("requestedTime", "ascending")}
+                      style={{
+                        ...getArrowStyle("requestedTime", "ascending"),
+                        marginRight: "-10px",
+                      }}
+                    />
+                    <ArrowDropDownIcon
+                      onClick={() => sortList("requestedTime", "descending")}
+                      style={getArrowStyle("requestedTime", "descending")}
+                    />
+                  </span>
+                </th>
+                <th scope="col" style={{ verticalAlign: "middle" }}>Preferred Time</th>
+                <th scope="col" style={{ verticalAlign: "middle" }}>Status</th>
+                <th scope="col" style={{ verticalAlign: "middle" }}>Update</th>
+              </tr>
+            </thead>
+            <tbody>
+              {list.length > 0 ? (
+                list.map((item, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{item.subscriberName}</td>
+                    <td>{item.serviceName}</td>
+                    <td>{item.requestedTime}</td>
+                    <td>{item.preferredDate}</td>
+                    <td>
+                      <span style={{ color: item.color === "amber" ? "#FFBF00" : item.color }}>
+                        {item.completionStatus}
+                      </span>
+                    </td>
+                    <td>
+                      <Link
+                        to={`/dashboard/serviceTaskList/${item.subscriberID}`}
+                        style={{ color: "inherit", textDecoration: "none" }}
+                      >
+                        <i className="bi bi-pencil-fill edit-btn-color"></i>
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7">No Service Request</td>
+                </tr>
               )}
+            </tbody>
+          </Table>
+        </div>
+      </Card.Body>
+    </Card>
+  </>
+)}
+
             </Card.Body>
           </Card>
         </Container>
