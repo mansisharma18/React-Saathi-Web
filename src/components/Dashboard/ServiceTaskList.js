@@ -598,7 +598,7 @@ const totalAlaCarteCompleted = requests
                               <tr key={interaction.interactionID}>
                                 <td>
                                   {interactionIndex === 0 && (
-                                    <strong>{task.serviceName}</strong>
+                                 <div>{task.serviceName}</div>
                                   )}
                                 </td>
                                 <td>
@@ -609,7 +609,8 @@ const totalAlaCarteCompleted = requests
                                 <td>{interaction.description}</td>
                                 <td>{interaction.createdDate}</td>
                                 <td>  <Box display="flex" justifyContent="center" alignItems="center">
-                  {[...Array(5)].map((_, index) => (
+                        
+                  {interaction.serviceRating &&[...Array(interaction?.serviceRating)].map((_, index) => (
                     <StarIcon
                       key={index}
                       style={{ color: "green", fontSize: 14 }} // Adjust fontSize as needed
