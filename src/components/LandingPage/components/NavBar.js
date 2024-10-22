@@ -71,7 +71,7 @@ function NavBar() {
               </ul>
             </li>
             <li>
-              <Link to="/#contact" className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200">
+              <Link to="https://etheriumtech.com/index.html#contact" className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200">
                 Contact
               </Link>
             </li>
