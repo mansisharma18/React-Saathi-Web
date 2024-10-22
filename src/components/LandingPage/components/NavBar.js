@@ -15,7 +15,7 @@ function NavBar() {
 
   return (
     <nav className="bg-default shadow-md">
-      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="container mx-auto px-2 py-3 flex items-center justify-between">
         <Link to="/" className="text-white text-3xl font-semibold tracking-wide">
           Saathi
         </Link>
@@ -58,17 +58,17 @@ function NavBar() {
             <li className="relative group">
               <Link
                 to="https://etheriumtech.com/index.html#products"
-                className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200"
+                className="text-white text-lg font-medium hover:text-gray-600 transition-colors duration-200"
               >
                 Products
               </Link>
-              <ul className="absolute hidden group-hover:block bg-gray-800 text-white mt-2 rounded-lg shadow-lg p-3">
+              {/* <ul className="absolute hidden group-hover:block bg-gray-800 text-white mt-2 rounded-lg shadow-lg p-3">
                 <li>
                   <a href="#" className="block px-4 py-2 hover:text-gray-300">
                     All Cures
                   </a>
                 </li>
-              </ul>
+              </ul> */}
             </li>
             <li>
               <Link to="https://etheriumtech.com/index.html#contact" className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200">

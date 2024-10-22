@@ -64,6 +64,7 @@ const Footer = () => {
                   src={googlePlay}
                   alt="Google Play Link"
                   className="w-36 object-contain rounded-lg shadow-lg"
+                  style={{ width: "148px", maxHeight: "45px", marginBottom: "7px", marginRight: "5px" }}
                 />
               </a>
               <a href="#appstore">
@@ -71,6 +72,7 @@ const Footer = () => {
                   src={appStore}
                   alt="App Store Link"
                   className="w-36 object-contain rounded-lg shadow-lg"
+                  style={{ width: "148px", maxHeight: "45px", marginBottom: "7px", marginRight: "5px" }}
                 />
               </a>
             </div>
