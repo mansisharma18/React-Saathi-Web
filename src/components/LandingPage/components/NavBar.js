@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 function NavBar() {
   const [open, setOpen] = useState(false);
@@ -12,89 +13,71 @@ function NavBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Nav items
-  const navItems = [
-    { name: "About Us", href: "#aboutus" },
-    { name: "Services", href: "#services" },
-    { name: "Contact Us", href: "#contactus" },
-  ];
-
-  // Handle navbar toggle for mobile view
-  const toggleNav = () => setOpen(!open);
-
   return (
-    <nav
-      className={`sticky top-0 z-20 shadow-lg transition-opacity duration-300 p-1 text-2xl font-DreamBold ${
-        scrollY > 0 ? "bg-white/70" : "bg-white"
-      }`}
-      aria-label="Main navigation"
-      
-    >
-      <a href="https://etheriumtech.com">
-      <div className="flex justify-between items-center p-3 px-12">
-        {/* Logo */}
-        <a
-          href="/"
-          className="flex items-center gap-2 tracking-wide text-default text-3xl no-underline"
-          aria-label="Go to Home"
-        >
+    <nav className="bg-default shadow-md">
+      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+        <Link to="/" className="text-white text-3xl font-semibold tracking-wide">
           Saathi
-        </a>
-
-        {/* Navigation Links */}
-        <div className={`${open ? "block" : "hidden"} md:flex`}>
-          <ul className="flex flex-col md:flex-row md:gap-8 absolute md:static top-16 right-5 md:bg-transparent">
-            {/* {navItems.map(({ name, href }, index) => (
-              <li key={index} className="md:hover:underline">
-                <a
-                  href={href}
-                  className="text-base font-medium text-textPrimary hover:text-default font-serif"
-                >
-                  {name}
-                </a>
-              </li>
-            ))} */}
+        </Link>
+        <button
+          className="text-white block lg:hidden focus:outline-none"
+          onClick={() => setOpen(!open)}
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
+        </button>
+        <div className={`lg:flex ${open ? "block" : "hidden"} w-full lg:w-auto`}>
+          <ul className="lg:flex lg:space-x-8 space-y-6 lg:space-y-0 mt-4 lg:mt-0">
+            <li>
+              <Link to="https://etheriumtech.com/index.html#home" className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="https://etheriumtech.com/index.html#services" className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200">
+                Services
+              </Link>
+            </li>
+            <li>
+              <Link to="https://etheriumtech.com/index.html#team" className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200">
+                Team
+              </Link>
+            </li>
+            <li className="relative group">
+              <Link
+                to="https://etheriumtech.com/index.html#products"
+                className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200"
+              >
+                Products
+              </Link>
+              <ul className="absolute hidden group-hover:block bg-gray-800 text-white mt-2 rounded-lg shadow-lg p-3">
+                <li>
+                  <a href="#" className="block px-4 py-2 hover:text-gray-300">
+                    All Cures
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <Link to="/#contact" className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200">
+                Contact
+              </Link>
+            </li>
           </ul>
         </div>
-
-        {/* Mobile Menu and Call Button */}
-        <div className="flex items-center">
-          {/* Call Us Button (can be uncommented when ready) */}
-          {/* <a
-            href="tel:+18001234567" // Replace with actual phone number
-            className="flex items-center justify-center p-2 text-base text-white bg-default hover:bg-default-dark rounded-md mr-2"
-            aria-label="Call Us"
-          >
-            <FaPhoneAlt className="mr-1" />
-            Call Us
-          </a> */}
-
-          {/* Hamburger Menu Button for Mobile */}
-          <button
-            className="inline-flex items-center justify-center p-2 w-10 h-10 text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
-            onClick={toggleNav}
-            aria-expanded={open}
-            aria-label="Toggle navigation menu"
-          >
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
-        </div>
       </div>
-      </a>
     </nav>
   );
 }

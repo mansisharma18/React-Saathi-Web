@@ -537,7 +537,7 @@ const totalAlaCarteCompleted = requests
                         </thead>
                         <tbody>
                           {requests
-                            ?.filter((task) => task.alaCarte && task.completionStatus ==="Not Completed") // Filter Ala-Carte services with pending tasks
+                            ?.filter((task) => task.alaCarte && task.completionStatus ==="Pending") // Filter Ala-Carte services with pending tasks
                             .map((task) =>
                               task.preferredDatesTimes.map((preferredDateTime, index) => (
                                 <tr key={`${task.serviceID}-${index}`}>
