@@ -17,7 +17,7 @@ const Footer = () => {
   const handlePrivacyModalShow = () => setShowPrivacyModal(true);
 
   return (
-    <footer className="bg-default text-gray-300 py-12">
+    <footer className="bg-default text-gray-300 py-2">
       <div className="container mx-auto px-6 md:px-16 lg:px-24">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-start lg:items-center gap-8">
           {/* Contact Us Section */}
@@ -27,7 +27,7 @@ const Footer = () => {
               Email:{" "}
               <a
                 href="mailto:info@etheriumtech.com"
-                className="text-blue-400 hover:text-white"
+                className="text-blue-400 hover:text-white text-base"
               >
                 info@etheriumtech.com
               </a>
@@ -36,7 +36,7 @@ const Footer = () => {
               Phone:{" "}
               <a
                 href="tel:+911912959035"
-                className="text-blue-400 hover:text-white"
+                className="text-blue-400 hover:text-white text-base"
               >
                 +91 1912959035
               </a>
@@ -44,20 +44,20 @@ const Footer = () => {
           </div>
 
           {/* App Promotion Section */}
-          <div className="md:w-1/3 text-center md:text-left">
+          <div className="md:w-1/3 text-left md:text-left">
             <p
-              className="text-blue-400 hover:text-white cursor-pointer mb-2"
+              className="text-blue-400 hover:text-white cursor-pointer mb-2 text-base"
               onClick={handleTnCModalShow}
             >
               Terms & Conditions
             </p>
             <p
-              className="text-blue-400 hover:text-white cursor-pointer mb-4"
+              className="text-blue-400 hover:text-white cursor-pointer mb-4 text-base"
               onClick={handlePrivacyModalShow}
             >
               Privacy Policy
             </p>
-            <p className="text-gray-400 mb-2">Download our app:</p>
+            <p className="text-white mb-2 text-base">Download our app:</p>
             <div className="flex space-x-4 justify-center md:justify-start">
               <a href="#googleplay">
                 <img
@@ -77,14 +77,13 @@ const Footer = () => {
               </a>
             </div>
           </div>
+          
         </div>
-
-        {/* Copyright Section */}
-        <div className="border-t border-gray-600 mt-8 pt-4">
-          <p className="text-center text-gray-400 text-sm">
+        <p className="text-center text-gray-400 text-sm">
             &copy; {new Date().getFullYear()} Saathi. All rights reserved.
           </p>
-        </div>
+        {/* Copyright Section */}
+      
       </div>
 
       {/* Modal for Terms & Conditions */}

@@ -50,7 +50,7 @@ const SubscriptionCard = ({ title, description, price, icon, colors }) => {
           className="mt-auto px-6 py-2 bg-white text-default font-semibold rounded-full hover:bg-default hover:text-white transition-all duration-300 ease-in-out"
           whileHover={{ scale: 1.1 }} // Slightly enlarge button on hover
           whileTap={{ scale: 0.95 }} // Slightly reduce button size on tap
-          onClick={() => alert(`Subscribed to ${title} plan`)}
+          onClick={() => alert(`Please proceed to make payment of  ${title} plan`)}
         >
          Subscribe Now
         </motion.button>
@@ -65,32 +65,32 @@ const SubscriptionPage = () => {
     {
       id: "1",
       title: "Basic",
-      description: `• One-hour call with patrons every week.\n• Includes one in-home visit to check health, take a photo, and ensure well-being.\n• All interactions/digital media uploaded to the ‘My Feed’ section of the app.\n• Offered at $30/month (Rs. 2500/month).`,
-      price: "$30/m\n(Rs. 2500/m)",
+      description: `• 1 hour phone call every week.\n• 1 monthly visit to the house.`,
+      price: "Rs. 1575/m",
       icon: "star-outline",
       colors: ["rgba(186, 220, 188, 0.8)", "#4CAF50"], // Light mint green with dark green border
     },
     {
       id: "2",
       title: "Bronze",
-      description: `• One-hour call with patrons every week.\n• Two in-home visits to check health, take a photo, and ensure well-being.\n• Up to 2 hours of running errands on behalf of patrons.\n• Offered at $40/month (Rs. 3500/month).`,
-      price: "$40/m\n(Rs. 3500/m)",
+      description: `• 1 hour phone call every week.\n• 2 monthly visits to the house.\n• 2 hours of running errands.`,
+      price: "Rs. 2975/m",
       icon: "medal-outline",
       colors: ["rgba(255, 224, 178, 0.8)", "#FFA726"], // Soft peach with deep orange border
     },
     {
       id: "3",
       title: "Silver",
-      description: `• One-hour call with patrons every week.\n• Weekly in-home visits to check health, take a photo, and ensure well-being.\n• Up to 4 hours of running errands on behalf of patrons.\n• Driving patrons (up to 2) to and from a destination within 4 hours.\n• Offered at $60/month (Rs. 5000/month).`,
-      price: "$60/m\n(Rs. 5000/m)",
+      description: `• 1 hour phone call every week.\n• 1 weekly visit to the house.\n• 4 hours of running errands.\n• 1 Destination drive (up to 4 hours).`,
+      price: "Rs. 5100/m",
       icon: "trophy-outline",
       colors: ["rgba(178, 235, 242, 0.8)", "#00ACC1"], // Light aqua with dark teal border
     },
     {
       id: "4",
       title: "Gold",
-      description: `• One-hour call with patrons every week.\n• Weekly in-home visits to check health, take a photo, and ensure well-being.\n• Up to 8 hours of running errands on behalf of patrons.\n• Offered at $80/month (Rs. 6500/month).`,
-      price: "$80/m\n(Rs. 6500/m)",
+      description: `• 1 hour phone call every week.\n• 1 weekly visit to the house.\n• 8 hours of running errands.\n• 2 Destination drives (up to 4 hours).`,
+      price: "Rs. 8250/m",
       icon: "ribbon-outline",
       colors: ["rgba(244, 213, 178, 0.8)", "#FF9800"], // Light sand with burnt orange border
     },

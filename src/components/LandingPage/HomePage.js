@@ -15,7 +15,7 @@ function HomePage() {
    <CardsSection/>
     <SaathisSection/>
     <SubscriptionPage/>
-    <TestimonialsSection/>
+    {/* <TestimonialsSection/> */}
     <FAQSection/>
     <Footer/>
     

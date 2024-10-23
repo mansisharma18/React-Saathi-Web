@@ -18,7 +18,7 @@ function NavBar() {
       <div className="container mx-auto px-2 py-3 flex items-center justify-between">
         <Link to="/" className="text-white text-3xl font-semibold tracking-wide no-underline">
           Saathi
-          <h6 style={{fontSize:'8px',}} className="no-underline  ml-3">by Etherium Technologies</h6>
+          <h6 style={{fontSize:'10px',}} className="no-underline ">An Etherium Technologies Venture</h6>
  
         </Link>
      
