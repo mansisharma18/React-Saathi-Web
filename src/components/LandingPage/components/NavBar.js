@@ -16,9 +16,12 @@ function NavBar() {
   return (
     <nav className="bg-default shadow-md">
       <div className="container mx-auto px-2 py-3 flex items-center justify-between">
-        <Link to="/" className="text-white text-3xl font-semibold tracking-wide">
+        <Link to="/" className="text-white text-3xl font-semibold tracking-wide no-underline">
           Saathi
+          <h6 style={{fontSize:'8px',}} className="no-underline  ml-3">by Etherium Technologies</h6>
+ 
         </Link>
+     
         <button
           className="text-white block lg:hidden focus:outline-none"
           onClick={() => setOpen(!open)}
@@ -41,24 +44,24 @@ function NavBar() {
         <div className={`lg:flex ${open ? "block" : "hidden"} w-full lg:w-auto`}>
           <ul className="lg:flex lg:space-x-8 space-y-6 lg:space-y-0 mt-4 lg:mt-0">
             <li>
-              <Link to="https://etheriumtech.com/index.html#home" className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200">
+              <Link to="https://etheriumtech.com/index.html#home" className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200 no-underline">
                 Home
               </Link>
             </li>
             <li>
-              <Link to="https://etheriumtech.com/index.html#services" className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200">
+              <Link to="https://etheriumtech.com/index.html#services" className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200 no-underline">
                 Services
               </Link>
             </li>
             <li>
-              <Link to="https://etheriumtech.com/index.html#team" className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200">
+              <Link to="https://etheriumtech.com/index.html#team" className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200 no-underline">
                 Team
               </Link>
             </li>
             <li className="relative group">
               <Link
                 to="https://etheriumtech.com/index.html#products"
-                className="text-white text-lg font-medium hover:text-gray-600 transition-colors duration-200"
+                className="text-white text-lg font-medium hover:text-gray-600 transition-colors duration-200 no-underline"
               >
                 Products
               </Link>
@@ -71,7 +74,7 @@ function NavBar() {
               </ul> */}
             </li>
             <li>
-              <Link to="https://etheriumtech.com/index.html#contact" className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200">
+              <Link to="https://etheriumtech.com/index.html#contact" className="text-white text-lg font-medium hover:text-gray-300 transition-colors duration-200 no-underline">
                 Contact
               </Link>
             </li>
