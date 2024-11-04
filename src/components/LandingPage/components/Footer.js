@@ -92,6 +92,7 @@ const Footer = () => {
           <Modal.Title >Terms & Conditions</Modal.Title>
         </Modal.Header>
         <Modal.Body className="p-4">
+          <div>
           <p>
             <strong>1. Introduction</strong>
           </p>
@@ -221,6 +222,7 @@ const Footer = () => {
             If you have any questions or concerns regarding these terms, please
             contact us.
           </p>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleTnCModalClose}>

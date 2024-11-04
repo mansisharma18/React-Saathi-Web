@@ -1,6 +1,6 @@
 import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -34,16 +34,17 @@ import EditPackage from "./components/Dashboard/EditPackage";
 import EditService from "./components/Dashboard/EditService";
 import ServiceTaskList from "./components/Dashboard/ServiceTaskList";
 import ProtectedRoute from "./components/Dashboard/ProtectedRoute";
+import Payment from "./components/LandingPage/components/Payment";
 function App() {
   const location = useLocation();
-
 
   return (
     <div className="">
       <Routes>
         {/* Route for Login Page */}
-        <Route path="/" element={<HomePage/>}/>
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/payment" element={<Payment />} />
 
         {/* Route for Home Page */}
         <Route path="/home" element={<HomePage />} />

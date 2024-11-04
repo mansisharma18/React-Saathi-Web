@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "proxy": "https://saathi.etheriumtech.com:444",
   "dependencies": {
+    "@cashfreepayments/cashfree-js": "^1.0.5",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^5.16.7",
