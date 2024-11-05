@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { baseUrl } from "../../../ApiPath";
+import { baseUrl } from "../../../../ApiPath";
 import { useLocation } from "react-router-dom";
 import { load } from "@cashfreepayments/cashfree-js";
 function Payment() {

@@ -34,7 +34,8 @@ import EditPackage from "./components/Dashboard/EditPackage";
 import EditService from "./components/Dashboard/EditService";
 import ServiceTaskList from "./components/Dashboard/ServiceTaskList";
 import ProtectedRoute from "./components/Dashboard/ProtectedRoute";
-import Payment from "./components/LandingPage/components/Payment";
+import Payment from "./components/LandingPage/components/payment/Payment";
+import PaymentSucess from "./components/LandingPage/components/payment/PaymentSucess";
 function App() {
   const location = useLocation();
 
@@ -45,6 +46,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/payment/successful" element={<PaymentSucess />} />
 
         {/* Route for Home Page */}
         <Route path="/home" element={<HomePage />} />
