@@ -47,6 +47,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/payment/successful" element={<PaymentSucess />} />
+        <Route path="/payment/failed" element={<PaymentSucess />} />
+
 
         {/* Route for Home Page */}
         <Route path="/home" element={<HomePage />} />

@@ -5,33 +5,23 @@ import { useLocation } from "react-router-dom";
 function PaymentSuccess() {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const queryParams = new URLSearchParams(location.search);
+  const orderId = queryParams.get("order_id");
   const handleGoToDashboard = () => {
     navigate("/dashboard"); // Redirect to the dashboard or desired route
   };
   const [paymentDetail, setPaymentDetail] = useState();
   useEffect(() => {
     const fetchData = async () => {
-      const queryParams = new URLSearchParams(location.search);
-      const orderId = queryParams.get("order_id");
-  
       try {
         const response = await fetch(
-          `https://sandbox.cashfree.com/pg/orders/${orderId}`,
-          {
-            method: "GET",
-            headers: {
-              "x-api-version": "2023-08-01",
-              "x-client-id": "TEST103294355d1590c90cc76d0a6b0853492301",
-              "x-client-secret": "cfsk_ma_test_a06f435fab19bda1dfb482ba9b3b5a21_a97d10df",
-            },
-          }
+          `https://saathi.etheriumtech.com:444/Saathi/cashfree/order/${orderId}`
         );
-  
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-  
+
         const json = await response.json();
         console.log("Payment Response", json);
         setPaymentDetail(json);
@@ -39,10 +29,10 @@ function PaymentSuccess() {
         console.error("Error fetching payment details:", error);
       }
     };
-  
+
     fetchData();
   }, [location.search]);
-  
+
   return (
     <div style={styles.container}>
       <div style={styles.content}>
@@ -53,7 +43,7 @@ function PaymentSuccess() {
         </p>
         <div style={styles.details}>
           <p>
-            <strong>Order ID:</strong> #123456789
+            <strong>Order ID:</strong> {orderId}
           </p>
           <p>
             <strong>Amount Paid:</strong> $99.99
