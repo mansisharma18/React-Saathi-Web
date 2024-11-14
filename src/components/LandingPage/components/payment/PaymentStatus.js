@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaCheckCircle } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
-function PaymentSuccess() {
+
+function PaymentStatus() {
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const orderId = queryParams.get("order_id");
-  const handleGoToDashboard = () => {
-    navigate("/dashboard"); // Redirect to the dashboard or desired route
-  };
+
   const [paymentDetail, setPaymentDetail] = useState();
+  const [status, setStatus] = useState("loading"); // "loading", "success", or "failed"
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,36 +23,77 @@ function PaymentSuccess() {
         }
 
         const json = await response.json();
-        console.log("Payment Response", json);
         setPaymentDetail(json);
+
+        if (json.orderStatus === "PAID") {
+          setStatus("success");
+        } else {
+          setStatus("failed");
+        }
       } catch (error) {
         console.error("Error fetching payment details:", error);
+        setStatus("failed");
       }
     };
 
     fetchData();
-  }, [location.search]);
+  }, [orderId]);
+
+  const handleGoToDashboard = () => {
+    navigate("/dashboard");
+  };
+
+  if (status === "loading") {
+    return (
+      <div style={styles.container}>
+        <div style={styles.content}>
+          <h1 style={styles.title}>Loading...</h1>
+          <p style={styles.message}>Fetching payment details, please wait.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={styles.container}>
-      <div style={styles.content}>
-        <h1 style={styles.title}>Payment Successful!</h1>
-        <p style={styles.message}>
-          Thank you for your purchase! Your transaction was completed
-          successfully.
-        </p>
-        <div style={styles.details}>
-          <p>
-            <strong>Order ID:</strong> {orderId}
+      {status === "success" ? (
+        <div style={styles.content}>
+          <h1 style={styles.title}>Payment Successful!</h1>
+          <p style={styles.message}>
+            Thank you for your purchase! Your transaction was completed
+            successfully.
           </p>
-          <p>
-            <strong>Amount Paid:</strong> $99.99
-          </p>
+          <div style={styles.details}>
+            <p>
+              <strong>Order ID:</strong> {paymentDetail?.orderID}
+            </p>
+            <p>
+              <strong>Amount Paid:</strong> ₹{paymentDetail?.amount} {paymentDetail?.currency}
+            </p>
+          </div>
+          <button style={styles.button} onClick={handleGoToDashboard}>
+            Go to App
+          </button>
         </div>
-        <button style={styles.button} onClick={handleGoToDashboard}>
-          Go to App
-        </button>
-      </div>
+      ) : (
+        <div style={styles.content}>
+          <h1 style={{ ...styles.title, color: "#D32F2F" }}>Payment Failed</h1>
+          <p style={styles.message}>
+            Unfortunately, your payment could not be processed.
+          </p>
+          <div style={styles.details}>
+            <p>
+              <strong>Order ID:</strong> {paymentDetail?.orderID}
+            </p>
+            <p>
+              <strong>Status:</strong> {paymentDetail?.orderStatus}
+            </p>
+          </div>
+          <button style={styles.button} onClick={handleGoToDashboard}>
+            Try Again
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -74,12 +115,6 @@ const styles = {
     backgroundColor: "#fff",
     borderRadius: "12px",
     boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
-  },
-  icon: {
-    fontSize: "50px",
-    color: "#4CAF50",
-    marginBottom: "10px",
-    alignItems: "center",
   },
   title: {
     fontSize: "26px",
@@ -113,4 +148,4 @@ const styles = {
   },
 };
 
-export default PaymentSuccess;
+export default PaymentStatus;

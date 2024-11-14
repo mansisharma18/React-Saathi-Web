@@ -35,7 +35,8 @@ import EditService from "./components/Dashboard/EditService";
 import ServiceTaskList from "./components/Dashboard/ServiceTaskList";
 import ProtectedRoute from "./components/Dashboard/ProtectedRoute";
 import Payment from "./components/LandingPage/components/payment/Payment";
-import PaymentSucess from "./components/LandingPage/components/payment/PaymentSucess";
+
+import PaymentStatus from "./components/LandingPage/components/payment/PaymentStatus";
 function App() {
   const location = useLocation();
 
@@ -46,8 +47,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/payment" element={<Payment />} />
-        <Route path="/payment/successful" element={<PaymentSucess />} />
-        <Route path="/payment/failed" element={<PaymentSucess />} />
+        <Route path="/payment/status" element={<PaymentStatus />} />
+    
 
 
         {/* Route for Home Page */}
