@@ -40,7 +40,9 @@ function PaymentStatus() {
   }, [orderId]);
 
   const handleGoToDashboard = () => {
-    navigate("/dashboard");
+    window.ReactNativeWebView.postMessage(
+      JSON.stringify({ action: "goToDashboard" })
+    );
   };
 
   if (status === "loading") {
@@ -68,7 +70,8 @@ function PaymentStatus() {
               <strong>Order ID:</strong> {paymentDetail?.orderID}
             </p>
             <p>
-              <strong>Amount Paid:</strong> ₹{paymentDetail?.amount} {paymentDetail?.currency}
+              <strong>Amount Paid:</strong> ₹{paymentDetail?.amount}{" "}
+              {paymentDetail?.currency}
             </p>
           </div>
           <button style={styles.button} onClick={handleGoToDashboard}>

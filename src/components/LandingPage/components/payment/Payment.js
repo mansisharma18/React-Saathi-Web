@@ -53,7 +53,7 @@ function Payment() {
       let checkoutOptions = {
         paymentSessionId: json.paymentSessionID,
         redirectTarget: "_modal", // optional (_self, _blank, or _top)
-        returnUrl: `https://saathi.etheriumtech.com/payment/successful?order_id=${json.orderID}`,
+        returnUrl: `https://saathi.etheriumtech.com/payment/status?order_id=${json.orderID}`,
       };
 
       cashfree.checkout(checkoutOptions).then((result) => {
