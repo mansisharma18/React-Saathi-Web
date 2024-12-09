@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
+
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import Alert from 'react-bootstrap/Alert';
+import Alert from "react-bootstrap/Alert";
 import { baseUrl } from "../../ApiPath";
 
 const Login = () => {
@@ -20,14 +18,11 @@ const Login = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `${baseUrl}/subscribers/active`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await fetch(`${baseUrl}/subscribers/active`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         const json = await response.json();
         console.log(json);
       } catch (error) {
@@ -60,50 +55,48 @@ const Login = () => {
         },
       })
       .then((res) => {
-        if (res.data && res.data !="Invalid credentials for Admin") {
+        if (res.data && res.data != "Invalid credentials for Admin") {
           // Assuming the API response has a success field
           localStorage.setItem("userType", res.data.userType);
           localStorage.setItem("userId", res.data.adminUserID);
           localStorage.setItem("userPhoto", res.data.picture);
-          localStorage.setItem("firstName",res.data.firstName);
-          localStorage.setItem("lastName",res.data.lastName);
-          localStorage.setItem("email",res.data.email);
+          localStorage.setItem("firstName", res.data.firstName);
+          localStorage.setItem("lastName", res.data.lastName);
+          localStorage.setItem("email", res.data.email);
           const user = localStorage.getItem("userType");
           const userId = localStorage.getItem("userId");
 
-          const first=localStorage.getItem('firstName')
-          const last =localStorage.getItem('lastName')
+          const first = localStorage.getItem("firstName");
+          const last = localStorage.getItem("lastName");
 
-          console.log("name",first)
-          console.log("name",last)
-      
+          console.log("name", first);
+          console.log("name", last);
+
           console.log("userId", userId);
           console.log("user", user);
-          console.log("pic",res.data.picture);
+          console.log("pic", res.data.picture);
           // Redirect to /dashboard after successful login
           navigate("/dashboard");
-        } else if (res.data =="Invalid credentials for Admin") {
+        } else if (res.data == "Invalid credentials for Admin") {
           // Show alert for invalid credentials
-          setAlert('Invalid credentials. Please try again.');
+          setAlert("Invalid credentials. Please try again.");
           setTimeout(() => {
-            setAlert('');
+            setAlert("");
           }, 4000);
         }
-       
       })
       .catch((err) => {
         console.log(err);
-        
-        if(err.response.data.includes('Invalid credentials')){
-          setAlert('Invalid Credentials.');
-          setTimeout(() => {
-            setAlert('');
-          }, 4000);
 
+        if (err.response.data.includes("Invalid credentials")) {
+          setAlert("Invalid Credentials.");
+          setTimeout(() => {
+            setAlert("");
+          }, 4000);
         }
-        setAlert('Invalid Credentials.');
+        setAlert("Invalid Credentials.");
         setTimeout(() => {
-          setAlert('');
+          setAlert("");
         }, 4000);
       });
   };
@@ -114,13 +107,23 @@ const Login = () => {
         className="d-flex justify-content-center align-items-center vh-100"
         style={{ backgroundColor: "#f7f7f7" }} // Background color for the whole page
       >
-        <Card className="shadow-sm" style={{ width: "400px", borderRadius: "10px" }}>
+        <Card
+          className="shadow-sm"
+          style={{ width: "400px", borderRadius: "10px" }}
+        >
           <Card.Body>
             <div className="text-center mb-4">
-              <h3 style={{ fontWeight: "bold", fontFamily: "'Helvetica Neue', sans-serif" ,color: "#6c757d" }}>Sign In</h3>
+              <h3
+                style={{
+                  fontWeight: "bold",
+                  fontFamily: "'Helvetica Neue', sans-serif",
+                  color: "#6c757d",
+                }}
+              >
+                Sign In
+              </h3>
             </div>
             <Form onSubmit={handleSubmit}>
-             
               <Form.Group className="mb-3" controlId="validationCustom02">
                 <Form.Control
                   required
@@ -144,10 +147,17 @@ const Login = () => {
               </Form.Group>
 
               <div className="d-flex align-items-center justify-content-between mb-3">
-                <Button variant="primary" type="submit" style={{ fontSize: "12px", padding: "7px 16px" }}>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  style={{ fontSize: "12px", padding: "7px 16px" }}
+                >
                   Login
                 </Button>
-                <Link to="#" style={{ fontSize: "14px", textDecoration: "none" }}>
+                <Link
+                  to="#"
+                  style={{ fontSize: "14px", textDecoration: "none" }}
+                >
                   Forgot Password?
                 </Link>
               </div>

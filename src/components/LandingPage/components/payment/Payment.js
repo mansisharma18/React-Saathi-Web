@@ -47,7 +47,7 @@ function Payment() {
 
       // Load Cashfree
       const cashfree = await load({
-        mode: "sandbox", // or "production"
+        mode: "production", 
       });
 
       let checkoutOptions = {
@@ -56,7 +56,7 @@ function Payment() {
         returnUrl: `https://saathi.etheriumtech.com/payment/status?order_id=${json.orderID}`,
       };
 
-      cashfree.checkout(checkoutOptions)
+      cashfree.checkout(checkoutOptions);
 
       // Set order details after successful payment initialization
       setOrderDetail(json);
